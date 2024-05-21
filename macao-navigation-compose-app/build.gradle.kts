@@ -132,9 +132,11 @@ kotlin {
             // Macao Navigation Compose Components
             implementation(project(":macao-navigation-compose-components"))
 
-            // Koin
-            // api("io.insert-koin:koin-core:3.5.3")
-            api(libs.koin.core)
+            // Lifecycle, Navigation and DI
+            implementation(libs.lifecycle.viewmodel.compose)
+            implementation(libs.navigation.compose)
+            implementation(libs.koin.compose)
+            implementation(libs.koin.compose.viewmodel)
         }
         commonTest.dependencies {
             // implementation(libs.kotlin.test)

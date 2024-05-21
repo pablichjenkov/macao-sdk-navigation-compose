@@ -1,28 +1,25 @@
 package com.macaosoftware.component.navigationcompose.demo
 
-import android.app.Activity
 import com.macaosoftware.app.RootKoinModuleInitializer
-import com.macaosoftware.plugin.account.AccountPlugin
-import com.macaosoftware.plugin.account.AccountPluginEmpty
 import com.macaosoftware.component.navigationcompose.demo.di.commonKoinModule
 import com.macaosoftware.component.navigationcompose.demo.di.macaoViewModelsModule
+import com.macaosoftware.plugin.account.AccountPlugin
+import com.macaosoftware.plugin.account.AccountPluginEmpty
 import org.koin.core.module.Module
 import org.koin.dsl.module
 
-class AndroidKoinModuleInitializer(
-    private val activity: Activity
-) : RootKoinModuleInitializer {
+class JvmRootKoinModuleInitializer : RootKoinModuleInitializer {
 
     override suspend fun initialize(): List<Module> {
 
-        //val database = createDatabase(AndroidDriverFactory(activity))
+        // val database = createDatabase(DesktopDriverFactory())
 
-        val androidKoinModule = module {
+        val JvmKoinModule = module {
             // single<Database> { database }
-             single<AccountPlugin> { AccountPluginEmpty() }
+            single<AccountPlugin> { AccountPluginEmpty() }
             // single<AccountPlugin> { SupabaseAccountPlugin() }
         }
 
-        return listOf(androidKoinModule, commonKoinModule, macaoViewModelsModule)
+        return listOf(JvmKoinModule, commonKoinModule, macaoViewModelsModule)
     }
 }

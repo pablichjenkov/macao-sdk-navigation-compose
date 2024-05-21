@@ -5,7 +5,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.sp
-import com.macaosoftware.component.core.Component
+import com.macaosoftware.component.ComposableStateMapper
 import com.macaosoftware.component.core.NavItem
 
 data class DrawerStyle(
@@ -20,18 +20,18 @@ data class DrawerStyle(
 )
 
 data class DrawerNavItem(
+    val composableStateMapper: ComposableStateMapper,
     val label: String,
     val icon: ImageVector,
     var selected: Boolean,
-    val component: Component,
     val badgeText: String? = null
 )
 
 fun NavItem.toDrawerNavItem(selected: Boolean = false): DrawerNavItem {
     return DrawerNavItem(
+        composableStateMapper = this.composableStateMapper,
         label = this.label,
         icon = this.icon,
         selected = selected,
-        component = this.component
     )
 }

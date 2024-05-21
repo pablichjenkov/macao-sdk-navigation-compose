@@ -1,5 +1,5 @@
-package com.macaosoftware.sdui.app.marketplace.navigator.drawer
-
+package com.macaosoftware.component.navigationcompose.demo.marketplace.navigators.drawer
+/*
 import com.macaosoftware.component.drawer.DrawerComponent
 import com.macaosoftware.component.drawer.DrawerComponentViewModelFactory
 import com.macaosoftware.component.drawer.DrawerStatePresenterDefault
@@ -20,3 +20,4 @@ class DrawerViewModelFactory(
         )
     }
 }
+*/

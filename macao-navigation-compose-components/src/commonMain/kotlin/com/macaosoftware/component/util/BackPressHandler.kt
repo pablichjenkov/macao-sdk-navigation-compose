@@ -2,13 +2,15 @@ package com.macaosoftware.component.util
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocal
-import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.staticCompositionLocalOf
-import com.macaosoftware.component.core.Component
-import com.macaosoftware.component.core.ComponentLifecycleState
+import androidx.compose.ui.platform.LocalLifecycleOwner
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
+import androidx.lifecycle.LifecycleOwner
 import com.macaosoftware.plugin.BackPressDispatcherPlugin
 import com.macaosoftware.plugin.DefaultBackPressDispatcherPlugin
 import com.macaosoftware.plugin.ForwardBackPressCallback
@@ -21,52 +23,56 @@ import com.macaosoftware.plugin.ForwardBackPressCallback
  */
 @Composable
 fun BackPressHandler(
-    component: Component,
+    lifecycleOwner: LifecycleOwner = LocalLifecycleOwner.current,
     enabled: Boolean = true,
     onBackPressed: () -> Unit
 ) {
+
+    val backPressDispatcher = LocalBackPressedDispatcher.current
+
     // Safely update the current `onBack` lambda when a new one is provided
     val currentOnBackPressed by rememberUpdatedState(onBackPressed)
 
     // Remember in Composition a back callback that calls the `onBackPressed` lambda
-    val backPressCallback = remember(component) {
-        ForwardBackPressCallback {
-            currentOnBackPressed()
-        }
-        /* uncomment to test: https://github.com/JetBrains/compose-jb/issues/2615
+    val backPressMacaoPluginCallback = remember(lifecycleOwner) {
+        /*
+        This ForwardBackPressCallback encapsulating class due to JS compilation is unable
+        to process anonymous objects inside a remember block.
+        Uncomment to test: https://github.com/JetBrains/compose-jb/issues/2615
         object : BackPressedCallback() {
             override fun onBackPressed() {
                 currentOnBackPressed()
             }
         }*/
+        ForwardBackPressCallback {
+            currentOnBackPressed()
+        }
     }
 
-    val backPressDispatcher = LocalBackPressedDispatcher.current
-    val componentLifecycleState by component.lifecycleStateFlow.collectAsState(
-        ComponentLifecycleState.Attached
-    )
-
-    when (componentLifecycleState) {
-        ComponentLifecycleState.Attached -> {
-            println("${component.instanceId()}::Lifecycle Flow = Created, Ignoring")
-            // Ignore
-        }
-
-        ComponentLifecycleState.Active -> {
-            println("${component.instanceId()}::Lifecycle Flow = Started, BackPressHandler Subscribing")
-            if (enabled) {
-                backPressDispatcher.subscribe(backPressCallback)
+    // If the enclosing lifecycleOwner changes, dispose and reset the effect
+    DisposableEffect(key1 = lifecycleOwner) {
+        // Create an observer that triggers our remembered callbacks
+        // when the LifecycleOwner that contains this composable changes its state.
+        val observer = LifecycleEventObserver { _, event ->
+            if (event == Lifecycle.Event.ON_START) {
+                // println("component.instanceId()::Lifecycle Flow = ON_START, BackPressHandler Subscribing")
+                if (enabled) {
+                    backPressDispatcher.subscribe(backPressMacaoPluginCallback)
+                }
+            } else if (event == Lifecycle.Event.ON_STOP) {
+                // println("component.instanceId()::Lifecycle Flow = ON_STOP, BackPressHandler Unsubscribing")
+                backPressDispatcher.unsubscribe(backPressMacaoPluginCallback)
             }
         }
 
-        ComponentLifecycleState.Inactive -> {
-            println("${component.instanceId()}::Lifecycle Flow = Stopped, BackPressHandler Unsubscribing")
-            backPressDispatcher.unsubscribe(backPressCallback)
+        if (enabled) {
+            backPressDispatcher.subscribe(backPressMacaoPluginCallback)
         }
 
-        ComponentLifecycleState.Detached -> {
-            println("${component.instanceId()}::Lifecycle Flow = Destroyed, Ignoring")
-            // Ignore it did unsubscribe in Stopped already.
+        // When the effect leaves the Composition, remove the observer to not leak the observer
+        onDispose {
+            lifecycleOwner.lifecycle.removeObserver(observer)
+            println("BackPressHandler::Disposing LifecycleEventObserver")
         }
     }
 

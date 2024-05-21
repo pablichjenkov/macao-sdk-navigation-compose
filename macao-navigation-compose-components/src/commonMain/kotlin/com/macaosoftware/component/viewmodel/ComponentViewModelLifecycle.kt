@@ -1,8 +1,8 @@
 package com.macaosoftware.component.viewmodel
 
-abstract class ComponentViewModelLifecycle {
-    protected abstract fun onAttach()
-    protected abstract fun onStart()
-    protected abstract fun onStop()
-    protected abstract fun onDetach()
+interface ComponentViewModelLifecycle {
+    fun onAttach()
+    fun onStart()
+    fun onStop()
+    fun onDetach()
 }
