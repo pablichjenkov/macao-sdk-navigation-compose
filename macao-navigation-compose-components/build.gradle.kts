@@ -163,11 +163,15 @@ kotlin {
             implementation(compose.ui)
             implementation(compose.material3)
             implementation(compose.animation)
-            implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0")
+            implementation(libs.kotlinx.coroutines.core)
             // implementation("org.jetbrains.compose.ui:ui-util:1.5.10")
             // implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1")
-            implementation("org.jetbrains.androidx.lifecycle:lifecycle-viewmodel-compose:2.8.0-rc01")
-            implementation("org.jetbrains.androidx.navigation:navigation-compose:2.7.0-alpha04")
+
+            // Lifecycle, Navigation and DI
+            implementation(libs.lifecycle.viewmodel.compose)
+            implementation(libs.navigation.compose)
+            implementation(libs.koin.compose)
+            implementation(libs.koin.compose.viewmodel)
         }
         commonTest.dependencies {
             implementation(kotlin("test"))

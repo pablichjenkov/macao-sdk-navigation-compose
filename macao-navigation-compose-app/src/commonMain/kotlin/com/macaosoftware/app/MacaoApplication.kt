@@ -10,7 +10,7 @@ import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import com.macaosoftware.component.PlatformComponentRenderer
+import org.koin.compose.KoinContext
 
 @Composable
 fun MacaoApplication(
@@ -32,7 +32,13 @@ fun MacaoApplication(
     }
 
     is InitializationSuccess -> {
-        PlatformComponentRenderer(rootComponent = stage.rootComponent)
+
+        KoinContext(
+            context = stage.koinRootContext.getKoin()
+        ) {
+            val intialRoute = stage.stateMapper.getInitialRoute()
+            stage.stateMapper.ContentForRoot(intialRoute)
+        }
     }
 }
 
@@ -49,7 +55,7 @@ private fun InitializationHandler(
         SplashScreen(initializing.taskName)
     }
 
-    Initializing.RootComponent -> {
+    Initializing.RootMetadata -> {
         SplashScreen("Fetching Root Component from Services")
     }
 }

@@ -95,7 +95,7 @@ class DrawerStatePresenterDefault(
     private fun updateDrawerSelectedItem(drawerNavItem: DrawerNavItem) {
         val update = _navItemsState.value.map { navItemDeco ->
             navItemDeco.copy(
-                selected = drawerNavItem.component == navItemDeco.component
+                selected = drawerNavItem.composableStateMapper == navItemDeco.composableStateMapper
             )
         }
         _navItemsState.value = update

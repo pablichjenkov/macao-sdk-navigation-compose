@@ -1,9 +1,5 @@
 package com.macaosoftware.component.drawer
 
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.navigation.compose.rememberNavController
-import com.macaosoftware.component.core.Component
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 
@@ -26,17 +22,4 @@ object DrawerComponentDefaults {
         )
     }
 
-    val DrawerComponentView: @Composable DrawerComponent<DrawerComponentViewModel>.(
-        modifier: Modifier,
-        childComponent: Component
-    ) -> Unit = { modifier, childComponent ->
-
-        navController = rememberNavController()
-
-        NavigationDrawer(
-            modifier = modifier,
-            statePresenter = componentViewModel.drawerStatePresenter,
-            navController = navController
-        )
-    }
 }

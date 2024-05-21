@@ -1,6 +1,6 @@
 package com.macaosoftware.component.navigationcompose.demo.di
 
-import com.macaosoftware.component.navigationcompose.demo.serverui.data.SduiRemoteService
+import com.macaosoftware.component.navigationcompose.demo.serverui.data.ServerUiRemoteService
 import com.macaosoftware.component.navigationcompose.demo.di.http.createDefaultHttpClient
 import io.ktor.client.HttpClient
 import kotlinx.datetime.Clock
@@ -14,5 +14,5 @@ internal val commonKoinModule = module {
     single<HttpClient> {
         createDefaultHttpClient()
     }
-    singleOf(::SduiRemoteService)
+    singleOf(::ServerUiRemoteService)
 }

@@ -1,13 +1,14 @@
 package com.macaosoftware.app
 
 import androidx.compose.runtime.mutableStateOf
-import com.macaosoftware.component.core.Component
+import com.macaosoftware.component.ComposableStateMapper
 import com.macaosoftware.plugin.CoroutineDispatchers
 import com.macaosoftware.util.MacaoResult
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import org.koin.core.component.KoinComponent
 import org.koin.dsl.koinApplication
 
 class MacaoApplicationState(
@@ -51,16 +52,16 @@ class MacaoApplicationState(
                     }
 
                     is StartupTaskStatus.CompleteSuccess -> {
-                        initializeRootComponent(koinInjector)
+                        initializeRootMetadata(koinInjector)
                     }
                 }
             }
     }
 
-    private suspend fun initializeRootComponent(koinInjector: KoinInjector) {
+    private suspend fun initializeRootMetadata(koinInjector: KoinInjector) {
 
         if (rootComponentInitializer.shouldShowLoader()) {
-            stage.value = Initializing.RootComponent
+            stage.value = Initializing.RootMetadata
         }
         val result = withContext(dispatchers.default) {
             rootComponentInitializer.initialize(koinInjector)
@@ -71,7 +72,10 @@ class MacaoApplicationState(
                 stage.value = InitializationError(result.error.toString())
             }
             is MacaoResult.Success -> {
-                stage.value = InitializationSuccess(result.value)
+                stage.value = InitializationSuccess(
+                    koinRootContext = koinInjector,
+                    stateMapper = result.value
+                )
             }
         }
     }
@@ -84,8 +88,11 @@ data object Created : Stage()
 sealed class Initializing : Stage() {
     // data object KoinRootModule : Initializing()
     data class StartupTask(val taskName: String) : Initializing()
-    data object RootComponent : Initializing()
+    data object RootMetadata : Initializing()
 }
 
 class InitializationError(val errorMsg: String) : Stage()
-class InitializationSuccess(val rootComponent: Component) : Stage()
+class InitializationSuccess(
+    val koinRootContext: KoinComponent,
+    val stateMapper: ComposableStateMapper
+) : Stage()

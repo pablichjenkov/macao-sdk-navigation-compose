@@ -6,6 +6,7 @@ plugins {
     alias(libs.plugins.kotlin.multiplatform)
     alias(libs.plugins.android.application)
     alias(libs.plugins.compose)
+    alias(libs.plugins.kotlin.serialization)
 }
 
 kotlin {
@@ -34,7 +35,7 @@ kotlin {
         }
     }
     
-    jvm("desktop")
+    jvm()
     
     listOf(
         iosX64(),
@@ -79,10 +80,17 @@ kotlin {
             implementation(libs.ktor.client.content.negotiation)
             implementation(libs.ktor.client.logging)
 
-            // Koin
-            implementation(libs.koin.core)
+            // Lifecycle, Navigation and DI
+            implementation(libs.lifecycle.viewmodel.compose)
+            implementation(libs.navigation.compose)
+            implementation(libs.koin.compose)
+            implementation(libs.koin.compose.viewmodel)
             implementation(project(":macao-navigation-compose-app"))
             implementation(project(":macao-navigation-compose-components"))
+        }
+        iosMain.dependencies {
+            // Ktor
+            implementation(libs.ktor.client.darwin)
         }
         androidMain.dependencies {
             implementation(libs.activity.compose)
@@ -92,11 +100,24 @@ kotlin {
             implementation(libs.compose.ui.tooling.preview)
 
             // Ktor
-            implementation(libs.ktor.client.android)
+            implementation(libs.ktor.client.okhttp)
         }
-        val desktopMain by getting
-        desktopMain.dependencies {
+        jvmMain.dependencies {
+            implementation(compose.desktop.common)
             implementation(compose.desktop.currentOs)
+            implementation(libs.kotlinx.coroutines.swing)
+
+            // Ktor
+            implementation(libs.ktor.client.java)
+        }
+        jsMain.dependencies {
+            implementation(libs.kotlinx.coroutines.core.js)
+            implementation(devNpm("copy-webpack-plugin", "9.1.0"))
+            implementation(npm("@cashapp/sqldelight-sqljs-worker", "2.0.0"))
+            implementation(npm("sql.js", "1.8.0"))
+
+            // Ktor
+            implementation(libs.ktor.client.js)
         }
     }
 }
@@ -137,11 +158,11 @@ android {
 
 compose.desktop {
     application {
-        mainClass = "MainKt"
+        mainClass = "com.macaosoftware.component.navigationcompose.demo.MainKt"
 
         nativeDistributions {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
-            packageName = "com.macaosoftware.component.navigationcompose"
+            packageName = "com.macaosoftware.component.navigationcompose.demo"
             packageVersion = "1.0.0"
         }
     }

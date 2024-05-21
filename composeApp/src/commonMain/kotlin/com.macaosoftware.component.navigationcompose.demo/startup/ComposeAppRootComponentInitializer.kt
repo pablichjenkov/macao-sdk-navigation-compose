@@ -1,9 +1,9 @@
 package com.macaosoftware.component.navigationcompose.demo.startup
 
 import com.macaosoftware.app.RootComponentInitializer
-import com.macaosoftware.component.core.Component
-import com.macaosoftware.component.navigationcompose.demo.serverui.data.SduiRemoteService
-import com.macaosoftware.component.navigationcompose.demo.serverui.domain.SduiComponentFactory
+import com.macaosoftware.component.ComposableStateMapper
+import com.macaosoftware.component.navigationcompose.demo.serverui.data.ServerUiRemoteService
+import com.macaosoftware.component.navigationcompose.demo.serverui.domain.ServerUiJsonToComponentTypeMapper
 import com.macaosoftware.util.MacaoResult
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.get
@@ -14,19 +14,25 @@ class ComposeAppRootComponentInitializer : RootComponentInitializer {
         return true
     }
 
-    override suspend fun initialize(koinComponent: KoinComponent): MacaoResult<Component> {
+    override suspend fun initialize(koinComponent: KoinComponent): MacaoResult<ComposableStateMapper> {
 
-        val sduiRemoteService = koinComponent.get<SduiRemoteService>()
+        val serverUiRemoteService = koinComponent.get<ServerUiRemoteService>()
 
-        val sduiComponentFactory = SduiComponentFactory(koinComponent)
-        val rootComponentJsonResilience = sduiRemoteService.getRootJsonResilience()
+        val jsonToComponentTypeMapper = ServerUiJsonToComponentTypeMapper(/*koinComponent*/)
+        val rootComponentJsonResilience = serverUiRemoteService.getRootJsonResilience()
         //val rootComponentJson = sduiRemoteService.getRemoteRootComponent("123")
 
-        val rootComponent = sduiComponentFactory.getComponentInstanceOf(
+        // val rootComponent = jsonToComponentTypeMapper.getComponentInstanceOf(
             // componentJson = rootComponentJson ?: rootComponentJsonResilience
-            componentJson = rootComponentJsonResilience
+            // componentJson = rootComponentJsonResilience
+        // )
+
+        // Migration
+
+        val stateMapper = RootComposableStateMapper(
+            rootComponentJsonResilience
         )
 
-        return MacaoResult.Success(rootComponent)
+        return MacaoResult.Success(stateMapper)
     }
 }

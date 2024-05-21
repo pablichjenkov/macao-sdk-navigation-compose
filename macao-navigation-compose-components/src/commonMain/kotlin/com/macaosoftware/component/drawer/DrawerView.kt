@@ -21,22 +21,67 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.util.fastForEach
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.macaosoftware.component.util.BackPressHandler
+import com.macaosoftware.component.util.EmptyNavigationView
+import com.macaosoftware.plugin.lifecycle.LifecycleEventObserver
+
+@Composable
+fun DrawerView(
+    viewModel: DrawerViewModel,
+    modifier: Modifier = Modifier
+) {
+
+    BackPressHandler {
+        viewModel.handleBackPressed()
+    }
+
+    LifecycleEventObserver(
+        lifecycleOwner = LocalLifecycleOwner.current,
+        onStart = {
+            println("Receiving DrawerView.onStart() event")
+            viewModel.onStart()
+        },
+        onStop = {
+            println("Receiving DrawerView.onStop() event")
+            viewModel.onStop()
+        },
+        initializeBlock = {
+            viewModel.onAttach()
+        }
+    )
+
+    val navController = rememberNavController()
+
+    val navItems = viewModel.drawerStatePresenter.navItemsState.value
+
+    if (navItems.isNotEmpty()) {
+        NavigationDrawer(
+            modifier = modifier,
+            statePresenter = viewModel.drawerStatePresenter,
+            navController = navController,
+            navItems = navItems
+        )
+    } else {
+        EmptyNavigationView()
+    }
+}
 
 @Composable
 fun NavigationDrawer(
-    modifier: Modifier = Modifier,
     statePresenter: DrawerStatePresenter,
-    navController: NavHostController
+    navController: NavHostController,
+    navItems: List<DrawerNavItem>,
+    modifier: Modifier = Modifier
 ) {
 
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
-    val navItems by statePresenter.navItemsState
 
     ModalNavigationDrawer(
         drawerContent = {
@@ -47,19 +92,20 @@ fun NavigationDrawer(
         gesturesEnabled = true,
         scrimColor = DrawerDefaults.scrimColor
     ) {
-
-
         NavHost(
             navController = navController,
+            route = "Component-Drawer",
             startDestination = navItems[0].label,
-            modifier = Modifier
-                .fillMaxSize()
-                //.verticalScroll(rememberScrollState())
-                //.padding(innerPadding)
+            modifier = modifier.fillMaxSize()
+            //.verticalScroll(rememberScrollState())
+            //.padding(innerPadding)
         ) {
             navItems.fastForEach { drawerNavItem ->
-                composable(drawerNavItem.label) {
-                    drawerNavItem.component.Content(Modifier.fillMaxSize())
+                composable(drawerNavItem.label) { backstackEntry ->
+                    drawerNavItem.composableStateMapper.ContentForRoute(
+                        navController,
+                        backstackEntry
+                    )
                 }
             }
         }
@@ -71,6 +117,12 @@ fun NavigationDrawer(
                 DrawerValue.Closed -> drawerState.close()
                 DrawerValue.Open -> drawerState.open()
             }
+        }
+    }
+
+    LaunchedEffect(key1 = statePresenter) {
+        statePresenter.navItemClickFlow.collect { navItem ->
+            navController.navigate(navItem.label)
         }
     }
 
