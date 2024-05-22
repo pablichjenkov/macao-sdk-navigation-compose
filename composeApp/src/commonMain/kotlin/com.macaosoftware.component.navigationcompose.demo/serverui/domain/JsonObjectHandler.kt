@@ -5,9 +5,9 @@ import com.macaosoftware.component.navigationcompose.demo.serverui.data.ServerUi
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonObject
 
-abstract class JsonObjectHandler(
-    private val jsonObject: JsonObject,
-    private val jsonToComponentTypeMapper: ServerUiJsonToComponentTypeMapper
+internal abstract class JsonObjectHandler(
+    private val serverJsonObjectManager: ServerJsonObjectManager,
+    private val jsonToComponentTypeMapper: ServerUiNavItemMapper = ServerUiNavItemMapper()
 ) {
     /*suspend fun loadChildren(): List<Component> {
         val children = jsonObject.get(
@@ -20,7 +20,7 @@ abstract class JsonObjectHandler(
     }*/
 
     suspend fun loadNavItems(): List<NavItem> {
-        val children = jsonObject.get(
+        val children = serverJsonObjectManager.getJson().get(
             ServerUiConstants.JsonKeyName.children
         ) as JsonArray
 

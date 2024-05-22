@@ -7,7 +7,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class DrawerViewModelDefault(
+internal class DrawerViewModelDefault(
     private val serverUiHandler: DrawerSduiHandler,
     override val drawerStatePresenter: DrawerStatePresenterDefault
 ) : DrawerViewModel() {

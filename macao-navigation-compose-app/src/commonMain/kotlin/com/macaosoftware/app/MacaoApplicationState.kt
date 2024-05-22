@@ -2,6 +2,7 @@ package com.macaosoftware.app
 
 import androidx.compose.runtime.mutableStateOf
 import com.macaosoftware.component.ComposableStateMapper
+import com.macaosoftware.component.core.RootDestinationRender
 import com.macaosoftware.plugin.CoroutineDispatchers
 import com.macaosoftware.util.MacaoResult
 import kotlinx.coroutines.CoroutineScope
@@ -74,7 +75,7 @@ class MacaoApplicationState(
             is MacaoResult.Success -> {
                 stage.value = InitializationSuccess(
                     koinRootContext = koinInjector,
-                    stateMapper = result.value
+                    rootDestinationRender = result.value
                 )
             }
         }
@@ -94,5 +95,5 @@ sealed class Initializing : Stage() {
 class InitializationError(val errorMsg: String) : Stage()
 class InitializationSuccess(
     val koinRootContext: KoinComponent,
-    val stateMapper: ComposableStateMapper
+    val rootDestinationRender: RootDestinationRender
 ) : Stage()

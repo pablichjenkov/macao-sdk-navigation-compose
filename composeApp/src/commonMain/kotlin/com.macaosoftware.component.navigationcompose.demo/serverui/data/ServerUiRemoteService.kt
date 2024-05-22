@@ -36,12 +36,11 @@ internal class ServerUiRemoteService(
             addJsonObject {
                 put(
                     ServerUiConstants.JsonKeyName.componentType,
-                    JsonPrimitive(ServerUiConstants.ComponentType.SimpleScreen)
+                    JsonPrimitive(ServerUiConstants.ComponentType.SimpleScreen1)
                 )
             }
         }
     }
-
 
     suspend fun getRemoteRootComponent(ownerId: String): JsonObject? {
         // val baseUrl = "http://localhost:8080"

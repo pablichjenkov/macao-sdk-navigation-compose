@@ -9,7 +9,6 @@ import com.macaosoftware.component.navigationcompose.demo.startup.ComposeAppRoot
 import com.macaosoftware.component.navigationcompose.demo.startup.DatabaseMigrationStartupTask
 import com.macaosoftware.component.navigationcompose.demo.startup.LaunchDarklyStartupTask
 import com.macaosoftware.component.navigationcompose.demo.startup.SdkXyzStartupTask
-import com.macaosoftware.plugin.account.AccountPlugin
 
 fun ComposeViewController(
     iosBridge: IosBridge

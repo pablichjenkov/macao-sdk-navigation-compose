@@ -33,11 +33,8 @@ fun MacaoApplication(
 
     is InitializationSuccess -> {
 
-        KoinContext(
-            context = stage.koinRootContext.getKoin()
-        ) {
-            val intialRoute = stage.stateMapper.getInitialRoute()
-            stage.stateMapper.ContentForRoot(intialRoute)
+        KoinContext(context = stage.koinRootContext.getKoin()) {
+            stage.rootDestinationRender.Content()
         }
     }
 }
