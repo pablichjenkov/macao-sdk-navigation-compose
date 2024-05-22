@@ -5,11 +5,11 @@ import androidx.compose.material.icons.sharp.DateRange
 import androidx.compose.material.icons.sharp.List
 import com.macaosoftware.component.core.NavItem
 import com.macaosoftware.component.navigationcompose.demo.serverui.data.ServerUiConstants
-import com.macaosoftware.component.navigationcompose.demo.startup.SimpleScreenComposableStateMapper
+import com.macaosoftware.component.navigationcompose.demo.serverui.SimpleScreenComposableStateMapper
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.jsonPrimitive
 
-class ServerUiJsonToComponentTypeMapper {
+class ServerUiNavItemMapper {
 
     fun getNavItemOf(
         componentJson: JsonObject

@@ -1,4 +1,4 @@
-package com.macaosoftware.component.navigationcompose.demo.startup
+package com.macaosoftware.component.navigationcompose.demo.serverui
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember

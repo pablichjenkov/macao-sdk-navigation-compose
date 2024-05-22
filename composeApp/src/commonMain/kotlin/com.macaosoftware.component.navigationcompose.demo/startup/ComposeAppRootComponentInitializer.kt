@@ -1,9 +1,10 @@
 package com.macaosoftware.component.navigationcompose.demo.startup
 
 import com.macaosoftware.app.RootComponentInitializer
-import com.macaosoftware.component.ComposableStateMapper
+import com.macaosoftware.component.core.RootDestinationRender
+import com.macaosoftware.component.navigationcompose.demo.serverui.ComposeAppRootDestinationRender
 import com.macaosoftware.component.navigationcompose.demo.serverui.data.ServerUiRemoteService
-import com.macaosoftware.component.navigationcompose.demo.serverui.domain.ServerUiJsonToComponentTypeMapper
+import com.macaosoftware.component.navigationcompose.demo.serverui.domain.ServerUiNavItemMapper
 import com.macaosoftware.util.MacaoResult
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.get
@@ -14,11 +15,11 @@ class ComposeAppRootComponentInitializer : RootComponentInitializer {
         return true
     }
 
-    override suspend fun initialize(koinComponent: KoinComponent): MacaoResult<ComposableStateMapper> {
+    override suspend fun initialize(koinComponent: KoinComponent): MacaoResult<RootDestinationRender> {
 
         val serverUiRemoteService = koinComponent.get<ServerUiRemoteService>()
 
-        val jsonToComponentTypeMapper = ServerUiJsonToComponentTypeMapper(/*koinComponent*/)
+        val jsonToComponentTypeMapper = ServerUiNavItemMapper(/*koinComponent*/)
         val rootComponentJsonResilience = serverUiRemoteService.getRootJsonResilience()
         //val rootComponentJson = sduiRemoteService.getRemoteRootComponent("123")
 
@@ -29,10 +30,10 @@ class ComposeAppRootComponentInitializer : RootComponentInitializer {
 
         // Migration
 
-        val stateMapper = RootComposableStateMapper(
+        val rootDestinationRender = ComposeAppRootDestinationRender(
             rootComponentJsonResilience
         )
 
-        return MacaoResult.Success(stateMapper)
+        return MacaoResult.Success(rootDestinationRender)
     }
 }
