@@ -8,18 +8,18 @@ import com.macaosoftware.plugin.account.AccountPluginEmpty
 import org.koin.core.module.Module
 import org.koin.dsl.module
 
-class JvmRootKoinModuleInitializer : RootKoinModuleInitializer {
+class JsKoinModuleInitializer : RootKoinModuleInitializer {
 
     override suspend fun initialize(): List<Module> {
 
-        // val database = createDatabase(DesktopDriverFactory())
+        // val database = createDatabase(BrowserDriverFactory())
 
-        val jvmKoinModule = module {
+        val JsKoinModule = module {
+            // single<ITimeProvider> { DefaultTimeProvider() }
             // single<Database> { database }
             single<AccountPlugin> { AccountPluginEmpty() }
-            // single<AccountPlugin> { SupabaseAccountPlugin() }
         }
 
-        return listOf(jvmKoinModule, commonKoinModule, macaoViewModelsModule)
+        return listOf(JsKoinModule, commonKoinModule, macaoViewModelsModule)
     }
 }

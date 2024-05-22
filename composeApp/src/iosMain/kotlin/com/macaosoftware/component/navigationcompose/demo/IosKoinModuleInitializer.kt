@@ -4,22 +4,22 @@ import com.macaosoftware.app.RootKoinModuleInitializer
 import com.macaosoftware.component.navigationcompose.demo.di.commonKoinModule
 import com.macaosoftware.component.navigationcompose.demo.di.macaoViewModelsModule
 import com.macaosoftware.plugin.account.AccountPlugin
-import com.macaosoftware.plugin.account.AccountPluginEmpty
 import org.koin.core.module.Module
 import org.koin.dsl.module
 
-class JvmRootKoinModuleInitializer : RootKoinModuleInitializer {
+class IosKoinModuleInitializer(
+    private val iosBridge: IosBridge
+) : RootKoinModuleInitializer {
 
     override suspend fun initialize(): List<Module> {
 
-        // val database = createDatabase(DesktopDriverFactory())
+        // val database = createDatabase(IosDriverFactory())
 
-        val jvmKoinModule = module {
+        val iOSKoinModule = module {
             // single<Database> { database }
-            single<AccountPlugin> { AccountPluginEmpty() }
-            // single<AccountPlugin> { SupabaseAccountPlugin() }
+            // single<AccountPlugin> { iosBridge.accountPlugin }
         }
 
-        return listOf(jvmKoinModule, commonKoinModule, macaoViewModelsModule)
+        return listOf(iOSKoinModule, commonKoinModule, macaoViewModelsModule)
     }
 }
