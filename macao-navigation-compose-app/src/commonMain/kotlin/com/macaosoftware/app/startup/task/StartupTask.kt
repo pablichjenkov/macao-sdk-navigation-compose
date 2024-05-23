@@ -1,4 +1,4 @@
-package com.macaosoftware.app
+package com.macaosoftware.app.startup.task
 
 import com.macaosoftware.util.MacaoResult
 import org.koin.core.component.KoinComponent

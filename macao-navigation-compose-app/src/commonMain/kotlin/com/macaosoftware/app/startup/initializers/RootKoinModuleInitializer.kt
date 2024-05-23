@@ -1,4 +1,4 @@
-package com.macaosoftware.app
+package com.macaosoftware.app.startup.initializers
 
 import org.koin.core.module.Module
 

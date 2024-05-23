@@ -19,9 +19,9 @@ import androidx.compose.ui.window.rememberNotification
 import androidx.compose.ui.window.singleWindowApplication
 import com.macaosoftware.app.MacaoApplication
 import com.macaosoftware.app.MacaoApplicationState
-import com.macaosoftware.app.StartupTaskRunnerDefault
+import com.macaosoftware.app.startup.task.StartupTaskRunnerDefault
 import com.macaosoftware.app.WindowWithCustomTopDecoration
-import com.macaosoftware.component.navigationcompose.demo.startup.ComposeAppRootComponentInitializer
+import com.macaosoftware.component.navigationcompose.demo.startup.ComposeAppDestinationsInitializer
 import com.macaosoftware.component.navigationcompose.demo.startup.DatabaseMigrationStartupTask
 import com.macaosoftware.component.navigationcompose.demo.startup.LaunchDarklyStartupTask
 import com.macaosoftware.component.navigationcompose.demo.startup.SdkXyzStartupTask
@@ -43,7 +43,7 @@ fun main() {
     val applicationState = MacaoApplicationState(
         rootKoinModuleInitializer = JvmRootKoinModuleInitializer(),
         startupTaskRunner = StartupTaskRunnerDefault(startupTasks),
-        rootComponentInitializer = ComposeAppRootComponentInitializer()
+        destinationsInitializer = ComposeAppDestinationsInitializer()
     )
     val backPressedDispatcherPlugin = DefaultBackPressDispatcherPlugin()
 

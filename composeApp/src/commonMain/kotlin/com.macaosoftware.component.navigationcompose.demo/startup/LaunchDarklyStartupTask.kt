@@ -1,6 +1,6 @@
 package com.macaosoftware.component.navigationcompose.demo.startup
 
-import com.macaosoftware.app.StartupTask
+import com.macaosoftware.app.startup.task.StartupTask
 import com.macaosoftware.util.MacaoResult
 import kotlinx.coroutines.delay
 import org.koin.core.component.KoinComponent

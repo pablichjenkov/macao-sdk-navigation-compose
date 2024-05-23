@@ -1,8 +1,10 @@
 package com.macaosoftware.component.navigationcompose.demo
 
-import com.macaosoftware.app.RootKoinModuleInitializer
+import com.macaosoftware.app.startup.initializers.RootKoinModuleInitializer
 import com.macaosoftware.component.navigationcompose.demo.di.commonKoinModule
-import com.macaosoftware.component.navigationcompose.demo.di.macaoViewModelsModule
+import com.macaosoftware.component.navigationcompose.demo.di.drawerViewModelsModule
+import com.macaosoftware.component.navigationcompose.demo.di.miscScreensViewModelsModule
+import com.macaosoftware.component.navigationcompose.demo.di.serverUiModule
 import com.macaosoftware.plugin.account.AccountPlugin
 import com.macaosoftware.plugin.account.AccountPluginEmpty
 import org.koin.core.module.Module
@@ -14,12 +16,18 @@ class JsKoinModuleInitializer : RootKoinModuleInitializer {
 
         // val database = createDatabase(BrowserDriverFactory())
 
-        val JsKoinModule = module {
+        val jsKoinModule = module {
             // single<ITimeProvider> { DefaultTimeProvider() }
             // single<Database> { database }
             single<AccountPlugin> { AccountPluginEmpty() }
         }
 
-        return listOf(JsKoinModule, commonKoinModule, macaoViewModelsModule)
+        return listOf(
+            jsKoinModule,
+            commonKoinModule,
+            serverUiModule,
+            drawerViewModelsModule,
+            miscScreensViewModelsModule
+        )
     }
 }

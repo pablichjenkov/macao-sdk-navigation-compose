@@ -1,4 +1,4 @@
-package com.macaosoftware.app
+package com.macaosoftware.app.startup.task
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow

@@ -10,7 +10,7 @@ import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import org.koin.compose.KoinContext
+import org.koin.compose.KoinIsolatedContext
 
 @Composable
 fun MacaoApplication(
@@ -33,8 +33,8 @@ fun MacaoApplication(
 
     is InitializationSuccess -> {
 
-        KoinContext(context = stage.koinRootContext.getKoin()) {
-            stage.rootDestinationRender.Content()
+        KoinIsolatedContext(context = stage.isolatedKoinComponent.koinApplication) {
+            stage.rootDestinationPresenter.Content()
         }
     }
 }

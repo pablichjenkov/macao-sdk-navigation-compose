@@ -23,6 +23,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.unit.dp
+import androidx.core.bundle.Bundle
+import androidx.navigation.NavController
+import androidx.navigation.NavDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -101,7 +104,7 @@ fun NavigationDrawer(
         ) {
             navItems.forEach { drawerNavItem ->
                 composable(drawerNavItem.label) { backstackEntry ->
-                    drawerNavItem.composableStateMapper.ContentForRoute(
+                    drawerNavItem.destinationPresenter.Content(
                         navController,
                         backstackEntry
                     )
@@ -122,6 +125,17 @@ fun NavigationDrawer(
     LaunchedEffect(key1 = statePresenter) {
         statePresenter.navItemClickFlow.collect { navItem ->
             navController.navigate(navItem.label)
+        }
+    }
+
+    LaunchedEffect(key1 = statePresenter) {
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+
+            val drawerNavItem = navItems.first {
+                it.label == destination.route
+            }
+
+            statePresenter.selectNavItemDeco(drawerNavItem)
         }
     }
 
@@ -183,7 +197,6 @@ private fun DrawerContentList(
     }
 }
 
-val LocalDrawerNavigationProvider =
-    staticCompositionLocalOf<DrawerNavigationProvider> {
+val LocalDrawerNavigationProvider = staticCompositionLocalOf<DrawerNavigationProvider> {
         EmptyDrawerNavigationProvider()
     }

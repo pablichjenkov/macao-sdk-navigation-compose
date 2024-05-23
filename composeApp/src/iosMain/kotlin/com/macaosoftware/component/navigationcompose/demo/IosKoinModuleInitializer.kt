@@ -1,9 +1,10 @@
 package com.macaosoftware.component.navigationcompose.demo
 
-import com.macaosoftware.app.RootKoinModuleInitializer
+import com.macaosoftware.app.startup.initializers.RootKoinModuleInitializer
 import com.macaosoftware.component.navigationcompose.demo.di.commonKoinModule
-import com.macaosoftware.component.navigationcompose.demo.di.macaoViewModelsModule
-import com.macaosoftware.plugin.account.AccountPlugin
+import com.macaosoftware.component.navigationcompose.demo.di.drawerViewModelsModule
+import com.macaosoftware.component.navigationcompose.demo.di.miscScreensViewModelsModule
+import com.macaosoftware.component.navigationcompose.demo.di.serverUiModule
 import org.koin.core.module.Module
 import org.koin.dsl.module
 
@@ -20,6 +21,12 @@ class IosKoinModuleInitializer(
             // single<AccountPlugin> { iosBridge.accountPlugin }
         }
 
-        return listOf(iOSKoinModule, commonKoinModule, macaoViewModelsModule)
+        return listOf(
+            iOSKoinModule,
+            commonKoinModule,
+            serverUiModule,
+            drawerViewModelsModule,
+            miscScreensViewModelsModule
+        )
     }
 }
