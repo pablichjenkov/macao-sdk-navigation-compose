@@ -1,11 +1,13 @@
 package com.macaosoftware.component.navigationcompose.demo
 
 import android.app.Activity
-import com.macaosoftware.app.RootKoinModuleInitializer
+import com.macaosoftware.app.startup.initializers.RootKoinModuleInitializer
 import com.macaosoftware.plugin.account.AccountPlugin
 import com.macaosoftware.plugin.account.AccountPluginEmpty
 import com.macaosoftware.component.navigationcompose.demo.di.commonKoinModule
-import com.macaosoftware.component.navigationcompose.demo.di.macaoViewModelsModule
+import com.macaosoftware.component.navigationcompose.demo.di.drawerViewModelsModule
+import com.macaosoftware.component.navigationcompose.demo.di.miscScreensViewModelsModule
+import com.macaosoftware.component.navigationcompose.demo.di.serverUiModule
 import org.koin.core.module.Module
 import org.koin.dsl.module
 
@@ -23,6 +25,12 @@ class AndroidKoinModuleInitializer(
             // single<AccountPlugin> { SupabaseAccountPlugin() }
         }
 
-        return listOf(androidKoinModule, commonKoinModule, macaoViewModelsModule)
+        return listOf(
+            androidKoinModule,
+            commonKoinModule,
+            serverUiModule,
+            drawerViewModelsModule,
+            miscScreensViewModelsModule
+        )
     }
 }

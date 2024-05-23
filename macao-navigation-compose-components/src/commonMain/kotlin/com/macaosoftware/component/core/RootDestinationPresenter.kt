@@ -2,7 +2,7 @@ package com.macaosoftware.component.core
 
 import androidx.compose.runtime.Composable
 
-interface RootDestinationRender {
+interface RootDestinationPresenter {
 
     @Composable
     fun Content()

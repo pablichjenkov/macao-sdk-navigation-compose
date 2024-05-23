@@ -8,8 +8,8 @@ import androidx.activity.compose.setContent
 import androidx.compose.material3.MaterialTheme
 import com.macaosoftware.app.MacaoApplication
 import com.macaosoftware.app.MacaoApplicationState
-import com.macaosoftware.app.StartupTaskRunnerDefault
-import com.macaosoftware.component.navigationcompose.demo.startup.ComposeAppRootComponentInitializer
+import com.macaosoftware.app.startup.task.StartupTaskRunnerDefault
+import com.macaosoftware.component.navigationcompose.demo.startup.ComposeAppDestinationsInitializer
 import com.macaosoftware.component.navigationcompose.demo.startup.DatabaseMigrationStartupTask
 import com.macaosoftware.component.navigationcompose.demo.startup.LaunchDarklyStartupTask
 import com.macaosoftware.component.navigationcompose.demo.startup.SdkXyzStartupTask
@@ -25,7 +25,7 @@ class MainActivity : ComponentActivity() {
     private val macaoApplicationState = MacaoApplicationState(
         rootKoinModuleInitializer = AndroidKoinModuleInitializer(this),
         startupTaskRunner = StartupTaskRunnerDefault(startupTasks),
-        rootComponentInitializer = ComposeAppRootComponentInitializer()
+        destinationsInitializer = ComposeAppDestinationsInitializer()
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {

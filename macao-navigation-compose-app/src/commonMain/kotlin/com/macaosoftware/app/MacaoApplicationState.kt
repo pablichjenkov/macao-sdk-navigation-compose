@@ -1,25 +1,27 @@
 package com.macaosoftware.app
 
 import androidx.compose.runtime.mutableStateOf
-import com.macaosoftware.component.ComposableStateMapper
-import com.macaosoftware.component.core.RootDestinationRender
+import com.macaosoftware.app.startup.initializers.DestinationsInitializer
+import com.macaosoftware.app.startup.initializers.RootKoinModuleInitializer
+import com.macaosoftware.app.startup.task.StartupTaskRunner
+import com.macaosoftware.app.startup.task.StartupTaskStatus
+import com.macaosoftware.component.core.RootDestinationPresenter
 import com.macaosoftware.plugin.CoroutineDispatchers
 import com.macaosoftware.util.MacaoResult
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import org.koin.core.component.KoinComponent
 import org.koin.dsl.koinApplication
 
 class MacaoApplicationState(
     private val rootKoinModuleInitializer: RootKoinModuleInitializer,
     private val startupTaskRunner: StartupTaskRunner,
-    private val rootComponentInitializer: RootComponentInitializer,
+    private val destinationsInitializer: DestinationsInitializer,
     private val dispatchers: CoroutineDispatchers = CoroutineDispatchers.Default
 ) {
 
-    var stage = mutableStateOf<Stage>(Created)
+    internal var stage = mutableStateOf<Stage>(Created)
     private val coroutineScope = CoroutineScope(dispatchers.main)
 
     fun initialize() = coroutineScope.launch {
@@ -34,13 +36,13 @@ class MacaoApplicationState(
             }
         }
 
-        runStartupTasks(KoinInjector(koinApplication))
+        runStartupTasks(IsolatedKoinComponent(koinApplication))
     }
 
-    private suspend fun runStartupTasks(koinInjector: KoinInjector) {
+    private suspend fun runStartupTasks(isolatedKoinComponent: IsolatedKoinComponent) {
 
         startupTaskRunner
-            .initialize(koinInjector)
+            .initialize(isolatedKoinComponent)
             .flowOn(dispatchers.default)
             .collect { status ->
                 when (status) {
@@ -53,19 +55,19 @@ class MacaoApplicationState(
                     }
 
                     is StartupTaskStatus.CompleteSuccess -> {
-                        initializeRootMetadata(koinInjector)
+                        initializeRootMetadata(isolatedKoinComponent)
                     }
                 }
             }
     }
 
-    private suspend fun initializeRootMetadata(koinInjector: KoinInjector) {
+    private suspend fun initializeRootMetadata(isolatedKoinComponent: IsolatedKoinComponent) {
 
-        if (rootComponentInitializer.shouldShowLoader()) {
+        if (destinationsInitializer.shouldShowLoader()) {
             stage.value = Initializing.RootMetadata
         }
         val result = withContext(dispatchers.default) {
-            rootComponentInitializer.initialize(koinInjector)
+            destinationsInitializer.initialize(isolatedKoinComponent)
         }
 
         when(result) {
@@ -74,8 +76,8 @@ class MacaoApplicationState(
             }
             is MacaoResult.Success -> {
                 stage.value = InitializationSuccess(
-                    koinRootContext = koinInjector,
-                    rootDestinationRender = result.value
+                    isolatedKoinComponent = isolatedKoinComponent,
+                    rootDestinationPresenter = result.value
                 )
             }
         }
@@ -83,17 +85,17 @@ class MacaoApplicationState(
 
 }
 
-sealed class Stage
-data object Created : Stage()
+internal sealed class Stage
+internal data object Created : Stage()
 
-sealed class Initializing : Stage() {
+internal sealed class Initializing : Stage() {
     // data object KoinRootModule : Initializing()
     data class StartupTask(val taskName: String) : Initializing()
     data object RootMetadata : Initializing()
 }
 
-class InitializationError(val errorMsg: String) : Stage()
-class InitializationSuccess(
-    val koinRootContext: KoinComponent,
-    val rootDestinationRender: RootDestinationRender
+internal class InitializationError(val errorMsg: String) : Stage()
+internal class InitializationSuccess(
+    val isolatedKoinComponent: IsolatedKoinComponent,
+    val rootDestinationPresenter: RootDestinationPresenter
 ) : Stage()

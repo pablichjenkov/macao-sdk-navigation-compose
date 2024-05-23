@@ -1,4 +1,4 @@
-package com.macaosoftware.app
+package com.macaosoftware.app.startup.task
 
 sealed class StartupTaskStatus {
     class Running(val taskName: String) : StartupTaskStatus()

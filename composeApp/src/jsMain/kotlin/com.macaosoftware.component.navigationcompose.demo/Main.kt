@@ -4,8 +4,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.ui.window.CanvasBasedWindow
 import com.macaosoftware.app.MacaoApplication
 import com.macaosoftware.app.MacaoApplicationState
-import com.macaosoftware.app.StartupTaskRunnerDefault
-import com.macaosoftware.component.navigationcompose.demo.startup.ComposeAppRootComponentInitializer
+import com.macaosoftware.app.startup.task.StartupTaskRunnerDefault
+import com.macaosoftware.component.navigationcompose.demo.startup.ComposeAppDestinationsInitializer
 import com.macaosoftware.component.navigationcompose.demo.startup.DatabaseMigrationStartupTask
 import com.macaosoftware.component.navigationcompose.demo.startup.LaunchDarklyStartupTask
 import com.macaosoftware.component.navigationcompose.demo.startup.SdkXyzStartupTask
@@ -23,7 +23,7 @@ fun main() {
         val applicationState = MacaoApplicationState(
             rootKoinModuleInitializer = JsKoinModuleInitializer(),
             startupTaskRunner = StartupTaskRunnerDefault(startupTasks),
-            rootComponentInitializer = ComposeAppRootComponentInitializer()
+            destinationsInitializer = ComposeAppDestinationsInitializer()
         )
 
         CanvasBasedWindow("Macao Navigation-Compose JS Demo") {

@@ -3,38 +3,36 @@ package com.macaosoftware.component.navigationcompose.demo.serverui
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.graphics.Color
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavHostController
-import com.macaosoftware.component.ComposableStateMapper
+import com.macaosoftware.component.core.DestinationPresenter
+import com.macaosoftware.component.core.NavItem
 import com.macaosoftware.component.navigationcompose.demo.marketplace.misc.SimpleScreenView
 import com.macaosoftware.component.navigationcompose.demo.marketplace.misc.SimpleScreenViewModel
 import com.macaosoftware.component.navigationcompose.demo.marketplace.navigators.drawer.DrawerViewModelDefault
 import com.macaosoftware.component.navigationcompose.demo.serverui.data.ServerUiConstants
 import com.macaosoftware.component.util.EmptyNavigationView
 import org.koin.compose.getKoin
-import org.koin.compose.viewmodel.koinNavViewModel
 import org.koin.compose.viewmodel.koinViewModel
 import org.koin.core.annotation.KoinExperimentalAPI
 import org.koin.core.parameter.parametersOf
 
-class SimpleScreenComposableStateMapper() : ComposableStateMapper {
+class MiscScreensDestinationPresenter : DestinationPresenter {
 
-    override fun getInitialRoute(): String {
-        return "N/A"
+    override fun getRoute(): String {
+        TODO("Not yet implemented")
     }
 
-    @Composable
-    override fun ContentForRoot(stateType: String) {
+    override fun getNavItem(): NavItem {
         TODO("Not yet implemented")
     }
 
     @OptIn(KoinExperimentalAPI::class)
     @Composable
-    override fun ContentForRoute(
+    override fun Content(
         navController: NavHostController,
         navBackStackEntry: NavBackStackEntry
-    ) = when(navBackStackEntry.destination.route) {
+    ) = when (navBackStackEntry.destination.route) {
 
         ServerUiConstants.ComponentType.SimpleScreen -> {
 

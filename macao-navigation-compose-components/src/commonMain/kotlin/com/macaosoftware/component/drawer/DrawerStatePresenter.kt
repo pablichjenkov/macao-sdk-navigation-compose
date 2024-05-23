@@ -88,16 +88,15 @@ class DrawerStatePresenterDefault(
     /**
      * To be called by a client class when the Drawer selected item needs to be updated.
      * */
-    override fun selectNavItemDeco(drawerNavItem: DrawerNavItem) {
-        updateDrawerSelectedItem(drawerNavItem)
-    }
+    override fun selectNavItemDeco(selectedNavItem: DrawerNavItem) {
 
-    private fun updateDrawerSelectedItem(drawerNavItem: DrawerNavItem) {
-        val update = _navItemsState.value.map { navItemDeco ->
-            navItemDeco.copy(
-                selected = drawerNavItem.composableStateMapper == navItemDeco.composableStateMapper
-            )
+        val update = _navItemsState.value.map { drawerNavItem ->
+
+            val isSameItem = selectedNavItem.label == drawerNavItem.label
+
+            drawerNavItem.copy(selected = isSameItem)
         }
+
         _navItemsState.value = update
     }
 
