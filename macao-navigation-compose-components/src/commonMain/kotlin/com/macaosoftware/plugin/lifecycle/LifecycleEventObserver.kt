@@ -13,7 +13,7 @@ fun LifecycleEventObserver(
     lifecycleOwner: LifecycleOwner,
     onStart: () -> Unit,
     onStop: () -> Unit,
-    initializeBlock: () -> Unit
+    initializeBlock: (() -> Unit)? = null
 ) {
     // Safely update the current lambdas when a new one is provided
     val currentOnStart by rememberUpdatedState(newValue = onStart)
@@ -21,7 +21,7 @@ fun LifecycleEventObserver(
 
     // If the enclosing lifecycleOwner changes, dispose and reset the effect
     DisposableEffect(key1 = lifecycleOwner) {
-        initializeBlock.invoke()
+        initializeBlock?.invoke()
         // Create an observer that triggers our remembered callbacks
         // when the LifecycleOwner that contains this composable changes its state.
         val observer = LifecycleEventObserver { _, event ->
@@ -38,7 +38,6 @@ fun LifecycleEventObserver(
         // When the effect leaves the Composition, remove the observer
         onDispose {
             lifecycleOwner.lifecycle.removeObserver(observer)
-            println("LifecycleEventObserver::Disposing LifecycleEventObserver")
         }
     }
 
