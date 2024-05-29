@@ -23,16 +23,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.unit.dp
-import androidx.core.bundle.Bundle
-import androidx.navigation.NavController
-import androidx.navigation.NavDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.macaosoftware.component.util.BackPressHandler
 import com.macaosoftware.component.util.EmptyNavigationView
-import com.macaosoftware.plugin.lifecycle.LifecycleEventObserver
 
 @Composable
 fun DrawerView(
@@ -44,14 +40,12 @@ fun DrawerView(
         viewModel.handleBackPressed()
     }
 
-    LifecycleEventObserver(
+    com.macaosoftware.plugin.lifecycle.LifecycleEventObserver(
         lifecycleOwner = LocalLifecycleOwner.current,
         onStart = {
-            println("Receiving DrawerView.onStart() event")
             viewModel.onStart()
         },
         onStop = {
-            println("Receiving DrawerView.onStop() event")
             viewModel.onStop()
         },
         initializeBlock = {
@@ -198,5 +192,5 @@ private fun DrawerContentList(
 }
 
 val LocalDrawerNavigationProvider = staticCompositionLocalOf<DrawerNavigationProvider> {
-        EmptyDrawerNavigationProvider()
-    }
+    EmptyDrawerNavigationProvider()
+}
