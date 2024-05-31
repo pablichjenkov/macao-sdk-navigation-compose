@@ -1,10 +1,11 @@
 import org.jetbrains.kotlin.gradle.targets.js.dsl.ExperimentalWasmDsl
 
 plugins {
-    kotlin("multiplatform")
-    id("com.android.library")
-    id("org.jetbrains.compose")
-    id("org.jetbrains.dokka")
+    alias(libs.plugins.kotlin.multiplatform)
+    alias(libs.plugins.compose.compiler)
+    alias(libs.plugins.compose)
+    alias(libs.plugins.android.library)
+    alias(libs.plugins.dokka)
     id("maven-publish")
     id("signing")
 }
@@ -114,14 +115,6 @@ tasks.withType<AbstractPublishToMaven>().configureEach {
     dependsOn(signingTasks)
 }
 
-/*compose {
-    // Sets a specific JetBrains Compose Compiler version
-    kotlinCompilerPlugin.set("1.4.7")
-    // Sets a specific Google Compose Compiler version
-    // kotlinCompilerPlugin.set("androidx.compose.compiler:compiler:1.4.2")
-    kotlinCompilerPluginArgs.add("suppressKotlinVersionCompatibilityCheck=1.8.21")
-}*/
-
 @OptIn(org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi::class)
 kotlin {
     // ANDROID
@@ -227,7 +220,7 @@ android {
     buildFeatures {
         compose = true
     }
-    composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.8"
+    composeCompiler {
+        enableStrongSkippingMode = true
     }
 }

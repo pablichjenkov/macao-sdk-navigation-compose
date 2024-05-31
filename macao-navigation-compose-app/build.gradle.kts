@@ -1,16 +1,17 @@
 import org.jetbrains.kotlin.gradle.targets.js.dsl.ExperimentalWasmDsl
 
 plugins {
-    kotlin("multiplatform")
-    id("com.android.library")
-    id("org.jetbrains.compose")
-    id("org.jetbrains.dokka")
+    alias(libs.plugins.kotlin.multiplatform)
+    alias(libs.plugins.compose.compiler)
+    alias(libs.plugins.compose)
+    alias(libs.plugins.android.library)
+    alias(libs.plugins.dokka)
     id("maven-publish")
     id("signing")
 }
 
 group = "io.github.pablichjenkov"
-version = libs.versions.macaoSdk.get()
+version = libs.versions.macaoNavigationComposeSdk.get()
 val mavenCentralUser = (findProperty("mavenCentral.user") as? String).orEmpty()
 val mavenCentralPass = (findProperty("mavenCentral.pass") as? String).orEmpty()
 
@@ -104,7 +105,7 @@ kotlin {
         iosSimulatorArm64()
     ).forEach {
         it.binaries.framework {
-            baseName = "MacaoSdkKoin"
+            baseName = "MacaoNavigationCompose"
             isStatic = true
         }
     }
@@ -115,7 +116,7 @@ kotlin {
 
     @OptIn(ExperimentalWasmDsl::class)
     wasmJs {
-        moduleName = "MacaoSdkKoin"
+        moduleName = "MacaoNavigationCompose"
         browser()
         binaries.library()
     }
