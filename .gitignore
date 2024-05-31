@@ -6,6 +6,7 @@ xcuserdata
 local.properties
 .idea
 .kotlin
+kotlin-js-store/
 .DS_Store
 captures
 .externalNativeBuild
