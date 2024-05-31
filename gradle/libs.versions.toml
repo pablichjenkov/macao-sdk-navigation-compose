@@ -3,11 +3,10 @@
 androidCompileSdk = "34"
 androidTargetSdk = "34"
 androidMinSdk = "26"
-macaoSdk = "0.6.10-rc02"
-macaoAmadeusApi = "0.3.4"
+macaoNavigationComposeSdk = "0.6.10"
 macaoAuthFirebase = "0.0.1-dev"
 koinCore = "3.6.0-Beta4"
-kotlin = "1.9.24"
+kotlin = "2.0.0"
 agp = "8.1.4"
 composeAndroidCompiler = "1.6.7"
 composePlugin = "1.6.10"
@@ -17,10 +16,10 @@ navigationCompose = "2.7.0-alpha06"
 kamelImage = "0.9.4"
 koinComposeMultiplatform = "1.2.0-Beta4"
 kotlinxCoroutines = "1.8.1"
-ktor = "2.3.10"
+ktor = "2.3.11"
 composeIcons = "1.1.0"
 kotlinxSerialization = "1.6.3"
-kotlinxDatetime = "0.5.0"
+kotlinxDatetime = "0.6.0"
 multiplatformSettings = "1.1.1"
 gmazzo = "5.3.5"
 sqldelight = "2.0.2"
@@ -68,7 +67,6 @@ ktor-serialization-kotlinx-json = { module = "io.ktor:ktor-serialization-kotlinx
 ktor-client-logging = { module = "io.ktor:ktor-client-logging", version.ref = "ktor" }
 
 ## MacaoSoftware
-amadeus-api = { module = "io.github.pablichjenkov:amadeus-api", version.ref = "macaoAmadeusApi" }
 macao-auth-firebase = { module = "io.github.pablichjenkov:macao-auth-firebase", version.ref = "macaoAuthFirebase" }
 
 ## Other Libs
@@ -84,6 +82,7 @@ koin-test = { module = "io.insert-koin:koin-test", version.ref = "koinCore" }
 [plugins]
 
 kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
+compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 compose = { id = "org.jetbrains.compose", version.ref = "composePlugin" }
 android-application = { id = "com.android.application", version.ref = "agp" }
 android-library = { id = "com.android.library", version.ref = "agp" }

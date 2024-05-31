@@ -1,12 +1,10 @@
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
-import org.jetbrains.kotlin.gradle.plugin.mpp.apple.XCFramework
-import org.jetbrains.kotlin.gradle.targets.js.dsl.ExperimentalWasmDsl
-import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpackConfig
 
 plugins {
     alias(libs.plugins.kotlin.multiplatform)
-    alias(libs.plugins.android.application)
+    alias(libs.plugins.compose.compiler)
     alias(libs.plugins.compose)
+    alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.serialization)
 }
 
@@ -27,7 +25,7 @@ kotlin {
         }
         binaries.executable()
     }*/
-    
+
     androidTarget {
         compilations.all {
             kotlinOptions {
@@ -35,11 +33,10 @@ kotlin {
             }
         }
     }
-    
+
     jvm()
 
     // IOS
-    val xcf = XCFramework()
     listOf(
         iosX64(),
         iosArm64(),
@@ -48,7 +45,6 @@ kotlin {
         iosTarget.binaries.framework {
             baseName = "ComposeApp"
             isStatic = true
-            xcf.add(this)
         }
     }
 
