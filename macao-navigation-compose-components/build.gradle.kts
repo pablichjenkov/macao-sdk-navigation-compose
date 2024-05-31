@@ -73,7 +73,7 @@ publishing {
     publications {
         withType<MavenPublication> {
             groupId = group as String
-            artifactId = "jetpack-navigation-components" // makeArtifactId(name)
+            artifactId = "macao-navigation-compose-components"
             version
             artifact(javadocJar)
             pom {
@@ -119,7 +119,7 @@ tasks.withType<AbstractPublishToMaven>().configureEach {
 kotlin {
     // ANDROID
     androidTarget {
-        publishLibraryVariants("release")
+        publishLibraryVariants("release", "debug")
     }
 
     // IOS
@@ -216,9 +216,6 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
-    }
-    buildFeatures {
-        compose = true
     }
     composeCompiler {
         enableStrongSkippingMode = true

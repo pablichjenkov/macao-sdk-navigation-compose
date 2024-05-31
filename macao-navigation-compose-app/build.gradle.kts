@@ -52,11 +52,11 @@ publishing {
     publications {
         withType<MavenPublication> {
             groupId = group as String
-            artifactId = "macao-sdk-koin"
+            artifactId = "macao-navigation-compose-app"
             version
             artifact(javadocJar)
             pom {
-                val projectGitUrl = "https://github.com/pablichjenkov/macao-sdk"
+                val projectGitUrl = "https://github.com/pablichjenkov/macao-sdk-navigation-compose"
                 name.set(rootProject.name)
                 description.set(
                     "Compose Multiplatform Application Microframework"
@@ -96,7 +96,7 @@ tasks.withType<AbstractPublishToMaven>().configureEach {
 
 kotlin {
     androidTarget {
-        publishLibraryVariants("release")
+        publishLibraryVariants("release", "debug")
     }
     
     listOf(
@@ -163,5 +163,8 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
+    }
+    composeCompiler {
+        enableStrongSkippingMode = true
     }
 }
