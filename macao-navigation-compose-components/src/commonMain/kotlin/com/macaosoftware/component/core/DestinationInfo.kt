@@ -2,8 +2,13 @@ package com.macaosoftware.component.core
 
 import androidx.compose.ui.graphics.vector.ImageVector
 
-data class NavItem(
-    val destinationPresenter: DestinationPresenter,
+data class DestinationInfo(
+    // Data
+    val route: String, // TODO: Make this a UUID
+    val renderType: String,
+    val dataSource: String,
+
+    // Presentation
     val label: String,
     val icon: ImageVector,
     val badgeText: String? = null

@@ -26,13 +26,8 @@ kotlin {
         binaries.executable()
     }*/
 
-    androidTarget {
-        compilations.all {
-            kotlinOptions {
-                jvmTarget = "11"
-            }
-        }
-    }
+    // ANDROID
+    androidTarget()
 
     jvm()
 

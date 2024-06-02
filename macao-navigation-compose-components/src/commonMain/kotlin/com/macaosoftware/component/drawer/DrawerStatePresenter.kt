@@ -92,7 +92,8 @@ class DrawerStatePresenterDefault(
 
         val update = _navItemsState.value.map { drawerNavItem ->
 
-            val isSameItem = selectedNavItem.label == drawerNavItem.label
+            val isSameItem =
+                selectedNavItem.destinationInfo.route == drawerNavItem.destinationInfo.route
 
             drawerNavItem.copy(selected = isSameItem)
         }

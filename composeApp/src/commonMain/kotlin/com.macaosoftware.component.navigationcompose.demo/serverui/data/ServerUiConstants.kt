@@ -3,11 +3,15 @@ package com.macaosoftware.component.navigationcompose.demo.serverui.data
 object ServerUiConstants {
 
     object JsonKeyName {
+        const val route = "route"
         const val componentType = "componentType"
         const val children = "children"
     }
 
     object ComponentType {
+
+        const val DestinationNotFound = "DestinationNotFound"
+
         const val BottomNavigation = "BottomNavigation"
         const val Drawer = "Drawer"
 
@@ -42,6 +46,16 @@ object ServerUiConstants {
                 const val Signup = "Signup"
                 const val Forget = "Forget"
             }
+        }
+    }
+
+    object Routes {
+        const val GLOBAL_SCREEN_404 = "global.screen.404"
+
+        object RootGraph {
+            const val MainEntryPoint = "main"
+            const val SimpleScreen = "main.simple.0"
+            const val SimpleScreen1 = "main.simple.1"
         }
     }
 }

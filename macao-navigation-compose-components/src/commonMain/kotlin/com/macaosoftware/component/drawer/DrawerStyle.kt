@@ -5,8 +5,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.sp
-import com.macaosoftware.component.core.DestinationPresenter
-import com.macaosoftware.component.core.NavItem
+import com.macaosoftware.component.core.DestinationRender
+import com.macaosoftware.component.core.DestinationInfo
 
 data class DrawerStyle(
     val alignment: Alignment.Horizontal = Alignment.Start,
@@ -20,18 +20,13 @@ data class DrawerStyle(
 )
 
 data class DrawerNavItem(
-    val destinationPresenter: DestinationPresenter,
-    val label: String,
-    val icon: ImageVector,
-    var selected: Boolean,
-    val badgeText: String? = null
+    val destinationInfo: DestinationInfo,
+    var selected: Boolean
 )
 
-fun NavItem.toDrawerNavItem(selected: Boolean = false): DrawerNavItem {
+fun DestinationInfo.toDrawerNavItem(selected: Boolean = false): DrawerNavItem {
     return DrawerNavItem(
-        destinationPresenter = this.destinationPresenter,
-        label = this.label,
-        icon = this.icon,
-        selected = selected,
+        destinationInfo = this,
+        selected = selected
     )
 }

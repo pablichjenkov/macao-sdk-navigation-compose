@@ -1,4 +1,4 @@
-package com.macaosoftware.component.navigationcompose.demo.marketplace.misc
+package com.macaosoftware.component.navigationcompose.demo.marketplace.misc.simplescreen
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -22,7 +22,7 @@ fun SimpleScreenView(
     BackPressHandler {
         viewModel.handleBackPressed()
     }
-    Column (
+    Column(
         modifier = modifier.fillMaxSize()
             .background(color = viewModel.bgColor)
             .verticalScroll(rememberScrollState()),

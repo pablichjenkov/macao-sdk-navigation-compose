@@ -1,11 +1,11 @@
 package com.macaosoftware.app
 
 import androidx.compose.runtime.mutableStateOf
-import com.macaosoftware.app.startup.initializers.DestinationsInitializer
+import com.macaosoftware.app.startup.initializers.RootGraphInitializer
 import com.macaosoftware.app.startup.initializers.RootKoinModuleInitializer
 import com.macaosoftware.app.startup.task.StartupTaskRunner
 import com.macaosoftware.app.startup.task.StartupTaskStatus
-import com.macaosoftware.component.core.RootDestinationPresenter
+import com.macaosoftware.component.core.RootDestinationRender
 import com.macaosoftware.plugin.CoroutineDispatchers
 import com.macaosoftware.util.MacaoResult
 import kotlinx.coroutines.CoroutineScope
@@ -17,7 +17,7 @@ import org.koin.dsl.koinApplication
 class MacaoApplicationState(
     private val rootKoinModuleInitializer: RootKoinModuleInitializer,
     private val startupTaskRunner: StartupTaskRunner,
-    private val destinationsInitializer: DestinationsInitializer,
+    private val rootGraphInitializer: RootGraphInitializer,
     private val dispatchers: CoroutineDispatchers = CoroutineDispatchers.Default
 ) {
 
@@ -63,21 +63,22 @@ class MacaoApplicationState(
 
     private suspend fun initializeRootMetadata(isolatedKoinComponent: IsolatedKoinComponent) {
 
-        if (destinationsInitializer.shouldShowLoader()) {
+        if (rootGraphInitializer.shouldShowLoader()) {
             stage.value = Initializing.RootMetadata
         }
         val result = withContext(dispatchers.default) {
-            destinationsInitializer.initialize(isolatedKoinComponent)
+            rootGraphInitializer.initialize(isolatedKoinComponent)
         }
 
-        when(result) {
+        when (result) {
             is MacaoResult.Error -> {
                 stage.value = InitializationError(result.error.toString())
             }
+
             is MacaoResult.Success -> {
                 stage.value = InitializationSuccess(
                     isolatedKoinComponent = isolatedKoinComponent,
-                    rootDestinationPresenter = result.value
+                    rootDestinationRender = result.value
                 )
             }
         }
@@ -97,5 +98,5 @@ internal sealed class Initializing : Stage() {
 internal class InitializationError(val errorMsg: String) : Stage()
 internal class InitializationSuccess(
     val isolatedKoinComponent: IsolatedKoinComponent,
-    val rootDestinationPresenter: RootDestinationPresenter
+    val rootDestinationRender: RootDestinationRender
 ) : Stage()

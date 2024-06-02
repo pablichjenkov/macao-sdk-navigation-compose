@@ -27,6 +27,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.macaosoftware.component.core.DestinationRendersRegistry
 import com.macaosoftware.component.util.BackPressHandler
 import com.macaosoftware.component.util.EmptyNavigationView
 
@@ -62,6 +63,7 @@ fun DrawerView(
             modifier = modifier,
             statePresenter = viewModel.drawerStatePresenter,
             navController = navController,
+            destinationRendersRegistry = viewModel.destinationRendersRegistry,
             navItems = navItems
         )
     } else {
@@ -74,6 +76,7 @@ fun NavigationDrawer(
     statePresenter: DrawerStatePresenter,
     navController: NavHostController,
     navItems: List<DrawerNavItem>,
+    destinationRendersRegistry: DestinationRendersRegistry,
     modifier: Modifier = Modifier
 ) {
 
@@ -91,14 +94,18 @@ fun NavigationDrawer(
         NavHost(
             navController = navController,
             route = "Component-Drawer",
-            startDestination = navItems[0].label,
+            startDestination = navItems[0].destinationInfo.route,
             modifier = modifier.fillMaxSize()
             //.verticalScroll(rememberScrollState())
             //.padding(innerPadding)
         ) {
             navItems.forEach { drawerNavItem ->
-                composable(drawerNavItem.label) { backstackEntry ->
-                    drawerNavItem.destinationPresenter.Content(
+                composable(drawerNavItem.destinationInfo.route) { backstackEntry ->
+
+                    val DestinationRender = destinationRendersRegistry
+                        .renderFor(drawerNavItem.destinationInfo.renderType)
+
+                    DestinationRender.Content(
                         navController,
                         backstackEntry
                     )
@@ -118,7 +125,7 @@ fun NavigationDrawer(
 
     LaunchedEffect(key1 = statePresenter) {
         statePresenter.navItemClickFlow.collect { navItem ->
-            navController.navigate(navItem.label)
+            navController.navigate(navItem.destinationInfo.route)
         }
     }
 
@@ -126,7 +133,7 @@ fun NavigationDrawer(
         navController.addOnDestinationChangedListener { _, destination, _ ->
 
             val drawerNavItem = navItems.first {
-                it.label == destination.route
+                it.destinationInfo.route == destination.route
             }
 
             statePresenter.selectNavItemDeco(drawerNavItem)
@@ -174,12 +181,12 @@ private fun DrawerContentList(
             NavigationDrawerItem(
                 label = {
                     Text(
-                        text = navItem.label,
+                        text = navItem.destinationInfo.label,
                         color = drawerStyle.itemTextColor,
                         fontSize = drawerStyle.itemTextSize
                     )
                 },
-                icon = { Icon(navItem.icon, null) },
+                icon = { Icon(navItem.destinationInfo.icon, null) },
                 selected = navItem.selected,
                 colors = NavigationDrawerItemDefaults.colors(
                     selectedContainerColor = drawerStyle.selectedColor,
