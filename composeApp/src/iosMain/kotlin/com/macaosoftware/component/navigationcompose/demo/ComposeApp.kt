@@ -5,10 +5,10 @@ import androidx.compose.ui.window.ComposeUIViewController
 import com.macaosoftware.app.MacaoApplication
 import com.macaosoftware.app.MacaoApplicationState
 import com.macaosoftware.app.startup.task.StartupTaskRunnerDefault
-import com.macaosoftware.component.navigationcompose.demo.startup.ComposeAppDestinationsInitializer
+import com.macaosoftware.component.navigationcompose.demo.startup.DemoRootGraphInitializer
 import com.macaosoftware.component.navigationcompose.demo.startup.DatabaseMigrationStartupTask
 import com.macaosoftware.component.navigationcompose.demo.startup.LaunchDarklyStartupTask
-import com.macaosoftware.component.navigationcompose.demo.startup.SdkXyzStartupTask
+import com.macaosoftware.component.navigationcompose.demo.startup.FirebaseConfigStartupTask
 
 fun ComposeViewController(
     iosBridge: IosBridge
@@ -17,12 +17,12 @@ fun ComposeViewController(
     val startupTasks = listOf(
         DatabaseMigrationStartupTask(),
         LaunchDarklyStartupTask(),
-        SdkXyzStartupTask()
+        FirebaseConfigStartupTask()
     )
     val applicationState = MacaoApplicationState(
         rootKoinModuleInitializer = IosKoinModuleInitializer(iosBridge),
         startupTaskRunner = StartupTaskRunnerDefault(startupTasks),
-        destinationsInitializer = ComposeAppDestinationsInitializer()
+        rootGraphInitializer = DemoRootGraphInitializer()
     )
 
     MaterialTheme {

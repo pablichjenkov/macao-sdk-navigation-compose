@@ -7,7 +7,7 @@ import org.koin.core.component.KoinComponent
 
 class LaunchDarklyStartupTask : StartupTask {
     override fun name(): String {
-        return "LaunchDarkly setup"
+        return "LaunchDarkly remote syncing ..."
     }
 
     override fun shouldShowLoader(): Boolean {

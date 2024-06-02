@@ -1,4 +1,4 @@
-package com.macaosoftware.util
+package com.macaosoftware.component.navigationcompose.demo.serverui.domain
 
 import kotlinx.coroutines.flow.Flow
 

@@ -34,7 +34,7 @@ fun MacaoApplication(
     is InitializationSuccess -> {
 
         KoinIsolatedContext(context = stage.isolatedKoinComponent.koinApplication) {
-            stage.rootDestinationPresenter.Content()
+            stage.rootDestinationRender.Content()
         }
     }
 }

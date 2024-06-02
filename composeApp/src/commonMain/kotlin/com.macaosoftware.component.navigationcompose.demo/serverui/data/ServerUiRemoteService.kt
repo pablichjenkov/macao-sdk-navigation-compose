@@ -17,23 +17,31 @@ internal class ServerUiRemoteService(
     private val httpClient: HttpClient
 ) {
 
-    companion object {
-        const val RootComponent = ServerUiConstants.ComponentType.Drawer
-    }
-
     fun getRootJsonResilience() = buildJsonObject {
         put(
+            ServerUiConstants.JsonKeyName.route,
+            JsonPrimitive(ServerUiConstants.Routes.RootGraph.MainEntryPoint)
+        )
+        put(
             ServerUiConstants.JsonKeyName.componentType,
-            JsonPrimitive(RootComponent)
+            JsonPrimitive(ServerUiConstants.ComponentType.Drawer)
         )
         putJsonArray(ServerUiConstants.JsonKeyName.children) {
             addJsonObject {
+                put(
+                    ServerUiConstants.JsonKeyName.route,
+                    JsonPrimitive(ServerUiConstants.Routes.RootGraph.SimpleScreen)
+                )
                 put(
                     ServerUiConstants.JsonKeyName.componentType,
                     JsonPrimitive(ServerUiConstants.ComponentType.SimpleScreen)
                 )
             }
             addJsonObject {
+                put(
+                    ServerUiConstants.JsonKeyName.route,
+                    JsonPrimitive(ServerUiConstants.Routes.RootGraph.SimpleScreen1)
+                )
                 put(
                     ServerUiConstants.JsonKeyName.componentType,
                     JsonPrimitive(ServerUiConstants.ComponentType.SimpleScreen1)

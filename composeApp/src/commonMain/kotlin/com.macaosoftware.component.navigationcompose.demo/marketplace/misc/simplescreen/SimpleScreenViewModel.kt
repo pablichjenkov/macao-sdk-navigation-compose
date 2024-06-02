@@ -1,4 +1,4 @@
-package com.macaosoftware.component.navigationcompose.demo.marketplace.misc
+package com.macaosoftware.component.navigationcompose.demo.marketplace.misc.simplescreen
 
 import androidx.compose.ui.graphics.Color
 import com.macaosoftware.component.viewmodel.ComponentViewModel

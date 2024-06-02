@@ -6,6 +6,7 @@ import kotlinx.coroutines.delay
 import org.koin.core.component.KoinComponent
 
 class DatabaseMigrationStartupTask : StartupTask {
+
     override fun name(): String {
         return "Database Migration"
     }

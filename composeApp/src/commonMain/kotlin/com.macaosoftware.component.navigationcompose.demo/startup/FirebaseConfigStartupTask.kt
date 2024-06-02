@@ -5,9 +5,10 @@ import com.macaosoftware.util.MacaoResult
 import kotlinx.coroutines.delay
 import org.koin.core.component.KoinComponent
 
-class SdkXyzStartupTask : StartupTask {
+class FirebaseConfigStartupTask : StartupTask {
+
     override fun name(): String {
-        return "Sdk XYZ setup"
+        return "Fetching initial app.config in firebase"
     }
 
     override fun shouldShowLoader(): Boolean {
