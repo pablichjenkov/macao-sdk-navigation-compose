@@ -1,4 +1,4 @@
-package com.macaosoftware.component.navigationcompose.demo.startup
+package com.macaosoftware.component.navigationcompose.demo.startup.initializers
 
 import com.macaosoftware.app.startup.initializers.RootGraphInitializer
 import com.macaosoftware.component.core.DestinationRendersRegistry

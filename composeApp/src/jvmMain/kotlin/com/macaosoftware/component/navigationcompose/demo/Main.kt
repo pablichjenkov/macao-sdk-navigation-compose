@@ -21,10 +21,10 @@ import com.macaosoftware.app.MacaoApplication
 import com.macaosoftware.app.MacaoApplicationState
 import com.macaosoftware.app.startup.task.StartupTaskRunnerDefault
 import com.macaosoftware.app.WindowWithCustomTopDecoration
-import com.macaosoftware.component.navigationcompose.demo.startup.DemoRootGraphInitializer
-import com.macaosoftware.component.navigationcompose.demo.startup.DatabaseMigrationStartupTask
-import com.macaosoftware.component.navigationcompose.demo.startup.LaunchDarklyStartupTask
-import com.macaosoftware.component.navigationcompose.demo.startup.FirebaseConfigStartupTask
+import com.macaosoftware.component.navigationcompose.demo.startup.initializers.DemoRootGraphInitializer
+import com.macaosoftware.component.navigationcompose.demo.startup.tasks.DatabaseMigrationStartupTask
+import com.macaosoftware.component.navigationcompose.demo.startup.tasks.LaunchDarklyStartupTask
+import com.macaosoftware.component.navigationcompose.demo.startup.tasks.FirebaseConfigStartupTask
 import com.macaosoftware.component.util.LocalBackPressedDispatcher
 import com.macaosoftware.plugin.DefaultBackPressDispatcherPlugin
 import java.awt.SystemTray
