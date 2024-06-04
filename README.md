@@ -1,8 +1,9 @@
 ### Macao Jetpack Navigation
 Refactor the whole Macao SDK architecture and components using jetpack navigation-compose.
 
-#### New architecture, new concepts:
-- ##### DestinationInfo
+---
+### New architecture, new concepts:
+- #### DestinationInfo
   Model that defines the destination in our domain. These destinations are usually setup in the server remotely and their data may vary per App launch. Currently the schema looks like bellow but it will keep adding more fields as it needs them.
   ```kotlin
     data class DestinationInfo(
@@ -15,7 +16,7 @@ Refactor the whole Macao SDK architecture and components using jetpack navigatio
     )
   ```
 
-- ##### DestinationRender
+- #### DestinationRender
   This is an interface with an abstract function:
   ```kotlin
     @Composable
@@ -26,19 +27,19 @@ Refactor the whole Macao SDK architecture and components using jetpack navigatio
   ```
   Implementations could be for instance `DrawerDestinationRender` or `BottomNavigationRender` or `MyCustomScreenDestinationRender`.
 
-- ##### RootDestinationRender
+- #### RootDestinationRender
   Similar to the `DestinationRender` but its composable Render function does not receive neither a navController nor a navBackStackEntry because it is a root and it doesn't need it.
   ```kotlin
     @Composable
     fun Content() 
   ```
 
-- ##### DestinationRendersRegistry
+- #### DestinationRendersRegistry
   Implementation of this interface should resolve the right `DestinationRender` or `RootDestinationRender` given a destination `renderType: String`.
   Each `DestinationInfo` must define what type of renderType will handle its rendering. This type has to match at least one registered `DestinationRender` or `RootDestinationRender`. The destination renderes implementations have to be defined at build time and registered explicitly by code in the registry.
   **Reflection in Kotlin Native doesn't allow instantiating a class given its String name, so we have to register each DestinationRender manually.**
 
-- ##### RootGraphInitializer
+- #### RootGraphInitializer
   This interface is defined as:
   ```kotlin
     suspend fun initialize(
@@ -47,7 +48,7 @@ Refactor the whole Macao SDK architecture and components using jetpack navigatio
    ```
   The `RootGraphInitializer` implementation will remotely load the necessary metadata to determine who will be the `RootDestinationRender` of the App. In the `initialize(...)` function it gets provided with the **root** `koinComponent: KoinComponent`. So it can get whatever dependency it needs from it. Eg: HttpService, Repository to fetch the initial Destination metadata.
 
-- ##### RootKoinModuleInitializer
+- #### RootKoinModuleInitializer
   This interface is defined as:
    ```kotlin
    interface RootKoinModuleInitializer {
@@ -56,20 +57,24 @@ Refactor the whole Macao SDK architecture and components using jetpack navigatio
    ```
   The `RootKoinModuleInitializer` implementation will be in charge of setting up the minimum necessary Koin dependencies for the App to complete the Startup process. These dependencies usually include a network library to access the `app-config.json` file remotely defined, and a local database to save and cache the Destinations metadata retrieved remotely.
 
-#### Coming from Macao SDK
+---
+### Coming from Macao SDK
 If familiar with the **plain** compose **Macao SDK**, this mapping bellow can help to grasp the **macao-jetpack-navigation** concepts.
 
-| Raw Compose         | Jetpack Navigation    |
-| ------------------- | --------------------- |
-| RootComponent       | RootDestinationRender |
-| Component           | DestinationRender     |
-| NavigationComponent | DestinationRender     |
+| Macao SDK           | Macao Jetpack Navigation |
+| ------------------- | ---------------------    |
+| RootComponent       | RootDestinationRender    |
+| Component           | DestinationRender        |
+| NavigationComponent | DestinationRender        |
 
-#### How it works
+---
+### Expanding the Macao Marketplace
 Basically adding a new screen(destination) to the library is a matter of completing a few steps. Lets do a **Drawer** as an example.
-### Drawer
+
+#### Drawer
 **1-** The first thing is create our custom ViewModel class which extends from `ComponentViewModel` which extends from `Jetpack ViewModel`.
-**ComponentViewModel will potentially change its name to DestinationViewModel**
+**(ComponentViewModel will potentially change its name to DestinationViewModel)**
+
 Your ViewModel will look like this:
 ```kotlin
 class DemoDrawerViewModel(
@@ -127,7 +132,7 @@ class DemoDrawerRootDestinationRender : RootDestinationRender {
 }
 
 ```
-**3-** The last step is registering our implemantation in the DestinationRendersDirectory. For that, in your implementation of `RootGraphInitializer`, place a code similar to this:
+**3-** The last step is registering our implemantation in the `DestinationRendersDirectory`. For that, in your implementation of `RootGraphInitializer`, place a code similar to this:
 ```kotlin
 class DemoRootGraphInitializer : RootGraphInitializer {
 
@@ -143,6 +148,7 @@ class DemoRootGraphInitializer : RootGraphInitializer {
             .get<DestinationRendersRegistry>()
             .apply {
                 addRoot(DemoDrawerRootDestinationRender())
+                addRoot(BottomNavigationRootDestinationRender())
                 add(SimpleScreenDestinationRender())
                 add(SimpleScreen1DestinationRender())
             }
