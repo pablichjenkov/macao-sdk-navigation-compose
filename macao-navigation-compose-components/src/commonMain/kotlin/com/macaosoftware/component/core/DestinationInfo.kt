@@ -4,7 +4,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 
 data class DestinationInfo(
     // Data
-    val route: String, // TODO: Make this a UUID
+    val route: String,
     val renderType: String,
     val dataSource: String,
 

@@ -1,4 +1,4 @@
-package com.macaosoftware.component.navigationcompose.demo.serverui
+package com.macaosoftware.component.navigationcompose.demo.marketplace
 
 import com.macaosoftware.component.core.DestinationRender
 import com.macaosoftware.component.core.DestinationRendersRegistry
