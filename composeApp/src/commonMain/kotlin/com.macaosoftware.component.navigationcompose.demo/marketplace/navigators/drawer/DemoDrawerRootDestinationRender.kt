@@ -14,8 +14,8 @@ class DemoDrawerRootDestinationRender : RootDestinationRender {
     }
 
     @Composable
-    override fun Content(destinationInfo: DestinationInfo) {
+    override fun Content(rootDestinationInfo: DestinationInfo) {
         val viewModel = koinViewModel<DemoDrawerViewModel>()
-        DrawerView(destinationInfo, viewModel)
+        DrawerView(rootDestinationInfo, viewModel)
     }
 }
