@@ -80,8 +80,8 @@ kotlin {
             implementation(libs.navigation.compose)
             implementation(libs.koin.compose)
             implementation(libs.koin.compose.viewmodel)
-            implementation(project(":macao-navigation-compose-app"))
-            implementation(project(":macao-navigation-compose-components"))
+            implementation(project(":macao-jetpack-navigation"))
+            //implementation(project(":macao-navigation-compose-components"))
         }
         iosMain.dependencies {
             // Ktor

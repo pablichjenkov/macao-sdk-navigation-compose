@@ -7,7 +7,9 @@ internal class ServerJsonManager(
     private val serverUiRemoteService: ServerUiRemoteService
 ) {
 
-    fun getJson(): JsonObject {
+    suspend fun getJson(sourceId: String): JsonObject {
+//        return serverUiRemoteService.getRemoteRootComponent("123")
+//            ?: serverUiRemoteService.getRootJsonResilience()
         return serverUiRemoteService.getRootJsonResilience()
     }
 }

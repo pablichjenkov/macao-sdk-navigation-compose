@@ -5,6 +5,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavHostController
+import com.macaosoftware.component.core.DestinationInfo
 import com.macaosoftware.component.core.DestinationRender
 import com.macaosoftware.component.navigationcompose.demo.marketplace.navigators.drawer.DemoDrawerViewModel
 import com.macaosoftware.component.navigationcompose.demo.serverui.data.ServerUiConstants
@@ -16,10 +17,6 @@ import org.koin.core.parameter.parametersOf
 
 class SimpleScreenDestinationRender : DestinationRender {
 
-    override fun getRoute(): String {
-        return ServerUiConstants.Routes.RootGraph.SimpleScreen
-    }
-
     override fun getRenderType(): String {
         return ServerUiConstants.ComponentType.SimpleScreen
     }
@@ -27,6 +24,7 @@ class SimpleScreenDestinationRender : DestinationRender {
     @OptIn(KoinExperimentalAPI::class)
     @Composable
     override fun Content(
+        destinationInfo: DestinationInfo,
         navController: NavHostController,
         navBackStackEntry: NavBackStackEntry
     ) {

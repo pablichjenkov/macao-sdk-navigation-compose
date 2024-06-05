@@ -10,8 +10,11 @@ internal abstract class ServerUiDataSource(
     private val destinationInfoParser: ServerUiDestinationInfoParser
 ) {
 
-    suspend fun loadDestinations(): List<DestinationInfo> {
-        val children = serverJsonManager.getJson().get(
+    suspend fun loadDestinations(dataSourceUrl: String): List<DestinationInfo> {
+
+        // TODO: Replace this with a real service call
+        // Should get children destinations url and load them
+        val children = serverJsonManager.getJson(dataSourceUrl).get(
             ServerUiConstants.JsonKeyName.children
         ) as JsonArray
 
