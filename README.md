@@ -123,12 +123,10 @@ Notice bellow how the integration with `Koin` allows us to inject the ViewModel 
 ```Kotlin
 class DemoDrawerRootDestinationRender : RootDestinationRender {
 
-    override fun getRoute(): String = ServerUiConstants.Routes.RootGraph.MainEntryPoint
-
     override fun getRenderType(): String = ServerUiConstants.ComponentType.Drawer
 
     @Composable
-    override fun Content() {
+    override fun Content(rootDestinationInfo: DestinationInfo) {
 
         val viewModel = koinViewModel<DemoDrawerViewModel>()
         DrawerView(viewModel)
