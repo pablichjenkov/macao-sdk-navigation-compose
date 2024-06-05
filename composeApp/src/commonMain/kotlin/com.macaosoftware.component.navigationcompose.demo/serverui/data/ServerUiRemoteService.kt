@@ -1,5 +1,8 @@
 package com.macaosoftware.component.navigationcompose.demo.serverui.data
 
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Menu
+import com.macaosoftware.component.core.DestinationInfo
 import com.macaosoftware.component.navigationcompose.demo.serverui.domain.MacaoApiError
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
@@ -58,7 +61,7 @@ internal class ServerUiRemoteService(
         )
         return if (resp.status.isSuccess()) {
             val bodyAsText = resp.bodyAsText()
-            // println("bodyText = $bodyText")
+            println("bodyText = $bodyAsText")
             val jsonObject = Json.decodeFromString<JsonObject>(bodyAsText)
             jsonObject
         } else {
@@ -68,4 +71,16 @@ internal class ServerUiRemoteService(
         }
     }
 
+    suspend fun getRootDestinationInfo(): DestinationInfo {
+        return DestinationInfo(
+            route = ServerUiConstants.Routes.RootGraph.MainEntryPoint,
+            renderType = ServerUiConstants.ComponentType.Drawer,
+            dataSource = "https://ktor-gae-401000.appspot.com/customer-project/json-data/${124}",
+
+            // Presentation
+            label = "Label: Drawer",
+            icon = Icons.Default.Menu,
+            badgeText = "0"
+        )
+    }
 }

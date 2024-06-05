@@ -28,6 +28,5 @@ dependencyResolutionManagement {
     }
 }
 
-include("macao-navigation-compose-components")
-include("macao-navigation-compose-app")
+include("macao-jetpack-navigation")
 include(":composeApp")

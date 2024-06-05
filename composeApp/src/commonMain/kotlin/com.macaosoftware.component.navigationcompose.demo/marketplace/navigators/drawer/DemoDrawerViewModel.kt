@@ -1,5 +1,6 @@
 package com.macaosoftware.component.navigationcompose.demo.marketplace.navigators.drawer
 
+import com.macaosoftware.component.core.DestinationInfo
 import com.macaosoftware.component.core.DestinationRendersRegistry
 import com.macaosoftware.component.drawer.DrawerStatePresenterDefault
 import com.macaosoftware.component.drawer.DrawerViewModel
@@ -16,10 +17,10 @@ internal class DemoDrawerViewModel(
 
     private val coroutineScope = CoroutineScope(Dispatchers.Main)
 
-    override fun onAttach() {
+    override fun onAttach(destinationInfo: DestinationInfo) {
         println("DrawerViewModelDefault[${instanceId()}]::onAttach()")
         coroutineScope.launch {
-            val childDestinations = drawerDataSource.loadDestinations()
+            val childDestinations = drawerDataSource.loadDestinations(destinationInfo.dataSource)
             val navItemDecoNewList = childDestinations.map {
                 it.toDrawerNavItem()
             }

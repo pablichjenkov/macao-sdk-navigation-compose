@@ -1,14 +1,15 @@
 package com.macaosoftware.component.navigationcompose.demo.marketplace.misc.simplescreen1
 
 import androidx.compose.ui.graphics.Color
-import com.macaosoftware.component.viewmodel.ComponentViewModel
+import com.macaosoftware.component.core.DestinationInfo
+import com.macaosoftware.component.viewmodel.DestinationViewModel
 
 class SimpleScreen1ViewModel(
     val bgColor: Color,
     val resultHandler: (Result) -> Unit
-) : ComponentViewModel() {
+) : DestinationViewModel() {
 
-    override fun onAttach() {
+    override fun onAttach(destinationInfo: DestinationInfo) {
 
     }
 

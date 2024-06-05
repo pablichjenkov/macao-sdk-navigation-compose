@@ -3,8 +3,8 @@ package com.macaosoftware.component.navigationcompose.demo.marketplace
 import com.macaosoftware.component.core.DestinationRender
 import com.macaosoftware.component.core.DestinationRendersRegistry
 import com.macaosoftware.component.core.RootDestinationRender
-import com.macaosoftware.component.navigationcompose.demo.serverui.domain.DestinationRenderEmpty
-import com.macaosoftware.component.navigationcompose.demo.serverui.domain.RootDestinationRenderEmpty
+import com.macaosoftware.component.navigationcompose.demo.serverui.domain.error.DestinationRenderNotFound
+import com.macaosoftware.component.navigationcompose.demo.serverui.domain.error.RootDestinationRenderNotFound
 
 class DemoDestinationRendersRegistry : DestinationRendersRegistry {
 
@@ -19,7 +19,7 @@ class DemoDestinationRendersRegistry : DestinationRendersRegistry {
         renderType: String
     ): DestinationRender = allDestinationRenders.firstOrNull { render ->
         render.getRenderType() == renderType
-    } ?: DestinationRenderEmpty()
+    } ?: DestinationRenderNotFound()
 
     override fun addRoot(destinationRender: RootDestinationRender) {
         allRootDestinationRenders.add(destinationRender)
@@ -29,6 +29,6 @@ class DemoDestinationRendersRegistry : DestinationRendersRegistry {
         rootRenderType: String
     ): RootDestinationRender = allRootDestinationRenders.firstOrNull { render ->
         render.getRenderType() == rootRenderType
-    } ?: RootDestinationRenderEmpty()
+    } ?: RootDestinationRenderNotFound()
 
 }
