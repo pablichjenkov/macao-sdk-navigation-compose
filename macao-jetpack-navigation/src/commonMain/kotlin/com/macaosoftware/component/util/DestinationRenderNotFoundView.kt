@@ -20,7 +20,7 @@ private const val NotFoundMessage =
     "404 Destination Not Found.\nDefine a DestinationRender for renderType: "
 
 @Composable
-fun DestinationRenderNotFoundView(
+fun MacaoDestinationRenderNotFoundView(
     renderType: String
 ) {
     var show by remember { mutableStateOf(false) }

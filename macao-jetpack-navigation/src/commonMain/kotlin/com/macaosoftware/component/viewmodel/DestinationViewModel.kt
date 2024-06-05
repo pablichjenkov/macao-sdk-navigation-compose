@@ -2,7 +2,7 @@ package com.macaosoftware.component.viewmodel
 
 import androidx.lifecycle.ViewModel
 
-abstract class DestinationViewModel : ViewModel(), ComponentViewModelLifecycle {
+abstract class DestinationViewModel : ViewModel(), DestinationViewModelLifecycle {
 
     open fun handleBackPressed() {
     }
