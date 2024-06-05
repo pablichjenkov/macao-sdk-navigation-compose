@@ -7,6 +7,8 @@ import com.macaosoftware.app.startup.initializers.RootKoinModuleInitializer
 import com.macaosoftware.app.startup.task.StartupTaskRunner
 import com.macaosoftware.app.startup.task.StartupTaskStatus
 import com.macaosoftware.component.core.DestinationInfo
+import com.macaosoftware.component.core.DestinationRender
+import com.macaosoftware.component.core.DestinationRendersRegistry
 import com.macaosoftware.component.core.RootDestinationRender
 import com.macaosoftware.plugin.CoroutineDispatchers
 import com.macaosoftware.util.MacaoResult
@@ -35,6 +37,24 @@ class MacaoApplicationState(
             koinApplication {
                 printLogger()
                 modules(rootModules)
+            }
+        }
+
+        // Register all DestinationRender implementations in DestinationRendersRegistry
+        with(koinApplication.koin) {
+
+            val destinationRendersRegistry = get<DestinationRendersRegistry>()
+
+            // Register all RootDestinationRender implementations provided
+            // in all Koin Modules
+            getAll<RootDestinationRender>().forEach {
+                destinationRendersRegistry.addRoot(it)
+            }
+
+            // Register all DestinationRender implementations provided
+            // in all Koin Modules
+            getAll<DestinationRender>().forEach {
+                destinationRendersRegistry.add(it)
             }
         }
 
@@ -71,7 +91,6 @@ class MacaoApplicationState(
         val result = withContext(dispatchers.default) {
             rootGraphInitializer.initialize(isolatedKoinComponent)
         }
-
         when (result) {
             is MacaoResult.Error -> {
                 stage.value = InitializationError(result.error.toString())
