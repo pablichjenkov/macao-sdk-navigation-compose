@@ -1,12 +1,9 @@
-package com.macaosoftware.component.navigationcompose.demo.marketplace
+package com.macaosoftware.component.core
 
-import com.macaosoftware.component.core.DestinationRender
-import com.macaosoftware.component.core.DestinationRendersRegistry
-import com.macaosoftware.component.core.RootDestinationRender
-import com.macaosoftware.component.navigationcompose.demo.serverui.domain.error.DestinationRenderNotFound
-import com.macaosoftware.component.navigationcompose.demo.serverui.domain.error.RootDestinationRenderNotFound
-
-class DemoDestinationRendersRegistry : DestinationRendersRegistry {
+class MacaoDestinationRendersRegistry(
+    private val destinationRenderNotFound: DestinationRender,
+    private val rootDestinationRenderNotFound: RootDestinationRender
+) : DestinationRendersRegistry {
 
     private val allDestinationRenders = mutableListOf<DestinationRender>()
     private val allRootDestinationRenders = mutableListOf<RootDestinationRender>()
@@ -19,7 +16,7 @@ class DemoDestinationRendersRegistry : DestinationRendersRegistry {
         renderType: String
     ): DestinationRender = allDestinationRenders.firstOrNull { render ->
         render.getRenderType() == renderType
-    } ?: DestinationRenderNotFound()
+    } ?: destinationRenderNotFound
 
     override fun addRoot(destinationRender: RootDestinationRender) {
         allRootDestinationRenders.add(destinationRender)
@@ -29,6 +26,6 @@ class DemoDestinationRendersRegistry : DestinationRendersRegistry {
         rootRenderType: String
     ): RootDestinationRender = allRootDestinationRenders.firstOrNull { render ->
         render.getRenderType() == rootRenderType
-    } ?: RootDestinationRenderNotFound()
+    } ?: rootDestinationRenderNotFound
 
 }
