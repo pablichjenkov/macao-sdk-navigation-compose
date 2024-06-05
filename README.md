@@ -117,6 +117,7 @@ class DemoDrawerViewModel(
 
 }
 ```
+
 **2-** Once your custom `DrawerViewModel` is defined, then we are going to do the custom `DestinationRender`, in this case lets do a `RootDestinationRender` for simplicity.
 Notice bellow how the integration with `Koin` allows us to inject the ViewModel instance and scope it to the nearest NavBackStackEntry.
 
@@ -134,35 +135,25 @@ class DemoDrawerRootDestinationRender : RootDestinationRender {
 }
 
 ```
-**3-** The last step is registering our implementation in the `DestinationRendersDirectory`. For that, in your implementation of `RootGraphInitializer`, place a code similar to this:
+
+**3-** The last step is providing a Koin module that creates the instances of your classes
 ```kotlin
-class DemoRootGraphInitializer : RootGraphInitializer {
+internal val drawerRootDestinationModule = module {
 
-    override fun shouldShowLoader(): Boolean {
-        return true
-    }
+  factoryOf(::DemoDrawerDataSource)
+  factory<DrawerStatePresenterDefault> {
+    DrawerComponentDefaults.createDrawerStatePresenter()
+  }
 
-    override suspend fun initialize(koinComponent: KoinComponent): MacaoResult<RootDestinationRender> {
-        
-        // ... Do your initialization stuff and when done, then register all the DestinationRenders in the registry. 
-        
-        // Register all the Destin ation Renders from all the plugins in the DestinationRendersRegistry
-        // TODO: This can be done using koin.getAll()
-        koinComponent
-          .get<DestinationRendersRegistry>()
-          .apply {
-            addRoot(DemoDrawerRootDestinationRender())
-            add(SimpleScreenDestinationRender())
-            add(SimpleScreen1DestinationRender())
-          }
-      
-        val rootDestinationInfo = serverUiRemoteService.getRootDestinationInfo()
-      
-        return MacaoResult.Success(rootDestinationInfo)
-    }
+  // DrawerViewModel
+  viewModelOf(::DemoDrawerViewModel)
+
+  factory { DemoDrawerRootDestinationRender() } bind (RootDestinationRender::class)
 }
-
 ```
+The `bind (RootDestinationRender::class)` is a must for Koin to include it in a list of all
+DestinationRender implementations. We then get that list and register all the renders in the
+`DestinationRendersRegistry`.
 
 **4-** And that was it. Above steps will give you something like shown in the gif image bellow:
 
