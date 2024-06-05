@@ -5,12 +5,13 @@ import com.macaosoftware.component.core.DestinationRendersRegistry
 import com.macaosoftware.component.drawer.DrawerStatePresenterDefault
 import com.macaosoftware.component.drawer.DrawerViewModel
 import com.macaosoftware.component.drawer.toDrawerNavItem
+import com.macaosoftware.component.navigationcompose.demo.serverui.domain.usecase.LoadChildrenDestinationUseCase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 internal class DemoDrawerViewModel(
-    private val drawerDataSource: DemoDrawerDataSource,
+    private val childrenDestinationLoaderUseCase: LoadChildrenDestinationUseCase,
     override val drawerStatePresenter: DrawerStatePresenterDefault,
     override val destinationRendersRegistry: DestinationRendersRegistry
 ) : DrawerViewModel() {
@@ -20,7 +21,8 @@ internal class DemoDrawerViewModel(
     override fun onAttach(destinationInfo: DestinationInfo) {
         println("DrawerViewModelDefault[${instanceId()}]::onAttach()")
         coroutineScope.launch {
-            val childDestinations = drawerDataSource.loadDestinations(destinationInfo.dataSource)
+            val childDestinations = childrenDestinationLoaderUseCase
+                .loadDestinations(destinationInfo.dataSource)
             val navItemDecoNewList = childDestinations.map {
                 it.toDrawerNavItem()
             }
