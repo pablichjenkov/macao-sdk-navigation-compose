@@ -1,4 +1,4 @@
-package com.macaosoftware.component.navigationcompose.demo.marketplace.navigators.drawer
+package com.macaosoftware.component.navigationcompose.demo.marketplace.navigators.drawer.ui
 
 import com.macaosoftware.component.core.DestinationInfo
 import com.macaosoftware.component.core.DestinationRendersRegistry

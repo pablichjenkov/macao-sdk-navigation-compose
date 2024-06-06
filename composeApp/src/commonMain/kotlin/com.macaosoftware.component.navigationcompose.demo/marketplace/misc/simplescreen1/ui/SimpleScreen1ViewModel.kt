@@ -1,10 +1,10 @@
-package com.macaosoftware.component.navigationcompose.demo.marketplace.misc.simplescreen
+package com.macaosoftware.component.navigationcompose.demo.marketplace.misc.simplescreen1.ui
 
 import androidx.compose.ui.graphics.Color
 import com.macaosoftware.component.core.DestinationInfo
 import com.macaosoftware.component.viewmodel.DestinationViewModel
 
-class SimpleScreenViewModel(
+class SimpleScreen1ViewModel(
     val bgColor: Color,
     val resultHandler: (Result) -> Unit
 ) : DestinationViewModel() {

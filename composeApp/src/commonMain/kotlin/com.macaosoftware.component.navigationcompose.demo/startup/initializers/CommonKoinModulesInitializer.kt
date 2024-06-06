@@ -1,10 +1,11 @@
 package com.macaosoftware.component.navigationcompose.demo.startup.initializers
 
 import com.macaosoftware.app.startup.initializers.KoinModulesInitializer
-import com.macaosoftware.component.navigationcompose.demo.di.commonKoinModule
-import com.macaosoftware.component.navigationcompose.demo.di.drawerViewModelsModule
-import com.macaosoftware.component.navigationcompose.demo.di.miscScreensViewModelsModule
-import com.macaosoftware.component.navigationcompose.demo.di.serverUiModule
+import com.macaosoftware.component.navigationcompose.demo.system.di.commonKoinModule
+import com.macaosoftware.component.navigationcompose.demo.marketplace.navigators.drawer.di.drawerModule
+import com.macaosoftware.component.navigationcompose.demo.serverui.di.serverUiModule
+import com.macaosoftware.component.navigationcompose.demo.marketplace.misc.simplescreen.di.simpleScreenModule
+import com.macaosoftware.component.navigationcompose.demo.marketplace.misc.simplescreen1.di.simpleScreen1Module
 import com.macaosoftware.plugin.CoroutineDispatchers
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
@@ -27,10 +28,11 @@ abstract class CommonKoinModulesInitializer(
         add(serverUiModule)
 
         // Drawer module
-        add(drawerViewModelsModule)
+        add(drawerModule)
 
         // Miscellaneous screens module
-        add(miscScreensViewModelsModule)
+        add(simpleScreenModule)
+        add(simpleScreen1Module)
     }
 
     abstract suspend fun platformKoinModules(): List<Module>
