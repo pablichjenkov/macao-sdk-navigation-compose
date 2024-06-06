@@ -20,7 +20,7 @@ fun ComposeViewController(
         FirebaseConfigStartupTask()
     )
     val applicationState = MacaoApplicationState(
-        rootKoinModuleInitializer = IosKoinModuleInitializer(iosBridge),
+        koinModulesInitializer = IosKoinModulesInitializer(iosBridge),
         startupTaskRunner = StartupTaskRunnerDefault(startupTasks),
         rootGraphInitializer = DemoRootGraphInitializer()
     )

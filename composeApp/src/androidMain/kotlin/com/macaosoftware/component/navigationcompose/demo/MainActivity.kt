@@ -23,7 +23,7 @@ class MainActivity : ComponentActivity() {
     )
 
     private val macaoApplicationState = MacaoApplicationState(
-        rootKoinModuleInitializer = AndroidKoinModuleInitializer(this),
+        koinModulesInitializer = AndroidKoinModulesInitializer(this),
         startupTaskRunner = StartupTaskRunnerDefault(startupTasks),
         rootGraphInitializer = DemoRootGraphInitializer()
     )
