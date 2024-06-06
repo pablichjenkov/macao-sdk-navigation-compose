@@ -21,7 +21,7 @@ fun main() {
         )
 
         val applicationState = MacaoApplicationState(
-            rootKoinModuleInitializer = JsKoinModuleInitializer(),
+            koinModulesInitializer = JsKoinModulesInitializer(),
             startupTaskRunner = StartupTaskRunnerDefault(startupTasks),
             rootGraphInitializer = DemoRootGraphInitializer()
         )

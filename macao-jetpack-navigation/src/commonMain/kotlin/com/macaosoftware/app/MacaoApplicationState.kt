@@ -3,7 +3,7 @@ package com.macaosoftware.app
 import androidx.compose.runtime.mutableStateOf
 import com.macaosoftware.app.di.IsolatedKoinComponent
 import com.macaosoftware.app.startup.initializers.RootGraphInitializer
-import com.macaosoftware.app.startup.initializers.RootKoinModuleInitializer
+import com.macaosoftware.app.startup.initializers.KoinModulesInitializer
 import com.macaosoftware.app.startup.task.StartupTaskRunner
 import com.macaosoftware.app.startup.task.StartupTaskStatus
 import com.macaosoftware.component.core.DestinationInfo
@@ -19,7 +19,7 @@ import kotlinx.coroutines.withContext
 import org.koin.dsl.koinApplication
 
 class MacaoApplicationState(
-    private val rootKoinModuleInitializer: RootKoinModuleInitializer,
+    private val koinModulesInitializer: KoinModulesInitializer,
     private val startupTaskRunner: StartupTaskRunner,
     private val rootGraphInitializer: RootGraphInitializer,
     private val dispatchers: CoroutineDispatchers = CoroutineDispatchers.Default
@@ -32,7 +32,7 @@ class MacaoApplicationState(
 
         val koinApplication = withContext(dispatchers.default) {
 
-            val rootModules = rootKoinModuleInitializer.initialize()
+            val rootModules = koinModulesInitializer.initialize()
 
             koinApplication {
                 printLogger()

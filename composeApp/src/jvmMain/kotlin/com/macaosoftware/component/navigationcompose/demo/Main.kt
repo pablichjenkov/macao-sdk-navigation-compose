@@ -41,7 +41,7 @@ fun main() {
         FirebaseConfigStartupTask()
     )
     val applicationState = MacaoApplicationState(
-        rootKoinModuleInitializer = JvmRootKoinModuleInitializer(),
+        koinModulesInitializer = JvmKoinModulesInitializer(),
         startupTaskRunner = StartupTaskRunnerDefault(startupTasks),
         rootGraphInitializer = DemoRootGraphInitializer()
     )
