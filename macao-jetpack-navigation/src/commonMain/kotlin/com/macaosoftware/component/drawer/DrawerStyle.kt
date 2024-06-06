@@ -18,15 +18,3 @@ data class DrawerStyle(
     val itemTextColor: Color = Color.Black,
     val itemTextSize: TextUnit = 14.sp
 )
-
-data class DrawerNavItem(
-    val destinationInfo: DestinationInfo,
-    var selected: Boolean
-)
-
-fun DestinationInfo.toDrawerNavItem(selected: Boolean = false): DrawerNavItem {
-    return DrawerNavItem(
-        destinationInfo = this,
-        selected = selected
-    )
-}
