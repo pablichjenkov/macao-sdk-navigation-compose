@@ -1,4 +1,4 @@
-package com.macaosoftware.component.navigationcompose.demo.marketplace.navigators.drawer
+package com.macaosoftware.component.navigationcompose.demo.marketplace.navigators.drawer.ui
 
 import androidx.compose.runtime.Composable
 import com.macaosoftware.component.core.DestinationInfo

@@ -1,12 +1,12 @@
-package com.macaosoftware.component.navigationcompose.demo.di
+package com.macaosoftware.component.navigationcompose.demo.marketplace.navigators.drawer.di
 
 import com.macaosoftware.component.core.RootDestinationRender
 import com.macaosoftware.component.drawer.DrawerHeaderDefaultState
 import com.macaosoftware.component.drawer.DrawerHeaderState
 import com.macaosoftware.component.drawer.DrawerStatePresenterDefault
 import com.macaosoftware.component.drawer.DrawerStyle
-import com.macaosoftware.component.navigationcompose.demo.marketplace.navigators.drawer.DemoDrawerRootDestinationRender
-import com.macaosoftware.component.navigationcompose.demo.marketplace.navigators.drawer.DemoDrawerViewModel
+import com.macaosoftware.component.navigationcompose.demo.marketplace.navigators.drawer.ui.DemoDrawerRootDestinationRender
+import com.macaosoftware.component.navigationcompose.demo.marketplace.navigators.drawer.ui.DemoDrawerViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import org.koin.compose.viewmodel.dsl.viewModelOf
@@ -14,7 +14,7 @@ import org.koin.core.parameter.ParametersHolder
 import org.koin.dsl.bind
 import org.koin.dsl.module
 
-internal val drawerViewModelsModule = module {
+internal val drawerModule = module {
 
     // Drawer Presenter
     factory<DrawerStatePresenterDefault> { parameters: ParametersHolder ->

@@ -1,4 +1,4 @@
-package com.macaosoftware.component.navigationcompose.demo.marketplace.misc.simplescreen1
+package com.macaosoftware.component.navigationcompose.demo.marketplace.misc.simplescreen.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -15,8 +15,8 @@ import androidx.compose.ui.unit.dp
 import com.macaosoftware.component.util.BackPressHandler
 
 @Composable
-fun SimpleScreen1View(
-    viewModel: SimpleScreen1ViewModel,
+fun SimpleScreenView(
+    viewModel: SimpleScreenViewModel,
     modifier: Modifier = Modifier.fillMaxSize()
 ) {
     BackPressHandler {
@@ -28,7 +28,6 @@ fun SimpleScreen1View(
             .verticalScroll(rememberScrollState()),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text("This is another screen render type")
         Button(
             modifier = Modifier.padding(vertical = 40.dp),
             onClick = {

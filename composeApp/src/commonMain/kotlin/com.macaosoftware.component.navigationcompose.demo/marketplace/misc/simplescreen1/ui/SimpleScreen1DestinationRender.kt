@@ -1,4 +1,4 @@
-package com.macaosoftware.component.navigationcompose.demo.marketplace.misc.simplescreen1
+package com.macaosoftware.component.navigationcompose.demo.marketplace.misc.simplescreen1.ui
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -7,7 +7,7 @@ import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavHostController
 import com.macaosoftware.component.core.DestinationInfo
 import com.macaosoftware.component.core.DestinationRender
-import com.macaosoftware.component.navigationcompose.demo.marketplace.navigators.drawer.DemoDrawerViewModel
+import com.macaosoftware.component.navigationcompose.demo.marketplace.navigators.drawer.ui.DemoDrawerViewModel
 import com.macaosoftware.component.navigationcompose.demo.serverui.data.ServerUiConstants
 import org.koin.compose.getKoin
 import org.koin.compose.viewmodel.koinViewModel

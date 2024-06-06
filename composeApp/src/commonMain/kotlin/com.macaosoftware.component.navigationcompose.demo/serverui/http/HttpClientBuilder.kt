@@ -1,4 +1,4 @@
-package com.macaosoftware.component.navigationcompose.demo.di.http
+package com.macaosoftware.component.navigationcompose.demo.serverui.http
 
 import io.ktor.client.*
 import io.ktor.client.plugins.*
