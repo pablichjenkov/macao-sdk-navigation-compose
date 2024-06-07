@@ -7,6 +7,7 @@ local.properties
 .idea
 .kotlin
 kotlin-js-store/
+.fleet/
 .DS_Store
 captures
 .externalNativeBuild

@@ -1,4 +1,4 @@
-package com.macaosoftware.component.navigationcompose.demo.serverui.domain.usecase
+package com.macaosoftware.component.navigationcompose.demo.marketplace.navigators.drawer.domain
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.sharp.AccountBox
@@ -6,9 +6,9 @@ import androidx.compose.material.icons.sharp.DateRange
 import com.macaosoftware.component.core.DestinationInfo
 import com.macaosoftware.component.navigationcompose.demo.serverui.data.ServerUiConstants
 
-class LoadChildrenDestinationUseCase {
+class DemoDrawerStateLoaderUseCase {
 
-    suspend fun loadDestinations(dataSourceUrl: String): List<DestinationInfo> {
+    suspend fun loadChildrenDestinations(dataSourceUrl: String): List<DestinationInfo> {
 
         return listOf(
             DestinationInfo(

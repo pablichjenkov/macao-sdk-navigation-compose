@@ -3,8 +3,10 @@ package com.macaosoftware.component.navigationcompose.demo.marketplace.navigator
 import com.macaosoftware.component.core.RootDestinationRender
 import com.macaosoftware.component.drawer.DrawerHeaderDefaultState
 import com.macaosoftware.component.drawer.DrawerHeaderState
+import com.macaosoftware.component.drawer.DrawerStatePresenter
 import com.macaosoftware.component.drawer.DrawerStatePresenterDefault
 import com.macaosoftware.component.drawer.DrawerStyle
+import com.macaosoftware.component.navigationcompose.demo.marketplace.navigators.drawer.domain.DemoDrawerStateLoaderUseCase
 import com.macaosoftware.component.navigationcompose.demo.marketplace.navigators.drawer.ui.DemoDrawerRootDestinationRender
 import com.macaosoftware.component.navigationcompose.demo.marketplace.navigators.drawer.ui.DemoDrawerViewModel
 import kotlinx.coroutines.CoroutineDispatcher
@@ -16,8 +18,10 @@ import org.koin.dsl.module
 
 internal val drawerModule = module {
 
+    factory<DemoDrawerStateLoaderUseCase> { DemoDrawerStateLoaderUseCase() }
+
     // Drawer Presenter
-    factory<DrawerStatePresenterDefault> { parameters: ParametersHolder ->
+    factory<DrawerStatePresenter> { parameters: ParametersHolder ->
 
         val drawerStyle = DrawerStyle()
 
@@ -35,17 +39,8 @@ internal val drawerModule = module {
         )
     }
 
-    // ViewModels
+    // DrawerViewModel
     viewModelOf(::DemoDrawerViewModel)
-    // TODO: Use injection with parameters when creating bellow ViewModel
-    /*viewModel<DemoDrawerViewModel> { parameters: ParametersHolder ->
-        DemoDrawerViewModel(
-            route = parameters.get(),
-            drawerDataSource = get(),
-            drawerStatePresenter = get(),
-            destinationRendersRegistry = get()
-        )
-    }*/
 
     factory { DemoDrawerRootDestinationRender() } bind (RootDestinationRender::class)
 }

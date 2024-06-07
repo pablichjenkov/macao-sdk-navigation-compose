@@ -11,8 +11,7 @@ internal val simpleScreen1Module = module {
     // SimpleScreen1ViewModel
     factory<SimpleScreen1ViewModel> { params ->
         SimpleScreen1ViewModel(
-            bgColor = params.get(),
-            resultHandler = params.get()
+            bgColor = params.get()
         )
     }
 

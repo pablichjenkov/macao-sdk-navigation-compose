@@ -90,7 +90,7 @@ class DemoDrawerViewModel(
     private val coroutineScope = CoroutineScope(Dispatchers.Main)
   
     override fun onAttach(destinationInfo: DestinationInfo) {
-        println("DrawerViewModelDefault[${instanceId()}]::onAttach()")
+        println("DemoDrawerViewModel[${instanceId()}]::onAttach()")
         coroutineScope.launch {
             val childDestinations = drawerDataSource.loadDestinations()
             val navItemDecoNewList = childDestinations.map {
@@ -101,15 +101,15 @@ class DemoDrawerViewModel(
     }
 
     override fun onStart() {
-        println("DrawerViewModelDefault[${instanceId()}]::onStart()")
+        println("DemoDrawerViewModel[${instanceId()}]::onStart()")
     }
 
     override fun onStop() {
-        println("DrawerViewModelDefault[${instanceId()}]::onStop()")
+        println("DemoDrawerViewModel[${instanceId()}]::onStop()")
     }
 
     override fun onDetach() {
-        println("DrawerViewModelDefault[${instanceId()}]::onDetach()")
+        println("DemoDrawerViewModel[${instanceId()}]::onDetach()")
     }
 
     override fun handleBackPressed() {
@@ -146,7 +146,7 @@ internal val drawerRootDestinationModule = module {
   }
 
   // DrawerViewModel
-  viewModelOf(::DemoDrawerViewModel)
+  viewModelOf(::DemoDrawerViewModel).bind(DestinationViewModel::class)
 
   factory { DemoDrawerRootDestinationRender() } bind (RootDestinationRender::class)
 }

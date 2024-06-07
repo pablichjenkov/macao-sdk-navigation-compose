@@ -12,6 +12,7 @@ interface DestinationRender {
     fun Content(
         destinationInfo: DestinationInfo,
         navController: NavHostController,
-        navBackStackEntry: NavBackStackEntry
+        navBackStackEntry: NavBackStackEntry,
+        resultHandler: () -> Unit
     )
 }
