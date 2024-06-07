@@ -146,7 +146,7 @@ internal val drawerRootDestinationModule = module {
   }
 
   // DrawerViewModel
-  viewModelOf(::DemoDrawerViewModel).bind(DestinationViewModel::class)
+  viewModelOf(::DemoDrawerViewModel)
 
   factory { DemoDrawerRootDestinationRender() } bind (RootDestinationRender::class)
 }
