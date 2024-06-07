@@ -63,7 +63,7 @@ fun main() {
         ) {
             val notification = rememberNotification(
                 title = "Macao Sdui App",
-                message = "Welcome toMacao Sdui App developed by Pablo Valdes & Muhammad Khubaib Imtiaz",
+                message = "Welcome to Macao Sdui App.",
                 type = Notification.Type.Info
             )
 

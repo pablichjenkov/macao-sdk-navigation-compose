@@ -17,10 +17,12 @@ import com.macaosoftware.component.util.BackPressHandler
 @Composable
 fun SimpleScreenView(
     viewModel: SimpleScreenViewModel,
-    modifier: Modifier = Modifier.fillMaxSize()
+    modifier: Modifier = Modifier.fillMaxSize(),
+    resultHandler: () -> Unit
 ) {
     BackPressHandler {
         viewModel.handleBackPressed()
+        resultHandler.invoke()
     }
     Column(
         modifier = modifier.fillMaxSize()

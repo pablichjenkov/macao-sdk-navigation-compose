@@ -5,8 +5,7 @@ import com.macaosoftware.component.core.DestinationInfo
 import com.macaosoftware.component.viewmodel.DestinationViewModel
 
 class SimpleScreen1ViewModel(
-    val bgColor: Color,
-    val resultHandler: (Result) -> Unit
+    val bgColor: Color
 ) : DestinationViewModel() {
 
     override fun onAttach(destinationInfo: DestinationInfo) {
@@ -30,11 +29,6 @@ class SimpleScreen1ViewModel(
     }
 
     override fun handleBackPressed() {
-        resultHandler.invoke(Result.UserPressBack)
     }
 
-    sealed class Result {
-        object UserPressBack : Result()
-        object ScreenIsDone : Result()
-    }
 }

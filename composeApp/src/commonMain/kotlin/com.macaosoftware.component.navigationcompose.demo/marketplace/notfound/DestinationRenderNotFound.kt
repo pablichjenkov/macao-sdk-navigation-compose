@@ -6,6 +6,7 @@ import androidx.navigation.NavHostController
 import com.macaosoftware.component.core.DestinationInfo
 import com.macaosoftware.component.core.DestinationRender
 import com.macaosoftware.component.navigationcompose.demo.serverui.data.ServerUiConstants
+import com.macaosoftware.component.util.BackPressHandler
 import com.macaosoftware.component.util.MacaoDestinationRenderNotFoundView
 
 class DestinationRenderNotFound : DestinationRender {
@@ -18,8 +19,12 @@ class DestinationRenderNotFound : DestinationRender {
     override fun Content(
         destinationInfo: DestinationInfo,
         navController: NavHostController,
-        navBackStackEntry: NavBackStackEntry
+        navBackStackEntry: NavBackStackEntry,
+        resultHandler: () -> Unit
     ) {
+        BackPressHandler {
+            resultHandler.invoke()
+        }
         MacaoDestinationRenderNotFoundView(destinationInfo.renderType)
     }
 }

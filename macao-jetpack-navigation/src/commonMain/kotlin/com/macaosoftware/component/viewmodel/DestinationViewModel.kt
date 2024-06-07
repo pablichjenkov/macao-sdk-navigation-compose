@@ -4,6 +4,10 @@ import androidx.lifecycle.ViewModel
 
 abstract class DestinationViewModel : ViewModel(), DestinationViewModelLifecycle {
 
+    init {
+        println("Creating VM = ${instanceId()}")
+    }
+
     open fun handleBackPressed() {
     }
 
