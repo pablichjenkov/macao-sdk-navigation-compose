@@ -1,11 +1,17 @@
 package com.macaosoftware.component.navigationcompose.demo.marketplace.misc.simplescreen1.ui
 
+import androidx.compose.material3.DrawerValue
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavHostController
+import com.macaosoftware.component.core.Cancel
 import com.macaosoftware.component.core.DestinationInfo
 import com.macaosoftware.component.core.DestinationRender
+import com.macaosoftware.component.core.DestinationResult
+import com.macaosoftware.component.core.ResultProcessor
+import com.macaosoftware.component.drawer.DrawerStatePresenter
+import com.macaosoftware.component.navigationcompose.demo.marketplace.misc.simplescreen1.SimpleScreen1Result
 import com.macaosoftware.component.navigationcompose.demo.serverui.data.ServerUiConstants
 import org.koin.compose.viewmodel.koinViewModel
 import org.koin.core.annotation.KoinExperimentalAPI
@@ -23,7 +29,7 @@ class SimpleScreen1DestinationRender : DestinationRender {
         destinationInfo: DestinationInfo,
         navController: NavHostController,
         navBackStackEntry: NavBackStackEntry,
-        resultHandler: () -> Unit
+        resultProcessor: ResultProcessor
     ) {
 
         /**
@@ -39,7 +45,39 @@ class SimpleScreen1DestinationRender : DestinationRender {
             }
         )
 
-        SimpleScreen1View(viewModel = viewModel, resultHandler = resultHandler)
+        SimpleScreen1View(
+            viewModel = viewModel,
+            resultProcessor = resultProcessor
+        )
+    }
+
+    override fun getDrawerResultProcessor(
+        drawer: DrawerStatePresenter,
+        navController: NavHostController
+    ): ResultProcessor {
+
+        return object : ResultProcessor {
+
+            override fun process(destinationResult: DestinationResult) {
+                when (destinationResult) {
+                    Cancel -> navController.popBackStack()
+
+                    is SimpleScreen1Result.Success -> {
+                        println("SimpleScreen1 returned: ${destinationResult.value}")
+                    }
+
+                    is SimpleScreen1Result.Error -> {
+                        println("SimpleScreen1 returned: ${destinationResult.error}")
+                        drawer.setDrawerState(DrawerValue.Open)
+                        navController.popBackStack()
+                    }
+                    else -> {
+                        // no-op
+                    }
+                }
+            }
+
+        }
     }
 
 }

@@ -26,8 +26,11 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.macaosoftware.component.core.Cancel
 import com.macaosoftware.component.core.DestinationInfo
 import com.macaosoftware.component.core.DestinationRendersRegistry
+import com.macaosoftware.component.core.DestinationResult
+import com.macaosoftware.component.core.ResultProcessor
 import com.macaosoftware.component.util.BackPressHandler
 
 @Composable
@@ -108,10 +111,11 @@ fun NavigationDrawer(
                     destinationRender.Content(
                         drawerNavItem.destinationInfo,
                         navController,
-                        backstackEntry
-                    ) {
-                        navController.popBackStack()
-                    }
+                        backstackEntry,
+                        destinationRender.getDrawerResultProcessor(
+                            statePresenter, navController
+                        )
+                    )
                 }
             }
         }
