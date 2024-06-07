@@ -35,6 +35,7 @@ class MacaoApplicationState(
             val rootModules = koinModulesInitializer.initialize()
 
             koinApplication {
+                allowOverride(true)
                 printLogger()
                 modules(rootModules)
             }

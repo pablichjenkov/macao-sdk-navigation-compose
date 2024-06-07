@@ -9,21 +9,31 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.macaosoftware.component.core.Cancel
+import com.macaosoftware.component.core.ResultProcessor
 import com.macaosoftware.component.util.BackPressHandler
 
 @Composable
 fun SimpleScreen1View(
     viewModel: SimpleScreen1ViewModel,
     modifier: Modifier = Modifier.fillMaxSize(),
-    resultHandler: () -> Unit
+    resultProcessor: ResultProcessor
 ) {
     BackPressHandler {
         viewModel.handleBackPressed()
-        resultHandler.invoke()
+        resultProcessor.process(Cancel)
     }
+
+    LaunchedEffect(viewModel) {
+        viewModel.resultFlow.collect {
+            resultProcessor.process(it)
+        }
+    }
+
     Column(
         modifier = modifier.fillMaxSize()
             .background(color = viewModel.bgColor)
@@ -34,10 +44,10 @@ fun SimpleScreen1View(
         Button(
             modifier = Modifier.padding(vertical = 40.dp),
             onClick = {
-                viewModel.nextClick()
+                viewModel.goBackClick()
             }
         ) {
-            Text(text = "Next")
+            Text(text = "Go Back with Result")
         }
     }
 }

@@ -1,11 +1,17 @@
 package com.macaosoftware.component.navigationcompose.demo.marketplace.misc.simplescreen.ui
 
+import androidx.compose.material3.DrawerValue
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavHostController
+import com.macaosoftware.component.core.Cancel
 import com.macaosoftware.component.core.DestinationInfo
 import com.macaosoftware.component.core.DestinationRender
+import com.macaosoftware.component.core.DestinationResult
+import com.macaosoftware.component.core.ResultProcessor
+import com.macaosoftware.component.drawer.DrawerStatePresenter
+import com.macaosoftware.component.navigationcompose.demo.marketplace.misc.simplescreen.SimpleScreenResult
 import com.macaosoftware.component.navigationcompose.demo.serverui.data.ServerUiConstants
 import org.koin.compose.viewmodel.koinViewModel
 import org.koin.core.annotation.KoinExperimentalAPI
@@ -23,7 +29,7 @@ class SimpleScreenDestinationRender : DestinationRender {
         destinationInfo: DestinationInfo,
         navController: NavHostController,
         navBackStackEntry: NavBackStackEntry,
-        resultHandler: () -> Unit
+        resultProcessor: ResultProcessor
     ) {
 
         /**
@@ -65,7 +71,40 @@ class SimpleScreenDestinationRender : DestinationRender {
             }
         )
 
-        SimpleScreenView(viewModel = viewModel3, resultHandler = resultHandler)
+        SimpleScreenView(
+            viewModel = viewModel3,
+            resultProcessor = resultProcessor
+        )
+    }
+
+    override fun getDrawerResultProcessor(
+        drawer: DrawerStatePresenter,
+        navController: NavHostController
+    ): ResultProcessor {
+
+        return object : ResultProcessor {
+
+                override fun process(destinationResult: DestinationResult) {
+
+                    when (destinationResult) {
+                        Cancel -> navController.popBackStack()
+
+                        is SimpleScreenResult.Success -> {
+                            drawer.setDrawerState(DrawerValue.Open)
+                            println("SimpleScreen returned: ${destinationResult.value}")
+                        }
+
+                        is SimpleScreenResult.Error -> {
+                            println("SimpleScreen returned: ${destinationResult.error}")
+                        }
+
+                        else -> {
+                            // no-op
+                        }
+                    }
+                }
+
+            }
     }
 
 }
