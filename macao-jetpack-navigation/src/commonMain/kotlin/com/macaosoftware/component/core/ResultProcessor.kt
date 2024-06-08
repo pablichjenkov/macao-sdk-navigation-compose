@@ -2,5 +2,6 @@ package com.macaosoftware.component.core
 
 interface ResultProcessor {
 
-    fun process(destinationResult: DestinationResult)
+    fun getRenderType(): String
+    fun process(destinationResultV2: DestinationResultV2)
 }

@@ -14,7 +14,7 @@ interface DestinationRender {
         destinationInfo: DestinationInfo,
         navController: NavHostController,
         navBackStackEntry: NavBackStackEntry,
-        resultProcessor: ResultProcessor
+        resultAdapter: ResultAdapter<DestinationResult<*>>
     )
 
     fun getDrawerResultProcessor(

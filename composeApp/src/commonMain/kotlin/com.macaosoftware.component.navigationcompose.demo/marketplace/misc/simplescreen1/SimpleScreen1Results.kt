@@ -1,9 +1,6 @@
 package com.macaosoftware.component.navigationcompose.demo.marketplace.misc.simplescreen1
 
-import com.macaosoftware.component.core.DestinationResult
-
-sealed class SimpleScreen1Result : DestinationResult() {
-
-    class Success(val value: Int) : SimpleScreen1Result()
-    class Error(val error: String) : SimpleScreen1Result()
-}
+data class SimpleScreen1Result(
+    val dataText: String = "Simple Screen 1 Data",
+    val dataNumber: Int = 1000
+)

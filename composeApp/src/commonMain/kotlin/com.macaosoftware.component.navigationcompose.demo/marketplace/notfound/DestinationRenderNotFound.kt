@@ -4,9 +4,12 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavHostController
 import com.macaosoftware.component.core.Cancel
+import com.macaosoftware.component.core.CancelV2
 import com.macaosoftware.component.core.DestinationInfo
 import com.macaosoftware.component.core.DestinationRender
 import com.macaosoftware.component.core.DestinationResult
+import com.macaosoftware.component.core.DestinationResultV2
+import com.macaosoftware.component.core.ResultAdapter
 import com.macaosoftware.component.core.ResultProcessor
 import com.macaosoftware.component.drawer.DrawerStatePresenter
 import com.macaosoftware.component.navigationcompose.demo.serverui.data.ServerUiConstants
@@ -24,10 +27,10 @@ class DestinationRenderNotFound : DestinationRender {
         destinationInfo: DestinationInfo,
         navController: NavHostController,
         navBackStackEntry: NavBackStackEntry,
-        resultProcessor: ResultProcessor
+        resultAdapter: ResultAdapter<DestinationResult<*>>
     ) {
         BackPressHandler {
-            resultProcessor.process(Cancel)
+            resultAdapter.process(DestinationResult.Error(Cancel))
         }
         MacaoDestinationRenderNotFoundView(destinationInfo.renderType)
     }
@@ -39,9 +42,13 @@ class DestinationRenderNotFound : DestinationRender {
 
         return object : ResultProcessor {
 
-            override fun process(destinationResult: DestinationResult) {
-                when (destinationResult) {
-                    Cancel -> navController.popBackStack()
+            override fun getRenderType(): String {
+                TODO("Not yet implemented")
+            }
+
+            override fun process(destinationResultV2: DestinationResultV2) {
+                when (destinationResultV2) {
+                    CancelV2 -> navController.popBackStack()
 
                     else -> {
                         // no-op

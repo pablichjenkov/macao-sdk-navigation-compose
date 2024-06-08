@@ -6,13 +6,18 @@ import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavHostController
 import com.macaosoftware.component.core.Cancel
+import com.macaosoftware.component.core.CancelV2
 import com.macaosoftware.component.core.DestinationInfo
 import com.macaosoftware.component.core.DestinationRender
 import com.macaosoftware.component.core.DestinationResult
+import com.macaosoftware.component.core.DestinationResultV2
+import com.macaosoftware.component.core.ResultAdapter
 import com.macaosoftware.component.core.ResultProcessor
 import com.macaosoftware.component.drawer.DrawerStatePresenter
 import com.macaosoftware.component.navigationcompose.demo.marketplace.misc.simplescreen1.SimpleScreen1Result
+import com.macaosoftware.component.navigationcompose.demo.marketplace.misc.simplescreen1.SimpleScreen1ResultV2
 import com.macaosoftware.component.navigationcompose.demo.serverui.data.ServerUiConstants
+import com.macaosoftware.util.MacaoResult
 import org.koin.compose.viewmodel.koinViewModel
 import org.koin.core.annotation.KoinExperimentalAPI
 import org.koin.core.parameter.parametersOf
@@ -29,7 +34,7 @@ class SimpleScreen1DestinationRender : DestinationRender {
         destinationInfo: DestinationInfo,
         navController: NavHostController,
         navBackStackEntry: NavBackStackEntry,
-        resultProcessor: ResultProcessor
+        resultAdapter: ResultAdapter<DestinationResult<*>>
     ) {
 
         /**
@@ -47,7 +52,7 @@ class SimpleScreen1DestinationRender : DestinationRender {
 
         SimpleScreen1View(
             viewModel = viewModel,
-            resultProcessor = resultProcessor
+            resultAdapter = resultAdapter
         )
     }
 
@@ -58,16 +63,20 @@ class SimpleScreen1DestinationRender : DestinationRender {
 
         return object : ResultProcessor {
 
-            override fun process(destinationResult: DestinationResult) {
-                when (destinationResult) {
-                    Cancel -> navController.popBackStack()
+            override fun getRenderType(): String {
+                return ServerUiConstants.ComponentType.SimpleScreen1
+            }
 
-                    is SimpleScreen1Result.Success -> {
-                        println("SimpleScreen1 returned: ${destinationResult.value}")
+            override fun process(destinationResultV2: DestinationResultV2) {
+                when (destinationResultV2) {
+                    CancelV2 -> navController.popBackStack()
+
+                    is SimpleScreen1ResultV2.Success -> {
+                        println("SimpleScreen1 returned: ${destinationResultV2.value}")
                     }
 
-                    is SimpleScreen1Result.Error -> {
-                        println("SimpleScreen1 returned: ${destinationResult.error}")
+                    is SimpleScreen1ResultV2.Error -> {
+                        println("SimpleScreen1 returned: ${destinationResultV2.error}")
                         drawer.setDrawerState(DrawerValue.Open)
                         navController.popBackStack()
                     }
