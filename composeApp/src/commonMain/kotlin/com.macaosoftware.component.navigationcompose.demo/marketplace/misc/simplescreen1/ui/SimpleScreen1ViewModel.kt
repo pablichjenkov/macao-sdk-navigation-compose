@@ -2,7 +2,7 @@ package com.macaosoftware.component.navigationcompose.demo.marketplace.misc.simp
 
 import androidx.compose.ui.graphics.Color
 import com.macaosoftware.component.core.DestinationInfo
-import com.macaosoftware.component.navigationcompose.demo.marketplace.misc.simplescreen1.SimpleScreen1Result
+import com.macaosoftware.component.navigationcompose.demo.marketplace.misc.simplescreen1.SimpleScreen1ResultV2
 import com.macaosoftware.component.viewmodel.DestinationViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -14,7 +14,7 @@ class SimpleScreen1ViewModel(
 ) : DestinationViewModel() {
 
     private val coroutineScope = CoroutineScope(Dispatchers.Main)
-    val resultFlow = MutableSharedFlow<SimpleScreen1Result>()
+    val resultFlow = MutableSharedFlow<SimpleScreen1ResultV2>()
 
     override fun onAttach(destinationInfo: DestinationInfo) {
 
@@ -34,7 +34,7 @@ class SimpleScreen1ViewModel(
 
     fun goBackClick() {
         coroutineScope.launch {
-            resultFlow.emit(SimpleScreen1Result.Error("Error in Simple Screen 1"))
+            resultFlow.emit(SimpleScreen1ResultV2.Error("Error in Simple Screen 1"))
         }
     }
 

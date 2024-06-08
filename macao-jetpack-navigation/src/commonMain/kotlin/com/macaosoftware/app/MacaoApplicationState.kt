@@ -9,7 +9,9 @@ import com.macaosoftware.app.startup.task.StartupTaskStatus
 import com.macaosoftware.component.core.DestinationInfo
 import com.macaosoftware.component.core.DestinationRender
 import com.macaosoftware.component.core.DestinationRendersRegistry
+import com.macaosoftware.component.core.ResultAdapter
 import com.macaosoftware.component.core.RootDestinationRender
+import com.macaosoftware.component.drawer.DrawerResultAdapter
 import com.macaosoftware.plugin.CoroutineDispatchers
 import com.macaosoftware.util.MacaoResult
 import kotlinx.coroutines.CoroutineScope
@@ -56,6 +58,11 @@ class MacaoApplicationState(
             // in all Koin Modules
             getAll<DestinationRender>().forEach {
                 destinationRendersRegistry.add(it)
+            }
+
+            getAll<DrawerResultAdapter<*>>().forEach {
+                println("Pablo found ResultAdapter binder for ${it}")
+                destinationRendersRegistry.addDrawerResultAdapter(it)
             }
         }
 

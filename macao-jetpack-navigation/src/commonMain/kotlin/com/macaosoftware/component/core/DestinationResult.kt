@@ -1,8 +1,9 @@
 package com.macaosoftware.component.core
 
-open class DestinationResult//<T>
+sealed class DestinationResult<out T> {
+    class Success<T>(val value: T) : DestinationResult<T>()
+    class Error(val error: DestinationError) : DestinationResult<Nothing>()
+}
 
-object Cancel : DestinationResult()//<Nothing>()
-
-//class Success<T>(val t: T) : DestinationResult<T>()
-
+sealed interface DestinationError
+object Cancel : DestinationError
