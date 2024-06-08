@@ -1,4 +1,4 @@
-package com.macaosoftware.component.navigationcompose.demo.marketplace.misc.simplescreen1
+package com.macaosoftware.component.navigationcompose.demo.marketplace.misc.simplescreen1.result
 
 data class SimpleScreen1Result(
     val dataText: String = "Simple Screen 1 Data",

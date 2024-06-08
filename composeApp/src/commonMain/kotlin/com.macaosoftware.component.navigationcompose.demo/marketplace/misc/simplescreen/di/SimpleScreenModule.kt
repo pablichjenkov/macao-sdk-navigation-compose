@@ -2,7 +2,7 @@ package com.macaosoftware.component.navigationcompose.demo.marketplace.misc.simp
 
 import com.macaosoftware.component.core.DestinationRender
 import com.macaosoftware.component.drawer.DrawerResultAdapter
-import com.macaosoftware.component.navigationcompose.demo.marketplace.misc.simplescreen.SimpleScreenToDrawerResultAdapter
+import com.macaosoftware.component.navigationcompose.demo.marketplace.misc.simplescreen.result.SimpleScreenToDrawerResultAdapter
 import com.macaosoftware.component.navigationcompose.demo.marketplace.misc.simplescreen.ui.SimpleScreenDestinationRender
 import com.macaosoftware.component.navigationcompose.demo.marketplace.misc.simplescreen.ui.SimpleScreenViewModel
 import org.koin.dsl.bind
@@ -18,7 +18,7 @@ internal val simpleScreenModule = module {
     }
 
     // SimpleScreenToDrawerResultAdapter
-    factory<SimpleScreenToDrawerResultAdapter> { params ->
+    factory<SimpleScreenToDrawerResultAdapter> {
         SimpleScreenToDrawerResultAdapter()
     } bind (DrawerResultAdapter::class)
 

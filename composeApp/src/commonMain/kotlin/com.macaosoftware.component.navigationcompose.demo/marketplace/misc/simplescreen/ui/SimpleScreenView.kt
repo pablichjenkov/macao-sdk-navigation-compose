@@ -16,7 +16,7 @@ import androidx.compose.ui.unit.dp
 import com.macaosoftware.component.core.Cancel
 import com.macaosoftware.component.core.DestinationResult
 import com.macaosoftware.component.core.ResultAdapter
-import com.macaosoftware.component.navigationcompose.demo.marketplace.misc.simplescreen.SimpleScreenResult
+import com.macaosoftware.component.navigationcompose.demo.marketplace.misc.simplescreen.result.SimpleScreenResult
 import com.macaosoftware.component.util.BackPressHandler
 
 @Composable
@@ -27,18 +27,10 @@ fun SimpleScreenView(
 ) {
     BackPressHandler {
         viewModel.handleBackPressed()
-        //resultProcessor.process(Cancel)
-        //resultHandler.invoke(MacaoResult.Success(Cancel))
-        resultAdapter.process(DestinationResult.Error(Cancel))
-
     }
 
     LaunchedEffect(viewModel) {
-        viewModel.resultFlow.collect {
-            //resultProcessor.process(it)
-            //resultHandler.invoke(MacaoResult.Error(SignupError()))
-            resultAdapter.process(DestinationResult.Success(SimpleScreenResult()))
-        }
+        viewModel.resultFlow.collect { resultAdapter.process(it) }
     }
 
     Column(

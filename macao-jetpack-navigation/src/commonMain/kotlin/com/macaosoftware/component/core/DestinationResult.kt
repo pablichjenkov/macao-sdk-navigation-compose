@@ -6,4 +6,4 @@ sealed class DestinationResult<out T> {
 }
 
 sealed interface DestinationError
-object Cancel : DestinationError
+data object Cancel : DestinationError

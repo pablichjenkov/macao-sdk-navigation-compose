@@ -6,6 +6,7 @@ import com.macaosoftware.component.navigationcompose.demo.marketplace.navigators
 import com.macaosoftware.component.navigationcompose.demo.serverui.di.serverUiModule
 import com.macaosoftware.component.navigationcompose.demo.marketplace.misc.simplescreen.di.simpleScreenModule
 import com.macaosoftware.component.navigationcompose.demo.marketplace.misc.simplescreen1.di.simpleScreen1Module
+import com.macaosoftware.component.navigationcompose.demo.marketplace.notfound.di.destinationNotFoundModule
 import com.macaosoftware.plugin.CoroutineDispatchers
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
@@ -33,6 +34,7 @@ abstract class CommonKoinModulesInitializer(
         // Miscellaneous screens module
         add(simpleScreenModule)
         add(simpleScreen1Module)
+        add(destinationNotFoundModule)
     }
 
     abstract suspend fun platformKoinModules(): List<Module>

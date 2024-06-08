@@ -13,13 +13,10 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.macaosoftware.component.core.Cancel
 import com.macaosoftware.component.core.DestinationResult
 import com.macaosoftware.component.core.ResultAdapter
-import com.macaosoftware.component.navigationcompose.demo.marketplace.misc.simplescreen1.SimpleScreen1Result
-import com.macaosoftware.component.navigationcompose.demo.marketplace.misc.simplescreen1.SimpleScreen1ResultV2
+import com.macaosoftware.component.navigationcompose.demo.marketplace.misc.simplescreen1.result.SimpleScreen1Result
 import com.macaosoftware.component.util.BackPressHandler
-import com.macaosoftware.util.MacaoResult
 
 @Composable
 fun SimpleScreen1View(
@@ -29,13 +26,10 @@ fun SimpleScreen1View(
 ) {
     BackPressHandler {
         viewModel.handleBackPressed()
-        resultAdapter.process(DestinationResult.Error(Cancel))
     }
 
     LaunchedEffect(viewModel) {
-        viewModel.resultFlow.collect {
-            resultAdapter.process(DestinationResult.Success(SimpleScreen1Result()))
-        }
+        viewModel.resultFlow.collect { resultAdapter.process(it) }
     }
 
     Column(
@@ -51,7 +45,7 @@ fun SimpleScreen1View(
                 viewModel.goBackClick()
             }
         ) {
-            Text(text = "Go Back with Result")
+            Text(text = "Send Result")
         }
     }
 }

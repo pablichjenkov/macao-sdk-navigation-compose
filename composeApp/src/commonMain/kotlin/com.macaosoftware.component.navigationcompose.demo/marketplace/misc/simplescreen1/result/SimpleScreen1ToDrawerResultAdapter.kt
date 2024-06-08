@@ -1,4 +1,4 @@
-package com.macaosoftware.component.navigationcompose.demo.marketplace.misc.simplescreen1
+package com.macaosoftware.component.navigationcompose.demo.marketplace.misc.simplescreen1.result
 
 import androidx.compose.material3.DrawerValue
 import com.macaosoftware.component.core.DestinationResult
