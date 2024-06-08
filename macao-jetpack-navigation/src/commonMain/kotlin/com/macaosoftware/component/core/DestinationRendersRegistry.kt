@@ -1,6 +1,6 @@
 package com.macaosoftware.component.core
 
-import com.macaosoftware.component.drawer.DrawerResultAdapter
+import com.macaosoftware.component.drawer.DrawerResultProcessor
 
 interface DestinationRendersRegistry {
 
@@ -11,8 +11,8 @@ interface DestinationRendersRegistry {
     fun addRoot(destinationRender: RootDestinationRender)
     fun renderForRoot(rootRenderType: String): RootDestinationRender
 
-    fun addDrawerResultAdapter(drawerResultAdapter:  DrawerResultAdapter<*>)
-    fun drawerResultAdapterFor(
+    fun addDrawerResultProcessor(drawerResultProcessor:  DrawerResultProcessor)
+    fun drawerResultProcessorFor(
         destinationType: String
-    ): DrawerResultAdapter<*>
+    ): DrawerResultProcessor
 }

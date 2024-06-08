@@ -29,7 +29,6 @@ import androidx.navigation.compose.rememberNavController
 import com.macaosoftware.component.core.DestinationInfo
 import com.macaosoftware.component.core.DestinationRendersRegistry
 import com.macaosoftware.component.core.DestinationResult
-import com.macaosoftware.component.core.ResultAdapter
 import com.macaosoftware.component.util.BackPressHandler
 
 @Composable
@@ -107,8 +106,8 @@ fun NavigationDrawer(
                     val destinationRender = destinationRendersRegistry
                         .renderFor(drawerNavItem.destinationInfo.renderType)
 
-                    val resultAdapter = destinationRendersRegistry
-                        .drawerResultAdapterFor(
+                    val resultProcessor = destinationRendersRegistry
+                        .drawerResultProcessorFor(
                             drawerNavItem.destinationInfo.renderType
                         ).apply {
                             this.drawerStatePresenter = statePresenter
@@ -119,7 +118,7 @@ fun NavigationDrawer(
                         drawerNavItem.destinationInfo,
                         navController,
                         backstackEntry,
-                        resultAdapter as ResultAdapter<DestinationResult<*>>
+                        resultProcessor
                     )
                 }
             }

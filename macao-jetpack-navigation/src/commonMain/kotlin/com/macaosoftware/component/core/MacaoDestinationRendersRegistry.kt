@@ -1,7 +1,7 @@
 package com.macaosoftware.component.core
 
-import com.macaosoftware.component.drawer.DrawerResultAdapter
 import com.macaosoftware.component.drawer.DrawerResultAdapterEmpty
+import com.macaosoftware.component.drawer.DrawerResultProcessor
 
 class MacaoDestinationRendersRegistry(
     private val destinationRenderNotFound: DestinationRender,
@@ -10,7 +10,7 @@ class MacaoDestinationRendersRegistry(
 
     private val allDestinationRenders = mutableListOf<DestinationRender>()
     private val allRootDestinationRenders = mutableListOf<RootDestinationRender>()
-    private val allResultAdapters = mutableListOf<DrawerResultAdapter<*>>()
+    private val allDrawerResultResultProcessors = mutableListOf<DrawerResultProcessor>()
 
     override fun add(destinationRender: DestinationRender) {
         allDestinationRenders.add(destinationRender)
@@ -32,16 +32,16 @@ class MacaoDestinationRendersRegistry(
         render.getRenderType() == rootRenderType
     } ?: rootDestinationRenderNotFound
 
-    override fun addDrawerResultAdapter(
-        drawerResultAdapter: DrawerResultAdapter<*>
+    override fun addDrawerResultProcessor(
+        drawerResultProcessor: DrawerResultProcessor
     ) {
-        allResultAdapters.add(drawerResultAdapter)
+        allDrawerResultResultProcessors.add(drawerResultProcessor)
     }
 
-    override fun drawerResultAdapterFor(
+    override fun drawerResultProcessorFor(
         destinationType: String
-    ): DrawerResultAdapter<*> = allResultAdapters.firstOrNull { render ->
+    ): DrawerResultProcessor = allDrawerResultResultProcessors.first { render ->
         render.getRenderType() == destinationType
-    } ?: DrawerResultAdapterEmpty()
+    }
 
 }

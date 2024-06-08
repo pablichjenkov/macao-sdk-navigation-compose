@@ -9,9 +9,8 @@ import com.macaosoftware.app.startup.task.StartupTaskStatus
 import com.macaosoftware.component.core.DestinationInfo
 import com.macaosoftware.component.core.DestinationRender
 import com.macaosoftware.component.core.DestinationRendersRegistry
-import com.macaosoftware.component.core.ResultAdapter
 import com.macaosoftware.component.core.RootDestinationRender
-import com.macaosoftware.component.drawer.DrawerResultAdapter
+import com.macaosoftware.component.drawer.DrawerResultProcessor
 import com.macaosoftware.plugin.CoroutineDispatchers
 import com.macaosoftware.util.MacaoResult
 import kotlinx.coroutines.CoroutineScope
@@ -60,9 +59,9 @@ class MacaoApplicationState(
                 destinationRendersRegistry.add(it)
             }
 
-            getAll<DrawerResultAdapter<*>>().forEach {
-                println("Pablo found ResultAdapter binder for ${it}")
-                destinationRendersRegistry.addDrawerResultAdapter(it)
+            getAll<DrawerResultProcessor>().forEach {
+                println("Pablo found DrawerResultProcessor binder for ${it}")
+                destinationRendersRegistry.addDrawerResultProcessor(it)
             }
         }
 
