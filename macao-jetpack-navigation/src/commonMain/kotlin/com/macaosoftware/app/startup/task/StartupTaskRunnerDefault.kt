@@ -1,5 +1,6 @@
 package com.macaosoftware.app.startup.task
 
+import com.macaosoftware.util.MacaoResult
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import org.koin.core.component.KoinComponent
@@ -10,17 +11,27 @@ class StartupTaskRunnerDefault(
 
     override fun initialize(
         koinComponent: KoinComponent
-    ): Flow<StartupTaskStatus> = flow {
+    ): Flow<StartupTasksEvents> = flow {
 
         startupTasks.forEach { startupTask ->
 
             if (startupTask.shouldShowLoader()) {
-                emit(StartupTaskStatus.Running(startupTask.name()))
+                emit(StartupTasksEvents.TaskRunning(startupTask))
             }
 
-            startupTask.initialize(koinComponent)
+            val taskResult = startupTask.initialize(koinComponent)
+            if (taskResult is MacaoResult.Error) {
+                emit(
+                    StartupTasksEvents.TaskFinishedWithError(
+                        startupTask,
+                        taskResult.error
+                    )
+                )
+                // Exit the flow
+                return@flow
+            }
         }
 
-        emit(StartupTaskStatus.CompleteSuccess)
+        emit(StartupTasksEvents.AllTaskCompletedSuccess)
     }
 }

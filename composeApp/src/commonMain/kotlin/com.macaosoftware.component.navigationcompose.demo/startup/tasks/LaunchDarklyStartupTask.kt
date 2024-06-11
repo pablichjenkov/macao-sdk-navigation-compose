@@ -16,7 +16,8 @@ class LaunchDarklyStartupTask : StartupTask {
 
     override suspend fun initialize(koinComponent: KoinComponent): MacaoResult<Unit> {
         // todo: Remove this delay
-        delay(300)
+        delay(800)
         return MacaoResult.Success(Unit)
+        //return MacaoResult.Error(MacaoError("LaunchDarklyStartupTask", "Something went wrong while fetching LaunchDarklyStartupTask, try again later"))
     }
 }

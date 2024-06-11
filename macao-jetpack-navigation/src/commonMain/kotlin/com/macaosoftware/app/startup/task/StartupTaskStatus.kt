@@ -1,7 +1,9 @@
 package com.macaosoftware.app.startup.task
 
-sealed class StartupTaskStatus {
-    class Running(val taskName: String) : StartupTaskStatus()
-    class CompleteError(val errorMsg: String) : StartupTaskStatus()
-    object CompleteSuccess : StartupTaskStatus()
+import com.macaosoftware.util.MacaoError
+
+sealed class StartupTasksEvents {
+    class TaskRunning(val task: StartupTask) : StartupTasksEvents()
+    class TaskFinishedWithError(val task: StartupTask, val error: MacaoError) : StartupTasksEvents()
+    object AllTaskCompletedSuccess : StartupTasksEvents()
 }

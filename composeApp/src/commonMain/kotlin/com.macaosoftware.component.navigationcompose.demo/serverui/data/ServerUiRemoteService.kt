@@ -9,6 +9,7 @@ import io.ktor.client.call.body
 import io.ktor.client.request.get
 import io.ktor.client.statement.bodyAsText
 import io.ktor.http.isSuccess
+import kotlinx.coroutines.delay
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.JsonPrimitive
@@ -72,10 +73,14 @@ internal class ServerUiRemoteService(
     }
 
     suspend fun getRootDestinationInfo(): DestinationInfo {
+
+        // TODO: Remove this hard code
+        delay(800)
+
         return DestinationInfo(
             route = ServerUiConstants.Routes.RootGraph.MainEntryPoint,
             renderType = ServerUiConstants.ComponentType.Drawer,
-            dataSource = "https://ktor-gae-401000.appspot.com/customer-project/json-data/${124}",
+            dataSource = "https://ktor-gae-401000.appspot.com/customer-project/json-data/${123}",
 
             // Presentation
             label = "Label: Drawer",
