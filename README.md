@@ -89,7 +89,7 @@ interface StartupTask {
 
     /**
      * This function dictates whether the initialization will actually take place
-     * or it will rely on the database cached values.
+     * or it will rely on cached computations from previous launches.
      * */
     fun shouldShowLoader(): Boolean
 
