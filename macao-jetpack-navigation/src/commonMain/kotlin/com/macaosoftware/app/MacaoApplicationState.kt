@@ -2,17 +2,18 @@ package com.macaosoftware.app
 
 import androidx.compose.runtime.mutableStateOf
 import com.macaosoftware.app.di.IsolatedKoinComponent
-import com.macaosoftware.app.startup.initializers.RootGraphInitializer
 import com.macaosoftware.app.startup.initializers.KoinModulesInitializer
+import com.macaosoftware.app.startup.initializers.RootGraphInitializer
+import com.macaosoftware.app.startup.task.StartupTask
 import com.macaosoftware.app.startup.task.StartupTaskRunner
-import com.macaosoftware.app.startup.task.StartupTaskStatus
+import com.macaosoftware.app.startup.task.StartupTasksEvents
 import com.macaosoftware.component.core.DestinationInfo
 import com.macaosoftware.component.core.DestinationRender
 import com.macaosoftware.component.core.DestinationRendersRegistry
-import com.macaosoftware.component.core.ResultAdapter
 import com.macaosoftware.component.core.RootDestinationRender
 import com.macaosoftware.component.drawer.DrawerResultAdapter
 import com.macaosoftware.plugin.CoroutineDispatchers
+import com.macaosoftware.util.MacaoError
 import com.macaosoftware.util.MacaoResult
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.flowOn
@@ -27,7 +28,7 @@ class MacaoApplicationState(
     private val dispatchers: CoroutineDispatchers = CoroutineDispatchers.Default
 ) {
 
-    internal var stage = mutableStateOf<Stage>(Created)
+    internal var startupStage = mutableStateOf<StartupStage>(Created)
     private val coroutineScope = CoroutineScope(dispatchers.main)
 
     fun initialize() = coroutineScope.launch {
@@ -60,8 +61,9 @@ class MacaoApplicationState(
                 destinationRendersRegistry.add(it)
             }
 
+            // Register all DrawerResultAdapter implementations provided
+            // in all Koin Modules
             getAll<DrawerResultAdapter<*>>().forEach {
-                println("Pablo found ResultAdapter binder for ${it}")
                 destinationRendersRegistry.addDrawerResultAdapter(it)
             }
         }
@@ -76,15 +78,15 @@ class MacaoApplicationState(
             .flowOn(dispatchers.default)
             .collect { status ->
                 when (status) {
-                    is StartupTaskStatus.Running -> {
-                        stage.value = Initializing.StartupTask(status.taskName)
+                    is StartupTasksEvents.TaskRunning -> {
+                        startupStage.value = Initializing.StartupTaskRunning(status.task)
                     }
 
-                    is StartupTaskStatus.CompleteError -> {
-                        stage.value = InitializationError(status.errorMsg)
+                    is StartupTasksEvents.TaskFinishedWithError -> {
+                        startupStage.value = InitializationError(status.error)
                     }
 
-                    is StartupTaskStatus.CompleteSuccess -> {
+                    is StartupTasksEvents.AllTaskCompletedSuccess -> {
                         initializeRootMetadata(isolatedKoinComponent)
                     }
                 }
@@ -94,18 +96,18 @@ class MacaoApplicationState(
     private suspend fun initializeRootMetadata(isolatedKoinComponent: IsolatedKoinComponent) {
 
         if (rootGraphInitializer.shouldShowLoader()) {
-            stage.value = Initializing.RootMetadata
+            startupStage.value = Initializing.FetchingRemoteNavigationRootGraph
         }
         val result = withContext(dispatchers.default) {
             rootGraphInitializer.initialize(isolatedKoinComponent)
         }
         when (result) {
             is MacaoResult.Error -> {
-                stage.value = InitializationError(result.error.toString())
+                startupStage.value = InitializationError(result.error)
             }
 
             is MacaoResult.Success -> {
-                stage.value = InitializationSuccess(
+                startupStage.value = InitializationSuccess(
                     isolatedKoinComponent = isolatedKoinComponent,
                     rootDestinationInfo = result.value
                 )
@@ -115,17 +117,19 @@ class MacaoApplicationState(
 
 }
 
-internal sealed class Stage
-internal data object Created : Stage()
+internal sealed class StartupStage
 
-internal sealed class Initializing : Stage() {
+internal data object Created : StartupStage()
+
+internal sealed class Initializing : StartupStage() {
     // data object KoinRootModule : Initializing()
-    data class StartupTask(val taskName: String) : Initializing()
-    data object RootMetadata : Initializing()
+    data class StartupTaskRunning(val task: StartupTask) : Initializing()
+    data object FetchingRemoteNavigationRootGraph : Initializing()
 }
 
-internal class InitializationError(val errorMsg: String) : Stage()
+internal class InitializationError(val error: MacaoError) : StartupStage()
+
 internal class InitializationSuccess(
     val isolatedKoinComponent: IsolatedKoinComponent,
     val rootDestinationInfo: DestinationInfo
-) : Stage()
+) : StartupStage()

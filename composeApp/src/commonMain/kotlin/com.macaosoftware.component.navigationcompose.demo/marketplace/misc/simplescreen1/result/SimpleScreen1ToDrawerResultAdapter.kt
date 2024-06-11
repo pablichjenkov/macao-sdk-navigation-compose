@@ -18,12 +18,12 @@ class SimpleScreen1ToDrawerResultAdapter
 
             is DestinationResult.Error -> {
                 println("SimpleScreen1 returned: ${result.error}")
-                drawerStatePresenter.setDrawerState(DrawerValue.Open)
                 navController.popBackStack()
             }
 
             is DestinationResult.Success -> {
                 println("SimpleScreen1 returned: ${result.value}")
+                drawerStatePresenter.setDrawerState(DrawerValue.Open)
             }
         }
 

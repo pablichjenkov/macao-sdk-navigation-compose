@@ -7,5 +7,5 @@ interface RootDestinationRender {
     fun getRenderType(): String
 
     @Composable
-    fun Content(rootDestinationInfo: DestinationInfo)
+    fun Content(destinationInfo: DestinationInfo)
 }

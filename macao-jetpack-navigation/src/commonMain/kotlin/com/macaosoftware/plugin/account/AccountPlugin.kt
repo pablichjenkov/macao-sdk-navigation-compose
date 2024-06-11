@@ -78,6 +78,7 @@ data class MacaoUser(
     val email: String
 )
 
+/*
 data class SignupError(
     val instanceId: Long = -1L,
     val errorCode: Int = 1,
@@ -89,3 +90,4 @@ data class LoginError(
     val errorCode: Int = 2,
     val errorDescription: String = "Login Failed"
 ) : MacaoError
+*/

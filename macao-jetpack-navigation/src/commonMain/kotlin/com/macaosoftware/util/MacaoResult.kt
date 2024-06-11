@@ -5,4 +5,8 @@ sealed class MacaoResult<out T> {
     class Error(val error: MacaoError) : MacaoResult<Nothing>()
 }
 
-interface MacaoError
+data class MacaoError(
+    val code: String,
+    val message: String,
+    val metadata: String = ""
+)

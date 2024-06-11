@@ -1,6 +1,7 @@
 package com.macaosoftware.component.navigationcompose.demo.startup.tasks
 
 import com.macaosoftware.app.startup.task.StartupTask
+import com.macaosoftware.util.MacaoError
 import com.macaosoftware.util.MacaoResult
 import kotlinx.coroutines.delay
 import org.koin.core.component.KoinComponent
@@ -17,7 +18,8 @@ class FirebaseConfigStartupTask : StartupTask {
 
     override suspend fun initialize(koinComponent: KoinComponent): MacaoResult<Unit> {
         // todo: Remove this delay
-        delay(300)
+        delay(800)
         return MacaoResult.Success(Unit)
+        //return MacaoResult.Error(MacaoError("FirebaseConfigStartupTask", "Something went wrong while fetching Firebase, try again later"))
     }
 }

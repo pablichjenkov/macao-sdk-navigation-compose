@@ -17,7 +17,7 @@ import org.koin.compose.getKoin
 @Composable
 fun MacaoApplication(
     applicationState: MacaoApplicationState
-) = when (val stage = applicationState.stage.value) {
+) = when (val stage = applicationState.startupStage.value) {
 
     Created -> {
         SideEffect {
@@ -30,7 +30,7 @@ fun MacaoApplication(
     }
 
     is InitializationError -> {
-        SplashScreen(stage.errorMsg)
+        SplashScreen(stage.error.message)
     }
 
     is InitializationSuccess -> {
@@ -53,12 +53,12 @@ private fun InitializationHandler(
 //        // No-op
 //    }
 
-    is Initializing.StartupTask -> {
-        SplashScreen(initializing.taskName)
+    is Initializing.StartupTaskRunning -> {
+        SplashScreen(initializing.task.name())
     }
 
-    Initializing.RootMetadata -> {
-        SplashScreen("Fetching Root Component from Services")
+    Initializing.FetchingRemoteNavigationRootGraph -> {
+        SplashScreen("Fetching Root Graph remotely")
     }
 }
 
