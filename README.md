@@ -73,6 +73,39 @@ Refactor the whole Macao SDK architecture and components using jetpack navigatio
    ```
   The `RootKoinModuleInitializer` implementation will be in charge of setting up the minimum necessary Koin dependencies for the App to complete the Startup process. These dependencies usually include a network library to access the `app-config.json` file remotely defined, and a local database to save and cache the Destinations metadata retrieved remotely.
 
+- #### StartupTask
+  A StartupTask is a task that runs anytime the Application is launched, either tapping on the App icon or tapping on a notification.
+  <BR/>
+  These tasks perform the fundamental operations for the App to properly function. Example of this task are:
+  1. Database migration
+  2. Third party SDKs initialization
+  3. Feature flags toggles, for example LaunchDarkly
+  4. Other App configurations in your server
+   
+```kotlin
+interface StartupTask {
+
+    fun name(): String
+
+    /**
+     * This function dictates whether the initialization will actually take place
+     * or it will rely on the database cached values.
+     * */
+    fun shouldShowLoader(): Boolean
+
+    /**
+     * This function should be executed in io/default dispatcher.
+     * Things like Database Migration and LaunchDarkly initialization
+     * are examples of StartupTasks.
+     * */
+    suspend fun initialize(koinComponent: KoinComponent): MacaoResult<Unit>
+}
+```
+The task execution doesn't necessarely has to do heavy work all the time. Some times the task knows it has some data cached and the next executione will take a few milliseconds. In this case, the StartupTask can return `false` in the function `fun shouldShowLoader(): Boolean` and the loader in the `SplashScreen` wont be shown. 
+<BR/>
+**If no task do heavy work(all them return false), then we omit the SplashScreen animation**
+
+
 ### Expanding the Macao Marketplace
 Basically adding a new screen(destination) to the library is a matter of completing a few steps. Lets do a **Drawer** as an example.
 
