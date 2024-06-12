@@ -12,7 +12,7 @@ import com.macaosoftware.component.navigationcompose.demo.serverui.data.ServerUi
 import com.macaosoftware.component.util.BackPressHandler
 import com.macaosoftware.component.util.MacaoDestinationRenderNotFoundView
 
-class DestinationRenderNotFound : DestinationRender {
+class NotFoundDestinationRender : DestinationRender {
 
     override fun getRenderType(): String {
         return ServerUiConstants.ComponentType.DestinationNotFound
