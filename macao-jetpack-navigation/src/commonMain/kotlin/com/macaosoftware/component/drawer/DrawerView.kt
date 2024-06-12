@@ -38,6 +38,8 @@ fun DrawerView(
     viewModel: DrawerViewModel,
     modifier: Modifier = Modifier
 ) {
+    val navController = rememberNavController()
+    val destinations = viewModel.drawerStatePresenter.navItemsState.value
 
     BackPressHandler {
         viewModel.handleBackPressed()
@@ -56,17 +58,13 @@ fun DrawerView(
         }
     )
 
-    val navController = rememberNavController()
-
-    val navItems = viewModel.drawerStatePresenter.navItemsState.value
-
-    if (navItems.isNotEmpty()) {
+    if (destinations.isNotEmpty()) {
         NavigationDrawer(
             modifier = modifier,
             statePresenter = viewModel.drawerStatePresenter,
             navController = navController,
             destinationRendersRegistry = viewModel.destinationRendersRegistry,
-            navItems = navItems
+            destinations = destinations
         )
     } else {
         DrawerEmptyView(destinationInfo.route)
@@ -74,10 +72,10 @@ fun DrawerView(
 }
 
 @Composable
-fun NavigationDrawer(
+private fun NavigationDrawer(
     statePresenter: DrawerStatePresenter,
     navController: NavHostController,
-    navItems: List<DrawerNavItem>,
+    destinations: List<DrawerNavItem>,
     destinationRendersRegistry: DestinationRendersRegistry,
     modifier: Modifier = Modifier
 ) {
@@ -96,27 +94,27 @@ fun NavigationDrawer(
         NavHost(
             navController = navController,
             route = "Component-Drawer",
-            startDestination = navItems[0].destinationInfo.route,
+            startDestination = destinations[0].destinationInfo.route,
             modifier = modifier.fillMaxSize()
             //.verticalScroll(rememberScrollState())
             //.padding(innerPadding)
         ) {
-            navItems.forEach { drawerNavItem ->
-                composable(drawerNavItem.destinationInfo.route) { backstackEntry ->
+            destinations.forEach { destination ->
+                composable(destination.destinationInfo.route) { backstackEntry ->
 
                     val destinationRender = destinationRendersRegistry
-                        .renderFor(drawerNavItem.destinationInfo.renderType)
+                        .renderFor(destination.destinationInfo.renderType)
 
                     val resultAdapter = destinationRendersRegistry
                         .drawerResultAdapterFor(
-                            drawerNavItem.destinationInfo.renderType
+                            destination.destinationInfo.renderType
                         ).apply {
                             this.drawerStatePresenter = statePresenter
                             this.navController = navController
                         }
 
                     destinationRender.Content(
-                        drawerNavItem.destinationInfo,
+                        destination.destinationInfo,
                         navController,
                         backstackEntry,
                         resultAdapter as ResultAdapter<DestinationResult<*>>
@@ -144,14 +142,13 @@ fun NavigationDrawer(
     LaunchedEffect(key1 = statePresenter) {
         navController.addOnDestinationChangedListener { _, destination, _ ->
 
-            val drawerNavItem = navItems.first {
+            val drawerNavItem = destinations.first {
                 it.destinationInfo.route == destination.route
             }
 
             statePresenter.selectNavItemDeco(drawerNavItem)
         }
     }
-
 }
 
 @Composable

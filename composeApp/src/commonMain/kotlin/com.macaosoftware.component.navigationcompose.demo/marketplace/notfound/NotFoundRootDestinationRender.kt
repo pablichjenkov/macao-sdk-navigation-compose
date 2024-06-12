@@ -6,7 +6,7 @@ import com.macaosoftware.component.core.RootDestinationRender
 import com.macaosoftware.component.navigationcompose.demo.serverui.data.ServerUiConstants
 import com.macaosoftware.component.util.MacaoDestinationRenderNotFoundView
 
-class RootDestinationRenderNotFound : RootDestinationRender {
+class NotFoundRootDestinationRender : RootDestinationRender {
 
     override fun getRenderType(): String {
         return ServerUiConstants.ComponentType.DestinationNotFound

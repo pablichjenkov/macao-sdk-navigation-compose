@@ -12,8 +12,11 @@ object ServerUiConstants {
 
         const val DestinationNotFound = "DestinationNotFound"
 
-        const val BottomNavigation = "BottomNavigation"
-        const val Drawer = "Drawer"
+        const val AppCoordinatorV1 = "AppCoordinatorV1"
+        const val AppCoordinatorV2 = "AppCoordinatorV2"
+
+        const val BottomNavigationDemo = "BottomNavigationDemo"
+        const val DrawerDemo = "DrawerDemo"
 
         const val SimpleScreen = "SimpleScreen"
         const val SimpleScreen1 = "SimpleScreen1"

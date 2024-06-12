@@ -28,7 +28,7 @@ internal class ServerUiRemoteService(
         )
         put(
             ServerUiConstants.JsonKeyName.componentType,
-            JsonPrimitive(ServerUiConstants.ComponentType.Drawer)
+            JsonPrimitive(ServerUiConstants.ComponentType.DrawerDemo)
         )
         putJsonArray(ServerUiConstants.JsonKeyName.children) {
             addJsonObject {
@@ -79,7 +79,7 @@ internal class ServerUiRemoteService(
 
         return DestinationInfo(
             route = ServerUiConstants.Routes.RootGraph.MainEntryPoint,
-            renderType = ServerUiConstants.ComponentType.Drawer,
+            renderType = ServerUiConstants.ComponentType.DrawerDemo,
             dataSource = "https://ktor-gae-401000.appspot.com/customer-project/json-data/${123}",
 
             // Presentation
