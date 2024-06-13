@@ -28,6 +28,11 @@ class SimpleScreen1DestinationRender : DestinationRender {
         resultAdapter: ResultAdapter<DestinationResult<*>>
     ) {
 
+        val color = destinationInfo.props?.getLong("BackgroundColor")
+            ?.let {
+                Color(it)
+            } ?: Color.Green
+
         /**
          * Don't use this one. It just create a dependency but is
          * not scoped. It just create the dependency from the global
@@ -35,9 +40,7 @@ class SimpleScreen1DestinationRender : DestinationRender {
          * */
         val viewModel = koinViewModel<SimpleScreen1ViewModel>(
             parameters = {
-                parametersOf(
-                    Color.Green
-                )
+                parametersOf(color)
             }
         )
 

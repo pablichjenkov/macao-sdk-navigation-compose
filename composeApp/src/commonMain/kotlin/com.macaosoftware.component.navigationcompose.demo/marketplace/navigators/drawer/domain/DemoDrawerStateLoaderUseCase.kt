@@ -3,6 +3,7 @@ package com.macaosoftware.component.navigationcompose.demo.marketplace.navigator
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.sharp.AccountBox
 import androidx.compose.material.icons.sharp.DateRange
+import androidx.core.bundle.Bundle
 import com.macaosoftware.component.core.DestinationInfo
 import com.macaosoftware.component.navigationcompose.demo.serverui.data.ServerUiConstants
 
@@ -23,7 +24,8 @@ class DemoDrawerStateLoaderUseCase {
                 renderType = ServerUiConstants.ComponentType.SimpleScreen1,
                 dataSource = "http://macao-software/custumer/123/destination/root.simple.1",
                 label = "Label: " + ServerUiConstants.ComponentType.SimpleScreen1,
-                icon = Icons.Sharp.AccountBox
+                icon = Icons.Sharp.AccountBox,
+                props = Bundle().apply { putLong("BackgroundColor", 0xFFAA112b) }
             ),
             DestinationInfo(
                 route = ServerUiConstants.Routes.GLOBAL_SCREEN_404,
