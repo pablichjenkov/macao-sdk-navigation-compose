@@ -7,13 +7,21 @@ Refactor the whole Macao SDK architecture and components using jetpack navigatio
   Model that defines the destination in our domain. These destinations are usually setup in the server remotely and their data may vary per App launch. Currently the schema looks like bellow but it will keep adding more fields as it needs them.
   ```kotlin
     data class DestinationInfo(
-      val route: String,
-      val renderType: String,
-      val dataSource: String,
-      val label: String,
-      val icon: ImageVector,
-      val badgeText: String? = null
-    )
+    // Remote Data
+    val route: String,
+    val renderType: String,
+    val dataSource: String,
+
+    // Presentation
+    val label: String,
+    val icon: ImageVector,
+    val badgeText: String? = null,
+
+    // Local Parameters, copying from ReactJS, used to pass properties from parent
+    // to child Composable function.
+    var props: Bundle? = null
+)
+
   ```
 
 - #### DestinationRender
