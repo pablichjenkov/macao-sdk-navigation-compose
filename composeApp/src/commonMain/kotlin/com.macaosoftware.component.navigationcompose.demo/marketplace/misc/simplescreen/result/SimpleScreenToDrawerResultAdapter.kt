@@ -19,7 +19,12 @@ class SimpleScreenToDrawerResultAdapter
 
             is DestinationResult.Error -> {
                 println("SimpleScreen returned error: ${result.error}")
-                navController.popBackStack()
+                if (navController.currentBackStack.value.size > 2) {
+                    println("SimpleScreen popping backstack")
+                    navController.popBackStack()
+                }
+                // If uncommented issue with back button shows up
+                // navController.popBackStack()
             }
 
             is DestinationResult.Success -> {

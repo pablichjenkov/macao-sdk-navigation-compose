@@ -71,5 +71,8 @@ class SimpleScreenDestinationRender : DestinationRender {
             viewModel = viewModel3,
             resultAdapter = resultAdapter
         )
+
+        // todo: Remove this
+        // val viewModel4 = koinViewModel<AnnoViewModel>()
     }
 }

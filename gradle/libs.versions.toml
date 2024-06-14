@@ -6,15 +6,18 @@ androidMinSdk = "26"
 macaoNavigationComposeSdk = "0.6.10"
 macaoAuthFirebase = "0.0.1-dev"
 koinCore = "3.6.0-Beta4"
+koinAnnotations = "1.3.1"
+koinComposeMultiplatform = "1.2.0-Beta4"
 kotlin = "2.0.0"
+ksp = "2.0.0-1.0.21"
 agp = "8.1.4"
-composeAndroidCompiler = "1.6.7"
-composePlugin = "1.6.10"
+composeAndroidCompiler = "1.6.8"
+composePlugin = "1.6.11"
 activityCompose = "1.9.0"
+coreBundle = "1.0.0"
 lifecycleViewmodelCompose = "2.8.0-rc03"
 navigationCompose = "2.7.0-alpha06"
-kamelImage = "0.9.4"
-koinComposeMultiplatform = "1.2.0-Beta4"
+kamelImage = "0.9.5"
 kotlinxCoroutines = "1.8.1"
 ktor = "2.3.11"
 composeIcons = "1.1.0"
@@ -25,6 +28,9 @@ gmazzo = "5.3.5"
 sqldelight = "2.0.2"
 dokka = "1.9.10"
 realm = "1.12.0"
+
+## Test
+junit = "4.13.2"
 
 [libraries]
 
@@ -41,6 +47,7 @@ kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutine
 kamel-image = { module = "media.kamel:kamel-image", version.ref = "kamelImage" }
 
 ## Lifecycle and Navigation Compose
+core-bundle =   { module = "org.jetbrains.androidx.core:core-bundle", version.ref = "coreBundle" }
 lifecycle-viewmodel-compose =   { module = "org.jetbrains.androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycleViewmodelCompose" }
 navigation-compose = { module = "org.jetbrains.androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
 
@@ -51,6 +58,7 @@ multiplatformSettings = { module = "com.russhwolf:multiplatform-settings", versi
 koin-core = { module = "io.insert-koin:koin-core", version.ref = "koinCore" }
 koin-compose = { module = "io.insert-koin:koin-compose", version.ref = "koinComposeMultiplatform" }
 koin-compose-viewmodel = { module = "io.insert-koin:koin-compose-viewmodel", version.ref = "koinComposeMultiplatform" }
+koin-annotations = {module = "io.insert-koin:koin-annotations", version.ref = "koinAnnotations"}
 
 ## Kotlinx Utils
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerialization" }
@@ -77,6 +85,7 @@ compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling", version.ref = 
 compose-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "composeAndroidCompiler" }
 
 ## Test
+junit = { module = "junit:junit", version.ref = "junit" }
 koin-test = { module = "io.insert-koin:koin-test", version.ref = "koinCore" }
 
 [plugins]
@@ -91,3 +100,4 @@ gmazzo = { id = "com.github.gmazzo.buildconfig", version.ref = "gmazzo" }
 sqldelight = { id = "app.cash.sqldelight", version.ref = "sqldelight" }
 dokka = { id = "org.jetbrains.dokka", version.ref = "dokka" }
 realm = { id = "io.realm.kotlin", version.ref = "realm" }
+ksp = {id ="com.google.devtools.ksp", version.ref = "ksp" }

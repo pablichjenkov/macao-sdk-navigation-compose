@@ -138,12 +138,12 @@ kotlin {
         browser()
     }
 
-    @OptIn(ExperimentalWasmDsl::class)
+    /*@OptIn(ExperimentalWasmDsl::class)
     wasmJs {
         moduleName = "ComponentToolkitKt"
         browser()
         binaries.library()
-    }
+    }*/
 
     // JVM
     jvm()
@@ -152,17 +152,21 @@ kotlin {
         // COMMON
         commonMain.dependencies {
             implementation(compose.runtime)
-            implementation(compose.foundation)
             implementation(compose.ui)
+            implementation(compose.foundation)
             implementation(compose.material3)
             implementation(compose.animation)
             implementation(libs.kotlinx.coroutines.core)
             // implementation("org.jetbrains.compose.ui:ui-util:1.5.10")
             // implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1")
 
-            // Lifecycle, Navigation and DI
+            // Lifecycle, Navigation-Compose
+            implementation(libs.core.bundle)
             implementation(libs.lifecycle.viewmodel.compose)
             implementation(libs.navigation.compose)
+
+            // Koin Compose
+            implementation(libs.koin.core)
             implementation(libs.koin.compose)
             implementation(libs.koin.compose.viewmodel)
         }
@@ -172,13 +176,13 @@ kotlin {
 
         // ANDROID
         androidMain.dependencies {
-            implementation("androidx.activity:activity-compose:1.9.0")
+            implementation(libs.activity.compose)
             api(compose.uiTooling)
             api(compose.preview)
         }
         val androidUnitTest by getting {
             dependencies {
-                implementation("junit:junit:4.13.2")
+                implementation(libs.junit)
             }
         }
         val androidInstrumentedTest by getting
