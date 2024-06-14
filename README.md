@@ -1,8 +1,20 @@
-### Macao Jetpack Navigation
-Refactor the whole Macao SDK architecture and components using jetpack navigation-compose.
+### Macao Server UI SDK
+Macao SDK allows you to create and extend an Application from a remote json file. It offers ways to change the lookand feeling of such an App without the need to go through the Google and Apple stores.
+<BR/>
+The Macao SDK already exist but is implemented with a custom architecture, navigation and components library. However, the implementation in this project, is purely fabricated on top of the **multiplatform** version of **Android Architecture Components**.
+
+### Tech Used
+- <ins>Compose Navigation</ins>
+- <ins>Compose ViewModel</ins>
+- <ins>Koin</ins>
+- <ins>Ktor</ins>(coming soon)
+- <ins>Room</ins>(coming soon)
+
+### Supported Targets
+Android, iOS, JVM and JS, **Wasm not supported**
 
 ---
-### New architecture, new concepts:
+### Core concepts
 - #### DestinationInfo
   Model that defines the destination in our domain. These destinations are usually setup in the server remotely and their data may vary per App launch. Currently the schema looks like bellow but it will keep adding more fields as it needs them.
   ```kotlin
