@@ -1,4 +1,5 @@
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompilationTask
 
 plugins {
     alias(libs.plugins.ksp)
@@ -51,44 +52,47 @@ kotlin {
     }
 
     sourceSets {
-        commonMain.dependencies {
-            implementation(compose.runtime)
-            implementation(compose.ui)
-            implementation(compose.foundation)
-            implementation(compose.material3)
-            implementation(compose.components.resources)
+        commonMain {
+            kotlin.srcDir("build/generated/ksp/metadata/commonMain/kotlin")
+            dependencies {
+                implementation(compose.runtime)
+                implementation(compose.ui)
+                implementation(compose.foundation)
+                implementation(compose.material3)
+                implementation(compose.components.resources)
 
-            // Desktop Previews (uses different Jetbrains library)
-            implementation(compose.components.uiToolingPreview)
+                // Desktop Previews (uses different Jetbrains library)
+                implementation(compose.components.uiToolingPreview)
 
-            // Kamel
-            implementation(libs.kamel.image)
+                // Kamel
+                implementation(libs.kamel.image)
 
-            // Kotlinx Utils
-            implementation(libs.kotlinx.coroutines.core)
-            implementation(libs.kotlinx.serialization.json)
-            implementation(libs.kotlinx.datetime)
+                // Kotlinx Utils
+                implementation(libs.kotlinx.coroutines.core)
+                implementation(libs.kotlinx.serialization.json)
+                implementation(libs.kotlinx.datetime)
 
-            // ktor
-            implementation(libs.ktor.client.core)
-            implementation(libs.ktor.serialization.kotlinx.json)
-            implementation(libs.kotlinx.serialization.json)
-            implementation(libs.ktor.client.content.negotiation)
-            implementation(libs.ktor.client.logging)
+                // ktor
+                implementation(libs.ktor.client.core)
+                implementation(libs.ktor.serialization.kotlinx.json)
+                implementation(libs.kotlinx.serialization.json)
+                implementation(libs.ktor.client.content.negotiation)
+                implementation(libs.ktor.client.logging)
 
-            // Lifecycle, Navigation-Compose
-            implementation(libs.core.bundle)
-            implementation(libs.lifecycle.viewmodel.compose)
-            implementation(libs.navigation.compose)
+                // Lifecycle, Navigation-Compose
+                implementation(libs.core.bundle)
+                implementation(libs.lifecycle.viewmodel.compose)
+                implementation(libs.navigation.compose)
 
-            // Koin Compose
-            implementation(libs.koin.core)
-            implementation(libs.koin.compose)
-            implementation(libs.koin.compose.viewmodel)
-            implementation(libs.koin.annotations)
+                // Koin Compose
+                implementation(libs.koin.core)
+                implementation(libs.koin.compose)
+                implementation(libs.koin.compose.viewmodel)
+                implementation(libs.koin.annotations)
 
-            // Macao Libs
-            implementation(project(":macao-jetpack-navigation"))
+                // Macao Libs
+                implementation(project(":macao-jetpack-navigation"))
+            }
         }
         iosMain.dependencies {
             // Ktor
@@ -191,13 +195,19 @@ ksp {
 }
 
 dependencies {
-    add("kspCommonMainMetadata", "io.insert-koin:koin-ksp-compiler:1.3.1")
-    add("kspJvm", "io.insert-koin:koin-ksp-compiler:1.3.1")
-    add("kspAndroid", "io.insert-koin:koin-ksp-compiler:1.3.1")
-    add("kspIosX64", "io.insert-koin:koin-ksp-compiler:1.3.1")
-    add("kspIosArm64", "io.insert-koin:koin-ksp-compiler:1.3.1")
-    add("kspIosSimulatorArm64", "io.insert-koin:koin-ksp-compiler:1.3.1")
-    add("kspJs", "io.insert-koin:koin-ksp-compiler:1.3.1")
+    add("kspCommonMainMetadata", libs.koin.ksp.compiler)
+//    add("kspJvm", "io.insert-koin:koin-ksp-compiler:1.3.1")
+//    add("kspAndroid", "io.insert-koin:koin-ksp-compiler:1.3.1")
+//    add("kspIosX64", "io.insert-koin:koin-ksp-compiler:1.3.1")
+//    add("kspIosArm64", "io.insert-koin:koin-ksp-compiler:1.3.1")
+//    add("kspIosSimulatorArm64", "io.insert-koin:koin-ksp-compiler:1.3.1")
+//    add("kspJs", "io.insert-koin:koin-ksp-compiler:1.3.1")
+}
+
+tasks.withType<KotlinCompilationTask<*>>().configureEach {
+    if (name != "kspCommonMainKotlinMetadata") {
+        dependsOn("kspCommonMainKotlinMetadata")
+    }
 }
 
 /*

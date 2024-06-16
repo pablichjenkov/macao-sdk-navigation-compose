@@ -9,6 +9,7 @@ The Macao SDK already exist but is implemented with a custom architecture, navig
 - <ins>Koin</ins>
 - <ins>Ktor</ins>(coming soon)
 - <ins>Room</ins>(coming soon)
+- <ins>Coil</ins>(coming soon)
 
 ### Supported Targets
 Android, iOS, JVM and JS, **Wasm not supported**
