@@ -1,6 +1,7 @@
 package com.macaosoftware.component.navigationcompose.demo.marketplace.navigators.drawer.ui
 
 import androidx.compose.runtime.Composable
+import androidx.lifecycle.ViewModelStoreOwner
 import com.macaosoftware.component.core.DestinationInfo
 import com.macaosoftware.component.core.RootDestinationRender
 import com.macaosoftware.component.drawer.DrawerView
@@ -14,7 +15,10 @@ class DemoDrawerRootDestinationRender : RootDestinationRender {
     }
 
     @Composable
-    override fun Content(destinationInfo: DestinationInfo) {
+    override fun Content(
+        destinationInfo: DestinationInfo,
+        viewModelStoreOwner: ViewModelStoreOwner
+    ) {
         val viewModel = koinViewModel<DemoDrawerViewModel>()
         DrawerView(destinationInfo, viewModel)
     }

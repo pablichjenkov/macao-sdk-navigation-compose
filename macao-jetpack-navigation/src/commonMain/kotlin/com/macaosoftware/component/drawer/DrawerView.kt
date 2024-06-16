@@ -113,6 +113,7 @@ private fun NavigationDrawer(
                             this.navController = navController
                         }
 
+                    @Suppress("UNCHECKED_CAST")
                     destinationRender.Content(
                         destination.destinationInfo,
                         navController,

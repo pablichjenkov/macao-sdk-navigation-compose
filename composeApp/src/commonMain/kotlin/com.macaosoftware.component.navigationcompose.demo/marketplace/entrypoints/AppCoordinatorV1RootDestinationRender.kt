@@ -1,6 +1,7 @@
 package com.macaosoftware.component.navigationcompose.demo.marketplace.entrypoints
 
 import androidx.compose.runtime.Composable
+import androidx.lifecycle.ViewModelStoreOwner
 import com.macaosoftware.component.core.DestinationInfo
 import com.macaosoftware.component.core.RootDestinationRender
 import com.macaosoftware.component.navigationcompose.demo.serverui.data.ServerUiConstants
@@ -14,7 +15,10 @@ class AppCoordinatorV1RootDestinationRender : RootDestinationRender {
     }
 
     @Composable
-    override fun Content(destinationInfo: DestinationInfo) {
+    override fun Content(
+        destinationInfo: DestinationInfo,
+        viewModelStoreOwner: ViewModelStoreOwner
+    ) {
         val viewModel = koinViewModel<AppCoordinatorV1ViewModel>()
         StackView(destinationInfo, viewModel)
     }

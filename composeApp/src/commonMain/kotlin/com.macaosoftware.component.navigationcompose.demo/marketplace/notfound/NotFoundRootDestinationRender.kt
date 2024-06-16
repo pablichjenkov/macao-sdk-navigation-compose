@@ -1,6 +1,7 @@
 package com.macaosoftware.component.navigationcompose.demo.marketplace.notfound
 
 import androidx.compose.runtime.Composable
+import androidx.lifecycle.ViewModelStoreOwner
 import com.macaosoftware.component.core.DestinationInfo
 import com.macaosoftware.component.core.RootDestinationRender
 import com.macaosoftware.component.navigationcompose.demo.serverui.data.ServerUiConstants
@@ -13,7 +14,7 @@ class NotFoundRootDestinationRender : RootDestinationRender {
     }
 
     @Composable
-    override fun Content(destinationInfo: DestinationInfo) {
+    override fun Content(destinationInfo: DestinationInfo, viewModelStoreOwner: ViewModelStoreOwner) {
         MacaoDestinationRenderNotFoundView(destinationInfo.renderType)
     }
 }
