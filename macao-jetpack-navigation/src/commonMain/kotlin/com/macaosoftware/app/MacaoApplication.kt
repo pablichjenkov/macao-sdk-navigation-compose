@@ -10,6 +10,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.compose.LifecycleStartEffect
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 import org.koin.compose.KoinIsolatedContext
 
@@ -21,8 +22,11 @@ private const val ErrorNullViewModelStoreOwner = """
 fun MacaoApplication(
     applicationState: MacaoApplicationState
 ) {
-
-    LifecycleStartEffect(key1 = applicationState) {
+    LocalLifecycleOwner.current!!
+    LifecycleStartEffect(
+        key1 = applicationState,
+        lifecycleOwner = LocalLifecycleOwner.current
+    ) {
         applicationState.start()
         onStopOrDispose {
             // no-op
