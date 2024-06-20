@@ -162,6 +162,7 @@ kotlin {
 
             // Lifecycle, Navigation-Compose
             implementation(libs.core.bundle)
+            implementation(libs.lifecycle.runtime.compose)
             implementation(libs.lifecycle.viewmodel.compose)
             implementation(libs.navigation.compose)
 

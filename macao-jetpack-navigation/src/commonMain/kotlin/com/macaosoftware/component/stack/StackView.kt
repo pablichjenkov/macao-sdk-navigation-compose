@@ -3,7 +3,7 @@ package com.macaosoftware.component.stack
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalLifecycleOwner
+import androidx.lifecycle.compose.LifecycleStartEffect
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -28,18 +28,12 @@ fun StackView(
         viewModel.handleBackPressed()
     }
 
-    com.macaosoftware.plugin.lifecycle.LifecycleEventObserver(
-        lifecycleOwner = LocalLifecycleOwner.current,
-        onStart = {
-            viewModel.onStart()
-        },
-        onStop = {
-            viewModel.onStop()
-        },
-        initializeBlock = {
-            viewModel.onAttach(destinationInfo)
-        }
-    )
+    LifecycleStartEffect(key1 = destinationInfo) {
+
+        viewModel.onStart(destinationInfo)
+
+        onStopOrDispose { viewModel.onStop() }
+    }
 
     if (destinations.isNotEmpty()) {
         StackNavigation(

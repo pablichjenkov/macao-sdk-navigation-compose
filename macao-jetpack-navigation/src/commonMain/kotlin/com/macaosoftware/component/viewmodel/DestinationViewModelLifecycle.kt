@@ -3,8 +3,6 @@ package com.macaosoftware.component.viewmodel
 import com.macaosoftware.component.core.DestinationInfo
 
 interface DestinationViewModelLifecycle {
-    fun onAttach(destinationInfo: DestinationInfo)
-    fun onStart()
+    fun onStart(destinationInfo: DestinationInfo)
     fun onStop()
-    fun onDetach()
 }

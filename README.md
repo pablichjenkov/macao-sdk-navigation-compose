@@ -5,7 +5,7 @@ The Macao SDK already exist but is implemented with a custom architecture, navig
 
 ### Tech Used
 - <ins>Compose Navigation</ins>
-- <ins>Compose ViewModel</ins>
+- <ins>Compose Lifecycle-ViewModel</ins>
 - <ins>Koin</ins>
 - <ins>Ktor</ins>(coming soon)
 - <ins>Room</ins>(coming soon)
