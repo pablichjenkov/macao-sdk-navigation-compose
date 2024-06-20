@@ -18,19 +18,11 @@ class SimpleScreenViewModel(
     private val coroutineScope = CoroutineScope(Dispatchers.Main)
     val resultFlow = MutableSharedFlow<DestinationResult<SimpleScreenResult>>()
 
-    override fun onAttach(destinationInfo: DestinationInfo) {
-
-    }
-
-    override fun onStart() {
+    override fun onStart(destinationInfo: DestinationInfo) {
 
     }
 
     override fun onStop() {
-
-    }
-
-    override fun onDetach() {
 
     }
 

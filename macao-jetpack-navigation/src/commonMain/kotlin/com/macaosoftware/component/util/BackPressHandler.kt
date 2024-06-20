@@ -8,6 +8,7 @@ import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.compose.LifecycleStartEffect
 import com.macaosoftware.plugin.BackPressDispatcherPlugin
 import com.macaosoftware.plugin.DefaultBackPressDispatcherPlugin
 import com.macaosoftware.plugin.ForwardBackPressCallback
@@ -46,17 +47,14 @@ fun BackPressHandler(
         }
     }
 
-    com.macaosoftware.plugin.lifecycle.LifecycleEventObserver(
-        lifecycleOwner = LocalLifecycleOwner.current,
-        onStart = {
-            if (enabled) {
-                backPressDispatcher.subscribe(backPressMacaoPluginCallback)
-            }
-        },
-        onStop = {
-            backPressDispatcher.unsubscribe(backPressMacaoPluginCallback)
+    LifecycleStartEffect(key1 = LocalLifecycleOwner.current) {
+
+        if (enabled) {
+            backPressDispatcher.subscribe(backPressMacaoPluginCallback)
         }
-    )
+
+        onStopOrDispose { backPressDispatcher.unsubscribe(backPressMacaoPluginCallback) }
+    }
 }
 
 /**

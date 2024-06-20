@@ -6,11 +6,8 @@ import org.koin.android.annotation.KoinViewModel
 
 // @KoinViewModel
 class AnnotationTestViewModel : DestinationViewModel() {
-    override fun onAttach(destinationInfo: DestinationInfo) {
-        TODO("Not yet implemented")
-    }
 
-    override fun onStart() {
+    override fun onStart(destinationInfo: DestinationInfo) {
         TODO("Not yet implemented")
     }
 
@@ -18,7 +15,4 @@ class AnnotationTestViewModel : DestinationViewModel() {
         TODO("Not yet implemented")
     }
 
-    override fun onDetach() {
-        TODO("Not yet implemented")
-    }
 }

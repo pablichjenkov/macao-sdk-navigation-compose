@@ -10,19 +10,11 @@ class AppCoordinatorV2ViewModel(
     override val destinationRendersRegistry: DestinationRendersRegistry
 ) : StackViewModel() {
 
-    override fun onAttach(destinationInfo: DestinationInfo) {
-        TODO("Not yet implemented")
-    }
-
-    override fun onStart() {
+    override fun onStart(destinationInfo: DestinationInfo) {
         TODO("Not yet implemented")
     }
 
     override fun onStop() {
-        TODO("Not yet implemented")
-    }
-
-    override fun onDetach() {
         TODO("Not yet implemented")
     }
 

@@ -28,10 +28,33 @@ class MacaoApplicationState(
     private val dispatchers: CoroutineDispatchers = CoroutineDispatchers.Default
 ) {
 
-    internal var startupStage = mutableStateOf<StartupStage>(Created)
+    internal var startupStage = mutableStateOf<StartupStage>(JustCreated)
     private val coroutineScope = CoroutineScope(dispatchers.main)
+    private var isInitializedSuccess = false
 
-    fun initialize() = coroutineScope.launch {
+    /**
+     * Triggers a new initialization flow only if the Application hasn't been successfully initialized
+     * before.
+     * See: isInitializedSuccess
+     * */
+    fun start() = coroutineScope.launch {
+
+        // If it was already initialized we just return
+        if (isInitializedSuccess) return@launch
+
+        initializeKoinRootModule()
+    }
+
+    /**
+     * Triggers a new initialization flow without considering isInitializedSuccess
+     * */
+    fun refreshInitialization() = coroutineScope.launch {
+        initializeKoinRootModule()
+    }
+
+    private suspend fun initializeKoinRootModule() = coroutineScope.launch {
+
+        startupStage.value = Initializing.KoinRootModule
 
         val koinApplication = withContext(dispatchers.default) {
 
@@ -107,10 +130,19 @@ class MacaoApplicationState(
             }
 
             is MacaoResult.Success -> {
+
+                val rootDestinationRender = isolatedKoinComponent
+                    .getKoin()
+                    .get<DestinationRendersRegistry>()
+                    .renderForRoot(result.value.renderType)
+
                 startupStage.value = InitializationSuccess(
                     isolatedKoinComponent = isolatedKoinComponent,
-                    rootDestinationInfo = result.value
+                    rootDestinationInfo = result.value,
+                    rootDestinationRender = rootDestinationRender
                 )
+
+                isInitializedSuccess = true
             }
         }
     }
@@ -119,10 +151,10 @@ class MacaoApplicationState(
 
 internal sealed class StartupStage
 
-internal data object Created : StartupStage()
+internal object JustCreated : StartupStage()
 
 internal sealed class Initializing : StartupStage() {
-    // data object KoinRootModule : Initializing()
+    data object KoinRootModule : Initializing()
     data class StartupTaskRunning(val task: StartupTask) : Initializing()
     data object FetchingRemoteNavigationRootGraph : Initializing()
 }
@@ -131,5 +163,6 @@ internal class InitializationError(val error: MacaoError) : StartupStage()
 
 internal class InitializationSuccess(
     val isolatedKoinComponent: IsolatedKoinComponent,
-    val rootDestinationInfo: DestinationInfo
+    val rootDestinationInfo: DestinationInfo,
+    val rootDestinationRender: RootDestinationRender
 ) : StartupStage()

@@ -20,8 +20,8 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.LifecycleStartEffect
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -45,18 +45,12 @@ fun DrawerView(
         viewModel.handleBackPressed()
     }
 
-    com.macaosoftware.plugin.lifecycle.LifecycleEventObserver(
-        lifecycleOwner = LocalLifecycleOwner.current,
-        onStart = {
-            viewModel.onStart()
-        },
-        onStop = {
-            viewModel.onStop()
-        },
-        initializeBlock = {
-            viewModel.onAttach(destinationInfo)
-        }
-    )
+    LifecycleStartEffect(key1 = destinationInfo) {
+
+        viewModel.onStart(destinationInfo)
+
+        onStopOrDispose { viewModel.onStop() }
+    }
 
     if (destinations.isNotEmpty()) {
         NavigationDrawer(

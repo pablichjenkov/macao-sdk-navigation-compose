@@ -57,7 +57,7 @@ fun main() {
             onMaximizeClick = { windowState.size = DpSize(width = 1200.dp, height = 1220.dp) },
             onCloseClick = { exitProcess(0) },
             onRefreshClick = {
-                applicationState.initialize()
+                applicationState.refreshInitialization()
             },
             onBackClick = { backPressedDispatcherPlugin.dispatchBackPressed() }
         ) {

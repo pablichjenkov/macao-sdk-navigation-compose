@@ -18,8 +18,9 @@ internal class DemoDrawerViewModel(
 
     private val coroutineScope = CoroutineScope(Dispatchers.Main)
 
-    override fun onAttach(destinationInfo: DestinationInfo) {
-        println("DemoDrawerViewModel[${instanceId()}]::onAttach()")
+    override fun onStart(destinationInfo: DestinationInfo) {
+        println("DemoDrawerViewModel[${instanceId()}]::onStart()")
+
         coroutineScope.launch {
             val childDestinations = stateLoaderUseCase
                 .loadChildrenDestinations(destinationInfo.dataSource)
@@ -30,16 +31,8 @@ internal class DemoDrawerViewModel(
         }
     }
 
-    override fun onStart() {
-        println("DemoDrawerViewModel[${instanceId()}]::onStart()")
-    }
-
     override fun onStop() {
         println("DemoDrawerViewModel[${instanceId()}]::onStop()")
-    }
-
-    override fun onDetach() {
-        println("DemoDrawerViewModel[${instanceId()}]::onDetach()")
     }
 
     override fun handleBackPressed() {
