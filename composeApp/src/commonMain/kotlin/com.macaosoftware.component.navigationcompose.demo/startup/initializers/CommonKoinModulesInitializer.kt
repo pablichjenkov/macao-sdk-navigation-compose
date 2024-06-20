@@ -7,13 +7,13 @@ import com.macaosoftware.component.navigationcompose.demo.marketplace.navigators
 import com.macaosoftware.component.navigationcompose.demo.marketplace.notfound.di.destinationNotFoundModule
 import com.macaosoftware.component.navigationcompose.demo.serverui.di.serverUiModule
 import com.macaosoftware.component.navigationcompose.demo.system.di.commonKoinModule
-import com.macaosoftware.plugin.CoroutineDispatchers
+import com.macaosoftware.plugin.getCoroutineDispatchers
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import org.koin.core.module.Module
 
 abstract class CommonKoinModulesInitializer(
-    private val ioDispatcher: CoroutineDispatcher = CoroutineDispatchers.Default.io
+    private val ioDispatcher: CoroutineDispatcher = getCoroutineDispatchers().io
 ) : KoinModulesInitializer {
 
     override suspend fun initialize(): List<Module> = withContext(ioDispatcher) {

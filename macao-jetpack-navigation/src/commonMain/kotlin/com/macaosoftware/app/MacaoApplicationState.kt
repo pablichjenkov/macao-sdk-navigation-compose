@@ -13,6 +13,7 @@ import com.macaosoftware.component.core.DestinationRendersRegistry
 import com.macaosoftware.component.core.RootDestinationRender
 import com.macaosoftware.component.drawer.DrawerResultAdapter
 import com.macaosoftware.plugin.CoroutineDispatchers
+import com.macaosoftware.plugin.getCoroutineDispatchers
 import com.macaosoftware.util.MacaoError
 import com.macaosoftware.util.MacaoResult
 import kotlinx.coroutines.CoroutineScope
@@ -25,7 +26,7 @@ class MacaoApplicationState(
     private val koinModulesInitializer: KoinModulesInitializer,
     private val startupTaskRunner: StartupTaskRunner,
     private val rootGraphInitializer: RootGraphInitializer,
-    private val dispatchers: CoroutineDispatchers = CoroutineDispatchers.Default
+    private val dispatchers: CoroutineDispatchers = getCoroutineDispatchers()
 ) {
 
     internal var startupStage = mutableStateOf<StartupStage>(JustCreated)
