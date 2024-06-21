@@ -1,6 +1,7 @@
 package com.macaosoftware.component.navigationcompose.demo.startup.initializers
 
 import com.macaosoftware.app.startup.initializers.RootGraphInitializer
+import com.macaosoftware.app.startup.initializers.RootGraphInitializerError
 import com.macaosoftware.component.core.DestinationInfo
 import com.macaosoftware.component.navigationcompose.demo.serverui.data.ServerUiRemoteService
 import com.macaosoftware.util.MacaoResult
@@ -13,7 +14,7 @@ class DemoRootGraphInitializer : RootGraphInitializer {
         return true
     }
 
-    override suspend fun initialize(koinComponent: KoinComponent): MacaoResult<DestinationInfo> {
+    override suspend fun initialize(koinComponent: KoinComponent): MacaoResult<DestinationInfo, RootGraphInitializerError> {
 
         val serverUiRemoteService = koinComponent.get<ServerUiRemoteService>()
         val rootDestinationInfo = serverUiRemoteService.getRootDestinationInfo()

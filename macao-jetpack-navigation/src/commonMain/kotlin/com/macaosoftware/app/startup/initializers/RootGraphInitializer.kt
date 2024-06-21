@@ -10,5 +10,5 @@ interface RootGraphInitializer {
     fun shouldShowLoader(): Boolean
     suspend fun initialize(
         koinComponent: KoinComponent
-    ): MacaoResult<DestinationInfo>
+    ): MacaoResult<DestinationInfo, RootGraphInitializerError>
 }
