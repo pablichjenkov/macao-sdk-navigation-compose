@@ -4,6 +4,7 @@ import androidx.compose.runtime.mutableStateOf
 import com.macaosoftware.app.di.IsolatedKoinComponent
 import com.macaosoftware.app.startup.initializers.KoinModulesInitializer
 import com.macaosoftware.app.startup.initializers.RootGraphInitializer
+import com.macaosoftware.app.startup.initializers.RootGraphInitializerError
 import com.macaosoftware.app.startup.task.StartupTask
 import com.macaosoftware.app.startup.task.StartupTaskRunner
 import com.macaosoftware.app.startup.task.StartupTasksEvents
@@ -14,7 +15,6 @@ import com.macaosoftware.component.core.RootDestinationRender
 import com.macaosoftware.component.drawer.DrawerResultAdapter
 import com.macaosoftware.plugin.CoroutineDispatchers
 import com.macaosoftware.plugin.getCoroutineDispatchers
-import com.macaosoftware.util.MacaoError
 import com.macaosoftware.util.MacaoResult
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.flowOn
@@ -107,7 +107,7 @@ class MacaoApplicationState(
                     }
 
                     is StartupTasksEvents.TaskFinishedWithError -> {
-                        startupStage.value = InitializationError(status.error)
+                        startupStage.value = InitializationFailure(status.error)
                     }
 
                     is StartupTasksEvents.AllTaskCompletedSuccess -> {
@@ -127,7 +127,7 @@ class MacaoApplicationState(
         }
         when (result) {
             is MacaoResult.Error -> {
-                startupStage.value = InitializationError(result.error)
+                startupStage.value = InitializationFailure(result.error)
             }
 
             is MacaoResult.Success -> {
@@ -149,21 +149,3 @@ class MacaoApplicationState(
     }
 
 }
-
-internal sealed class StartupStage
-
-internal object JustCreated : StartupStage()
-
-internal sealed class Initializing : StartupStage() {
-    data object KoinRootModule : Initializing()
-    data class StartupTaskRunning(val task: StartupTask) : Initializing()
-    data object FetchingRemoteNavigationRootGraph : Initializing()
-}
-
-internal class InitializationError(val error: MacaoError) : StartupStage()
-
-internal class InitializationSuccess(
-    val isolatedKoinComponent: IsolatedKoinComponent,
-    val rootDestinationInfo: DestinationInfo,
-    val rootDestinationRender: RootDestinationRender
-) : StartupStage()

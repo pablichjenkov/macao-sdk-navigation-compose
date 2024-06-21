@@ -12,6 +12,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.compose.LifecycleStartEffect
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
+import com.macaosoftware.app.startup.initializers.RootGraphInitializerError
+import com.macaosoftware.app.startup.task.StartupTaskError
 import org.koin.compose.KoinIsolatedContext
 
 private const val ErrorNullViewModelStoreOwner = """
@@ -44,8 +46,8 @@ fun MacaoApplication(
             InitializationHandler(stage)
         }
 
-        is InitializationError -> {
-            SplashScreen(stage.error.message, Color.Red)
+        is InitializationFailure -> {
+            FailureScreen(stage)
         }
 
         is InitializationSuccess -> {
@@ -68,6 +70,23 @@ fun MacaoApplication(
             }
         }
     }
+}
+
+@Composable
+private fun FailureScreen(failure: InitializationFailure) {
+
+    val errorMsg = when(val error = failure.error) {
+
+        is StartupTaskError -> { error.errorMsg }
+
+        is RootGraphInitializerError -> {
+            error.errorMsg
+        }
+
+        else -> { "Unknown Error" }
+    }
+
+    SplashScreen(errorMsg, Color.Red)
 }
 
 @Composable

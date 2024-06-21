@@ -14,6 +14,7 @@ data class DestinationInfo(
     val icon: ImageVector,
     val badgeText: String? = null,
 
-    // Local Parameters
+    // To pass input params from parents down to children.
+    // Basically is the "Props" pattern taken from ReactJS.
     var props: Bundle? = null
 )

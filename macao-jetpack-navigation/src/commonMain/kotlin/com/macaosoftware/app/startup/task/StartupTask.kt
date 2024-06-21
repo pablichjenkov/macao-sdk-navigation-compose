@@ -18,5 +18,5 @@ interface StartupTask {
      * Things like Database Migration and LaunchDarkly initialization
      * are examples of StartupTasks.
      * */
-    suspend fun initialize(koinComponent: KoinComponent): MacaoResult<Unit>
+    suspend fun initialize(koinComponent: KoinComponent): MacaoResult<Unit, StartupTaskError>
 }
