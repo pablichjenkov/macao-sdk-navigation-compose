@@ -56,7 +56,7 @@ Android, iOS, JVM and JS, **Wasm not supported yet**
         destinationInfo: DestinationInfo,
         navController: NavHostController,
         navBackStackEntry: NavBackStackEntry,
-        resultAdapter: ResultAdapter<DestinationResult<*>>
+        resultHandler: ResultHandler<DestinationResult<*>>
       )
     }
   

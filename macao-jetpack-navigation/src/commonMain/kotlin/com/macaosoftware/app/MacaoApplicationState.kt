@@ -4,15 +4,12 @@ import androidx.compose.runtime.mutableStateOf
 import com.macaosoftware.app.di.IsolatedKoinComponent
 import com.macaosoftware.app.startup.initializers.KoinModulesInitializer
 import com.macaosoftware.app.startup.initializers.RootGraphInitializer
-import com.macaosoftware.app.startup.initializers.RootGraphInitializerError
-import com.macaosoftware.app.startup.task.StartupTask
 import com.macaosoftware.app.startup.task.StartupTaskRunner
 import com.macaosoftware.app.startup.task.StartupTasksEvents
-import com.macaosoftware.component.core.DestinationInfo
 import com.macaosoftware.component.core.DestinationRender
 import com.macaosoftware.component.core.DestinationRendersRegistry
 import com.macaosoftware.component.core.RootDestinationRender
-import com.macaosoftware.component.drawer.DrawerResultAdapter
+import com.macaosoftware.component.drawer.DrawerResultHandler
 import com.macaosoftware.plugin.CoroutineDispatchers
 import com.macaosoftware.plugin.getCoroutineDispatchers
 import com.macaosoftware.util.MacaoResult
@@ -87,7 +84,7 @@ class MacaoApplicationState(
 
             // Register all DrawerResultAdapter implementations provided
             // in all Koin Modules
-            getAll<DrawerResultAdapter<*>>().forEach {
+            getAll<DrawerResultHandler<*>>().forEach {
                 destinationRendersRegistry.addDrawerResultAdapter(it)
             }
         }

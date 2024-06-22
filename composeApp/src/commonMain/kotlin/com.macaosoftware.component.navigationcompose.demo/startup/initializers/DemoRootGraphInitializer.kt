@@ -7,6 +7,7 @@ import com.macaosoftware.component.navigationcompose.demo.serverui.data.ServerUi
 import com.macaosoftware.util.MacaoResult
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.get
+import kotlin.coroutines.cancellation.CancellationException
 
 class DemoRootGraphInitializer : RootGraphInitializer {
 
@@ -14,11 +15,16 @@ class DemoRootGraphInitializer : RootGraphInitializer {
         return true
     }
 
-    override suspend fun initialize(koinComponent: KoinComponent): MacaoResult<DestinationInfo, RootGraphInitializerError> {
-
+    override suspend fun initialize(
+        koinComponent: KoinComponent
+    ): MacaoResult<DestinationInfo, RootGraphInitializerError> = try {
         val serverUiRemoteService = koinComponent.get<ServerUiRemoteService>()
         val rootDestinationInfo = serverUiRemoteService.getRootDestinationInfo()
-
-        return MacaoResult.Success(rootDestinationInfo)
+        MacaoResult.Success(rootDestinationInfo)
+    } catch (th: Throwable) {
+        if (th is CancellationException) throw th
+        MacaoResult.Error(
+            RootGraphInitializerError("Error loading remote root destination: $th")
+        )
     }
 }

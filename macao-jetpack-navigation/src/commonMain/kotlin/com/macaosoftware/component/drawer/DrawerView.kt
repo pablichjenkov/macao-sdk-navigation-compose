@@ -29,7 +29,7 @@ import androidx.navigation.compose.rememberNavController
 import com.macaosoftware.component.core.DestinationInfo
 import com.macaosoftware.component.core.DestinationRendersRegistry
 import com.macaosoftware.component.core.DestinationResult
-import com.macaosoftware.component.core.ResultAdapter
+import com.macaosoftware.component.core.ResultHandler
 import com.macaosoftware.component.util.BackPressHandler
 
 @Composable
@@ -112,7 +112,7 @@ private fun NavigationDrawer(
                         destination.destinationInfo,
                         navController,
                         backstackEntry,
-                        resultAdapter as ResultAdapter<DestinationResult<*>>
+                        resultAdapter as ResultHandler<DestinationResult<*>>
                     )
                 }
             }

@@ -1,7 +1,7 @@
 package com.macaosoftware.component.core
 
-import com.macaosoftware.component.drawer.DrawerResultAdapter
-import com.macaosoftware.component.stack.StackResultAdapter
+import com.macaosoftware.component.drawer.DrawerResultHandler
+import com.macaosoftware.component.stack.StackResultHandler
 
 interface DestinationRendersRegistry {
 
@@ -11,11 +11,11 @@ interface DestinationRendersRegistry {
     fun addRoot(destinationRender: RootDestinationRender)
     fun renderForRoot(rootRenderType: String): RootDestinationRender
 
-    fun addDrawerResultAdapter(drawerResultAdapter:  DrawerResultAdapter<*>)
+    fun addDrawerResultAdapter(drawerResultAdapter:  DrawerResultHandler<*>)
     fun drawerResultAdapterFor(
         destinationType: String
-    ): DrawerResultAdapter<*>
+    ): DrawerResultHandler<*>
 
-    fun addStackResultAdapter(stackResultAdapter: StackResultAdapter<*>)
-    fun stackResultAdapterFor(destinationType: String): StackResultAdapter<*>
+    fun addStackResultAdapter(stackResultAdapter: StackResultHandler<*>)
+    fun stackResultAdapterFor(destinationType: String): StackResultHandler<*>
 }

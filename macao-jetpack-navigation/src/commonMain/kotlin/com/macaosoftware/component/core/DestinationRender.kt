@@ -13,6 +13,6 @@ interface DestinationRender {
         destinationInfo: DestinationInfo,
         navController: NavHostController,
         navBackStackEntry: NavBackStackEntry,
-        resultAdapter: ResultAdapter<DestinationResult<*>>
+        resultHandler: ResultHandler<DestinationResult<*>>
     )
 }

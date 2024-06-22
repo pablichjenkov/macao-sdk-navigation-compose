@@ -7,7 +7,7 @@ import androidx.navigation.NavHostController
 import com.macaosoftware.component.core.DestinationInfo
 import com.macaosoftware.component.core.DestinationRender
 import com.macaosoftware.component.core.DestinationResult
-import com.macaosoftware.component.core.ResultAdapter
+import com.macaosoftware.component.core.ResultHandler
 import com.macaosoftware.component.navigationcompose.demo.serverui.data.ServerUiConstants
 import org.koin.compose.viewmodel.koinViewModel
 import org.koin.core.annotation.KoinExperimentalAPI
@@ -25,7 +25,7 @@ class SimpleScreen1DestinationRender : DestinationRender {
         destinationInfo: DestinationInfo,
         navController: NavHostController,
         navBackStackEntry: NavBackStackEntry,
-        resultAdapter: ResultAdapter<DestinationResult<*>>
+        resultHandler: ResultHandler<DestinationResult<*>>
     ) {
 
         val color = destinationInfo.props?.getLong("BackgroundColor")
@@ -46,7 +46,7 @@ class SimpleScreen1DestinationRender : DestinationRender {
 
         SimpleScreen1View(
             viewModel = viewModel,
-            resultAdapter = resultAdapter
+            resultHandler = resultHandler
         )
     }
 }
