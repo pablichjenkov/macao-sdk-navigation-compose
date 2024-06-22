@@ -2,9 +2,9 @@ package com.macaosoftware.component.stack
 
 import androidx.navigation.NavHostController
 import com.macaosoftware.component.core.DestinationResult
-import com.macaosoftware.component.core.ResultAdapter
+import com.macaosoftware.component.core.ResultHandler
 
-abstract class StackResultAdapter<T> : ResultAdapter<DestinationResult<T>> {
+abstract class StackResultHandler<T> : ResultHandler<DestinationResult<T>> {
 
     lateinit var stackStatePresenter: StackStatePresenter
     lateinit var navController: NavHostController

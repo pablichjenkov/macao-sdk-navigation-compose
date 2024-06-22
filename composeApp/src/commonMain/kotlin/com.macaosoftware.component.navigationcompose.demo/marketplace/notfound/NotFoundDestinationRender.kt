@@ -7,7 +7,7 @@ import com.macaosoftware.component.core.Cancel
 import com.macaosoftware.component.core.DestinationInfo
 import com.macaosoftware.component.core.DestinationRender
 import com.macaosoftware.component.core.DestinationResult
-import com.macaosoftware.component.core.ResultAdapter
+import com.macaosoftware.component.core.ResultHandler
 import com.macaosoftware.component.navigationcompose.demo.serverui.data.ServerUiConstants
 import com.macaosoftware.component.util.BackPressHandler
 import com.macaosoftware.component.util.MacaoDestinationRenderNotFoundView
@@ -23,10 +23,10 @@ class NotFoundDestinationRender : DestinationRender {
         destinationInfo: DestinationInfo,
         navController: NavHostController,
         navBackStackEntry: NavBackStackEntry,
-        resultAdapter: ResultAdapter<DestinationResult<*>>
+        resultHandler: ResultHandler<DestinationResult<*>>
     ) {
         BackPressHandler {
-            resultAdapter.process(DestinationResult.Error(Cancel))
+            resultHandler.process(DestinationResult.Error(Cancel))
         }
         MacaoDestinationRenderNotFoundView(destinationInfo.renderType)
     }

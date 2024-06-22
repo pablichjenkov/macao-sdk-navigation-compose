@@ -2,12 +2,12 @@ package com.macaosoftware.component.navigationcompose.demo.marketplace.misc.simp
 
 import androidx.compose.material3.DrawerValue
 import com.macaosoftware.component.core.DestinationResult
-import com.macaosoftware.component.drawer.DrawerResultAdapter
+import com.macaosoftware.component.drawer.DrawerResultHandler
 import com.macaosoftware.component.navigationcompose.demo.marketplace.misc.simplescreen1.result.SimpleScreen1Result
 import com.macaosoftware.component.navigationcompose.demo.serverui.data.ServerUiConstants
 
-class SimpleScreenToDrawerResultAdapter
-    : DrawerResultAdapter<SimpleScreen1Result>() {
+class SimpleScreenToDrawerResultHandler
+    : DrawerResultHandler<SimpleScreen1Result>() {
 
     override fun getRenderType(): String {
         return ServerUiConstants.ComponentType.SimpleScreen

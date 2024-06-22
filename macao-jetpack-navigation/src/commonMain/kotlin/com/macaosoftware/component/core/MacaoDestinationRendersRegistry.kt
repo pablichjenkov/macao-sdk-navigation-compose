@@ -1,8 +1,8 @@
 package com.macaosoftware.component.core
 
-import com.macaosoftware.component.drawer.DrawerResultAdapter
-import com.macaosoftware.component.drawer.DrawerResultAdapterEmpty
-import com.macaosoftware.component.stack.StackResultAdapter
+import com.macaosoftware.component.drawer.DrawerResultHandler
+import com.macaosoftware.component.drawer.DrawerResultHandlerEmpty
+import com.macaosoftware.component.stack.StackResultHandler
 
 class MacaoDestinationRendersRegistry(
     private val destinationRenderNotFound: DestinationRender,
@@ -46,32 +46,32 @@ class MacaoDestinationRendersRegistry(
     /**
      * DrawerResultAdapter
      * */
-    private val allDrawerResultAdapters = mutableListOf<DrawerResultAdapter<*>>()
+    private val allDrawerResultAdapters = mutableListOf<DrawerResultHandler<*>>()
 
     override fun addDrawerResultAdapter(
-        drawerResultAdapter: DrawerResultAdapter<*>
+        drawerResultAdapter: DrawerResultHandler<*>
     ) {
         allDrawerResultAdapters.add(drawerResultAdapter)
     }
 
     override fun drawerResultAdapterFor(
         destinationType: String
-    ): DrawerResultAdapter<*> = allDrawerResultAdapters.firstOrNull { render ->
+    ): DrawerResultHandler<*> = allDrawerResultAdapters.firstOrNull { render ->
         render.getRenderType() == destinationType
-    } ?: DrawerResultAdapterEmpty()
+    } ?: DrawerResultHandlerEmpty()
 
     //**********************************************//
 
     /**
      * StackResultAdapter
      * */
-    private val allStackResultAdapters = mutableListOf<StackResultAdapter<*>>()
+    private val allStackResultAdapters = mutableListOf<StackResultHandler<*>>()
 
-    override fun addStackResultAdapter(stackResultAdapter: StackResultAdapter<*>) {
+    override fun addStackResultAdapter(stackResultAdapter: StackResultHandler<*>) {
         allStackResultAdapters.add(stackResultAdapter)
     }
 
-    override fun stackResultAdapterFor(destinationType: String): StackResultAdapter<*> {
+    override fun stackResultAdapterFor(destinationType: String): StackResultHandler<*> {
         TODO("Not yet implemented")
     }
 
