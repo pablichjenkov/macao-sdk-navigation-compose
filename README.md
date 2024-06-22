@@ -101,7 +101,7 @@ Android, iOS, JVM and JS, **Wasm not supported yet**
       
       suspend fun initialize(
         koinComponent: KoinComponent
-      ): MacaoResult<DestinationInfo>
+      ): MacaoResult<DestinationInfo, RootGraphInitializerError>
     }
   
    ```
@@ -148,7 +148,7 @@ interface StartupTask {
      * Things like Database Migration and LaunchDarkly initialization
      * are examples of StartupTasks.
      * */
-    suspend fun initialize(koinComponent: KoinComponent): MacaoResult<Unit>
+    suspend fun initialize(koinComponent: KoinComponent): MacaoResult<Unit, StartupTaskError>
 }
 ```
 The task execution doesn't necessarely has to do heavy work all the time. Some times the task knows it has some data cached and the next executione will take a few milliseconds. In this case, the StartupTask can return `false` in the function `fun shouldShowLoader(): Boolean` and the loader in the `SplashScreen` wont be shown. 
